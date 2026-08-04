@@ -1,3 +1,4 @@
+HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -5,13 +6,11 @@ target/
 .kotlin
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-../.idea/compiler.xml
-.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
 ### Eclipse ###
 .apt_generated
@@ -21,6 +20,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+bin/
 
 ### NetBeans ###
 /nbproject/private/
@@ -35,5 +35,20 @@ build/
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
+### macOS ###
 .DS_Store
+
+### Environment / secrets ###
+.env
+.env.local
+application-local.properties
+application-local.yml
+
+### SQLite database files ###
+*.db
+*.sqlite
+*.sqlite3
+
+### Logs ###
+*.log
+logs/
