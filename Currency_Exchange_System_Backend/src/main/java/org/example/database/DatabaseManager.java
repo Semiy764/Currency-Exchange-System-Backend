@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    private static final String DB_PATH = "database/exchange_project.db";
+    private static final String DB_PATH = "Currency_Exchange_System_Backend/database/exchange_project.db";
     private static final String URL = "jdbc:sqlite:" + DB_PATH;
 
 

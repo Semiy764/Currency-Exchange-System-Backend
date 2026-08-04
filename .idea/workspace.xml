@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22760f19-47aa-4c57-862a-3d1891980830" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/database/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/database/DatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/exchange_project.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/database/DatabaseInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/database/DatabaseInitializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/database/DatabaseManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/database/DatabaseManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +47,7 @@
     "Spring Boot.App.executor": "Run",
     "git-widget-placeholder": "feature/backend",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Currency-Exchange-System-Backend",
+    "last_opened_file_path": "D:/Currency-Exchange-System-Backend/Currency_Exchange_System_Backend/src/main/java/org/example/database",
     "onboarding.tips.debug.path": "D:/Currency-Exchange-System-Backend/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
@@ -52,6 +56,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Currency-Exchange-System-Backend\Currency_Exchange_System_Backend\src\main\java\org\example\database" />
       <recent name="D:\Currency-Exchange-System-Backend\Currency_Exchange_System_Backend\src\main\java\org\example" />
       <recent name="D:\Currency-Exchange-System-Backend\Currency_Exchange_System_Backend\src\main\java\org\example\enums" />
     </key>
