@@ -48,15 +48,15 @@ public class JwtUtil {
                 .getPayload();
     }
 
-    public long extractUserId(String token) {
-        return Long.parseLong(extractAllClaims(token).getSubject());
+    public int extractUserId(String token) {
+        return Integer.parseInt(extractAllClaims(token).getSubject());
     }
 
     public String extractUsername(String token) {
         return extractAllClaims(token).get("username", String.class);
     }
 
-    public String getRole(String token) {
+    public String extractRole(String token) {
         return extractAllClaims(token).get("role", String.class);
     }
 
