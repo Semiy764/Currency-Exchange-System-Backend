@@ -148,18 +148,6 @@ public class UserRepositoryImpl implements UserRepsitory {
         }
     }
 
-    private User mapUser(ResultSet res) throws SQLException {
-
-        User user = new User();
-        user.setId(res.getLong("id"));
-        user.setUsername(res.getString("username"));
-        user.setPasswordHash(res.getString("password_hash"));
-        user.setRole(UserRole.valueOf(res.getString("role")));
-        user.setActive(res.getInt("is_active") == 1);
-
-        return user;
-    }
-
     @Override
     public boolean existsById(int userId) {
 
@@ -182,4 +170,67 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         }
     }
+
+    @Override
+    public void delete(int userId) {
+
+        String sql = """
+                DELETE FROM users WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public User update(User user) {
+
+        String sql = """
+                UPDATE users SET
+                username = ?,
+                role = ?,
+                is_active = ?
+                WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getRole().name());
+            statement.setInt(3, user.isActive() ? 1 : 0);
+            statement.setInt(4, user.getId().intValue());
+
+            statement.executeUpdate();
+            return user;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in updateUser " + e.getMessage(), e);
+        }
+    }
+
+    private User mapUser(ResultSet res) throws SQLException {
+
+        User user = new User();
+        user.setId(res.getLong("id"));
+        user.setUsername(res.getString("username"));
+        user.setPasswordHash(res.getString("password_hash"));
+        user.setRole(UserRole.valueOf(res.getString("role")));
+        user.setActive(res.getInt("is_active") == 1);
+
+        return user;
+    }
+
+
 }
