@@ -39,6 +39,7 @@
   "keyToString": {
     "JUnit.CustomerRepositoryTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.existingCustomerByIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findAllCustomersTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
@@ -82,7 +83,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.existingByUserIdTest">
+  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.existingCustomerByIdTest">
     <configuration name="CustomerRepositoryTest.existingByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -94,6 +95,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
       <option name="METHOD_NAME" value="existingByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerRepositoryTest.existingCustomerByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
+      <option name="METHOD_NAME" value="existingCustomerByIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -147,22 +164,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CustomerRepositoryTest.saveCustomerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
-      <option name="METHOD_NAME" value="saveCustomerTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -176,11 +177,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomerRepositoryTest.existingByUserIdTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.existingCustomerByIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findAllCustomersTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.existingByUserIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByIdTest" />
-        <item itemvalue="JUnit.CustomerRepositoryTest.saveCustomerTest" />
       </list>
     </recent_temporary>
   </component>
