@@ -9,7 +9,7 @@ public interface UserRepsitory {
 //
 //    void delete(int userId);
 //
-//    User findById(int userId);
+    User findById(int userId);
 //
 //    User findByUsername(String username);
 //
