@@ -3,13 +3,15 @@ package org.example.model;
 public class Customer {
 
     private long id;
+    private long userId;
     private String fullname;
     private String nationalId;
     private String phoneNumber;
 
-    public Customer(String fullname, long id, String nationalId, String phoneNumber) {
+    public Customer(String fullname, long id, String nationalId,long userId, String phoneNumber) {
         this.fullname = fullname;
         this.id = id;
+        this.userId = userId;
         this.nationalId = nationalId;
         this.phoneNumber = phoneNumber;
     }

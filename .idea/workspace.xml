@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/UserRepositoryImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/UserRepositoryImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repsitory/UserRepositoryTest.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Customer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +18,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -36,6 +36,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
+    "JUnit.UserRepositoryImplTest$Exists.executor": "Run",
+    "JUnit.UserRepositoryImplTest$FindAll.executor": "Run",
+    "JUnit.UserRepositoryImplTest$FindById.findById_found_returnsUser.executor": "Run",
+    "JUnit.UserRepositoryImplTest$FindById.findById_notFound_returnsNull.executor": "Run",
+    "JUnit.UserRepositoryImplTest$FindById.findById_sqlException_throwsRuntimeException.executor": "Run",
+    "JUnit.UserRepositoryImplTest$FindByUsername.executor": "Run",
+    "JUnit.UserRepositoryImplTest$Save.save_sqlException_throwsRuntimeException.executor": "Run",
+    "JUnit.UserRepositoryImplTest$Save.save_success_setsGeneratedId.executor": "Run",
+    "JUnit.UserRepositoryImplTest$Update.executor": "Run",
     "JUnit.UserRepositoryTest.deletingByUserIdTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
     "JUnit.UserRepositoryTest.existingUserByUsernameTest.executor": "Run",
