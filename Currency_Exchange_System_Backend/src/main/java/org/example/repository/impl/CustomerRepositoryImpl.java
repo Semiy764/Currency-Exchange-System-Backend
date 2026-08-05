@@ -219,6 +219,27 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     }
 
+
+    @Override
+    public void delete(int customerId) {
+
+        String sql = """
+                DELETE FROM customers WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in remove customer: " + e.getMessage(), e);
+        }
+    }
+
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 
         Customer customer = new Customer();

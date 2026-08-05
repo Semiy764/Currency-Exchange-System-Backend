@@ -9,12 +9,13 @@ public interface CustomerRepository {
     Customer save(Customer customer);
 
     Customer update(Customer customer);
-//
-//    void delete(int userId);
+
+    void delete(int customerId);
 
     Customer findById(int customerId);
 
     List<Customer> findAll();
+
     Customer findByUserId(int userId);
 
     boolean existsByUserId(int userId);
