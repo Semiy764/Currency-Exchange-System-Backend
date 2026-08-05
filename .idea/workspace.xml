@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/database/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/database/DatabaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CustomerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CustomerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CustomerRepositoryTest.java" afterDir="false" />
@@ -81,7 +79,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.findCustomerByIdTest">
+  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest">
     <configuration name="CustomerRepositoryTest.findAllCustomersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -114,6 +112,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CustomerRepositoryTest.findCustomerByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
+      <option name="METHOD_NAME" value="findCustomerByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CustomerRepositoryTest.saveCustomerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -125,22 +139,6 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
       <option name="METHOD_NAME" value="saveCustomerTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserRepositoryTest.findAllUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
-      <option name="METHOD_NAME" value="findAllUsersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -173,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByIdTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findAllCustomersTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.saveCustomerTest" />
         <item itemvalue="Spring Boot.App" />
-        <item itemvalue="JUnit.UserRepositoryTest.findAllUsersTest" />
       </list>
     </recent_temporary>
   </component>
