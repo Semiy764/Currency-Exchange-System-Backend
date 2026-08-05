@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @SpringBootTest(classes = App.class)
 public class CustomerRepositoryTest {
 
@@ -17,7 +19,7 @@ public class CustomerRepositoryTest {
 
     @Test
     public void saveCustomerTest() {
-        Customer customer = new Customer("Ahmad Mohammadi", "08793838", 3, "049494");
+        Customer customer = new Customer("Ahmad Mohammadi", "08793838", 5, "049494");
         customerRepository.save(customer);
     }
 
@@ -25,10 +27,25 @@ public class CustomerRepositoryTest {
     public void findAllCustomersTest() {
         List<Customer> allCustomers = customerRepository.findAll();
         for(Customer customer : allCustomers) {
-            System.out.println(customer.getUserId() + customer.getFullname());
+            System.out.println(customer.getId() + " - " +
+                    customer.getFullname() + " - " +
+                    customer.getNationalId() + " - " +
+                    customer.getUserId() + " - " +
+                    customer.getPhoneNumber()
+            );
         }
     }
 
+    @Test
+    public void findCustomerByIdTest(){
 
+        Customer customer = customerRepository.findById(2);
+        assertThat(customer.getId()).isEqualTo(2);
+        assertThat(customer.getFullname()).isEqualTo("Mohammad Simiyari");
+        assertThat(customer.getNationalId()).isEqualTo("029292929");
+        assertThat(customer.getUserId()).isEqualTo(2);
+        assertThat(customer.getPhoneNumber()).isEqualTo("091064736");
+
+    }
 
 }

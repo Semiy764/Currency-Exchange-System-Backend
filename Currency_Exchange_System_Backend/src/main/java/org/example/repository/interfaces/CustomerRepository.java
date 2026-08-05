@@ -12,7 +12,7 @@ public interface CustomerRepository {
 //
 //    void delete(int userId);
 //
-//    User findById(int userId);
+    Customer findById(int customerId);
 //
 //    User findByUsername(String username);
 //
