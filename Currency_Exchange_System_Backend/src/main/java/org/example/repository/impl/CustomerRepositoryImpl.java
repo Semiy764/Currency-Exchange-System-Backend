@@ -68,10 +68,33 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in save customer: " + e.getMessage(), e);
+            throw new RuntimeException("Error in find all customers: " + e.getMessage(), e);
         }
     }
 
+    @Override
+    public Customer findById(int customerId) {
+
+        String sql = """
+                SELECT * FROM customers WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setInt(1, customerId);
+
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapCustomer(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find customer by id: " + e.getMessage(), e);
+        }
+    }
 
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 
@@ -84,6 +107,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         return customer;
 
-        // user id , phone
+
     }
 }

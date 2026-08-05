@@ -10,7 +10,7 @@ public class DatabaseManager {
     private static final String MODULE_DIR_NAME = "Currency_Exchange_System_Backend";
     private static final String DB_RELATIVE_PATH = "database/exchange_project.db";
     private static final String DB_PATH = resolveDbPath();
-    private static final String URL = "jdbc:sqlite:" + DB_PATH;
+    private static final String URL = "jdbc:sqlite:" + DB_PATH + "?foreign_keys=on";
 
     /**
      * Always resolves to ".../Currency_Exchange_System_Backend/database/exchange_project.db",
