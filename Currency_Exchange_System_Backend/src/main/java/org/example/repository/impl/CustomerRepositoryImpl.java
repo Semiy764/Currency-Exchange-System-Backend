@@ -3,9 +3,11 @@ package org.example.repository.impl;
 import org.example.database.DatabaseManager;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+@Repository
 public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
@@ -33,7 +35,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             ResultSet keys = statement.getGeneratedKeys();
             if(keys.next()) {
-                customer.setId(keys.getLong("id"));
+                customer.setId(keys.getLong(1));
             }
 
             return customer;
