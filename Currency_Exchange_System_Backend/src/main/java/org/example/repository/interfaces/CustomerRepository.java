@@ -18,8 +18,8 @@ public interface CustomerRepository {
 //
     List<Customer> findAll();
     Customer findByUserId(int userId);
-//
-//    boolean existsByUsername(String username);
+
+    boolean existsByUserId(int userId);
 //
 //    boolean existsById(int userId);
 //

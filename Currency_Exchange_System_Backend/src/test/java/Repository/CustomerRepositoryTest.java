@@ -54,4 +54,9 @@ public class CustomerRepositoryTest {
         assertThat(customer.getId()).isEqualTo(4);
     }
 
+    @Test
+    public void existingByUserIdTest() {
+        System.out.println(customerRepository.existsByUserId(234));
+    }
+
 }

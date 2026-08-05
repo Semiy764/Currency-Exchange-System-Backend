@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CustomerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CustomerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CustomerRepositoryTest.java" afterDir="false" />
@@ -37,8 +38,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.CustomerRepositoryTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findAllCustomersTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByIdTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
     "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
     "JUnit.UserRepositoryImplTest$Exists.executor": "Run",
@@ -79,7 +82,23 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest">
+  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.existingByUserIdTest">
+    <configuration name="CustomerRepositoryTest.existingByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
+      <option name="METHOD_NAME" value="existingByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CustomerRepositoryTest.findAllCustomersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -155,27 +174,13 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
-    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
-      <module name="backend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.App" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.existingByUserIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findAllCustomersTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.saveCustomerTest" />
-        <item itemvalue="Spring Boot.App" />
       </list>
     </recent_temporary>
   </component>
@@ -195,5 +200,16 @@
       <updated>1785867008730</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

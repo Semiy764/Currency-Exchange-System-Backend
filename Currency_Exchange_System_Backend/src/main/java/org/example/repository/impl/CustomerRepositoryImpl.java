@@ -119,6 +119,27 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
     }
 
+    @Override
+    public boolean existsByUserId(int userId) {
+
+        String sql = """
+                SELECT 1 FROM customers WHERE user_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing customer by user_id: " + e.getMessage(), e);
+        }
+    }
+
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 
         Customer customer = new Customer();
