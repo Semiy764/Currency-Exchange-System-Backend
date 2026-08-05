@@ -13,7 +13,7 @@ public interface UserRepsitory {
 //
 //    User findByUsername(String username);
 //
-//    List<User> findAll();
+    List<User> findAll();
 //
 //    boolean existsByUsername(String username);
 //
