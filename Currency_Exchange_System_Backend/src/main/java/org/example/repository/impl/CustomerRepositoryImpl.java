@@ -163,6 +163,62 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     }
 
+    @Override
+    public boolean existsByPhone(String phone) {
+
+        String sql = """
+                SELECT 1 FROM customers WHERE phone_number = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, phone);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing customer by phone_number: " + e.getMessage(), e);
+
+        }
+    }
+
+    @Override
+    public Customer update(Customer customer) {
+
+        String sql = """
+                UPDATE customers SET
+                full_name = ?,
+                national_id = ?,
+                phone_number = ?,
+                user_id = ?
+                WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, customer.getFullname());
+            statement.setString(2, customer.getNationalId());
+            statement.setString(3, customer.getPhoneNumber());
+            statement.setInt(4, customer.getUserId().intValue());
+            statement.setInt(5, customer.getId().intValue());
+
+            statement.executeUpdate();
+            return customer;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in update customer: " + e.getMessage(), e);
+
+        }
+
+
+    }
+
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 
         Customer customer = new Customer();
@@ -174,6 +230,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         return customer;
 
-
     }
+
+
 }

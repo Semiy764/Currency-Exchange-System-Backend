@@ -6,6 +6,7 @@ import org.example.repository.interfaces.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -62,6 +63,28 @@ public class CustomerRepositoryTest {
     @Test
     public void existingCustomerByIdTest() {
         System.out.println(customerRepository.existsById(7));
+    }
+
+    @Test
+    public void existingCustomerByPhoneNumberTest() {
+        System.out.println(customerRepository.existsByPhone("091064735"));
+    }
+
+    @Test
+    public void testUpateCustomer() {
+        Customer customer = customerRepository.findById(2);
+        customer.setFullname("Erfan Simiyari");
+        customer.setNationalId("0313464200");
+        customer.setPhoneNumber("09107241801");
+
+        customerRepository.update(customer);
+
+        Customer foundCustomer = customerRepository.findById(2);
+        assertThat(foundCustomer).isNotNull();
+        assertThat(foundCustomer.getId()).isEqualTo(2);
+        assertThat(foundCustomer.getFullname()).isEqualTo("Erfan Simiyari");
+        assertThat(foundCustomer.getNationalId()).isEqualTo("0313464200");
+        assertThat(foundCustomer.getPhoneNumber()).isEqualTo("09107241801");
     }
 
 }

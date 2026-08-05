@@ -40,10 +40,12 @@
     "JUnit.CustomerRepositoryTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingCustomerByIdTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.existingCustomerByPhoneNumberTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findAllCustomersTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.testUpateCustomer.executor": "Run",
     "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
     "JUnit.UserRepositoryImplTest$Exists.executor": "Run",
     "JUnit.UserRepositoryImplTest$FindAll.executor": "Run",
@@ -83,7 +85,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.existingCustomerByIdTest">
+  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.testUpateCustomer">
     <configuration name="CustomerRepositoryTest.existingByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -116,6 +118,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CustomerRepositoryTest.existingCustomerByPhoneNumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
+      <option name="METHOD_NAME" value="existingCustomerByPhoneNumberTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CustomerRepositoryTest.findAllCustomersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -132,7 +150,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CustomerRepositoryTest.findCustomerByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CustomerRepositoryTest.testUpateCustomer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -142,23 +160,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
-      <option name="METHOD_NAME" value="findCustomerByIdTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CustomerRepositoryTest.findCustomerByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
-      <option name="METHOD_NAME" value="findCustomerByUserIdTest" />
+      <option name="METHOD_NAME" value="testUpateCustomer" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -177,11 +179,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomerRepositoryTest.existingCustomerByIdTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.testUpateCustomer" />
         <item itemvalue="JUnit.CustomerRepositoryTest.findAllCustomersTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.existingCustomerByPhoneNumberTest" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.existingCustomerByIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.existingByUserIdTest" />
-        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByUserIdTest" />
-        <item itemvalue="JUnit.CustomerRepositoryTest.findCustomerByIdTest" />
       </list>
     </recent_temporary>
   </component>
