@@ -11,7 +11,7 @@ public interface UserRepsitory {
 //
     User findById(int userId);
 //
-//    User findByUsername(String username);
+    User findByUsername(String username);
 //
     List<User> findAll();
 //
