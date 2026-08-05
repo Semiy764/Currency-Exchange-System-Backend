@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Teller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/UsersInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CustomerRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/UserRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +40,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.CustomerRepositoryTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
     "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
     "JUnit.UserRepositoryImplTest$Exists.executor": "Run",
     "JUnit.UserRepositoryImplTest$FindAll.executor": "Run",
@@ -47,6 +54,7 @@
     "JUnit.UserRepositoryImplTest$Update.executor": "Run",
     "JUnit.UserRepositoryTest.deletingByUserIdTest.executor": "Run",
     "JUnit.UserRepositoryTest.executor": "Run",
+    "JUnit.UserRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.UserRepositoryTest.existingUserByUsernameTest.executor": "Run",
     "JUnit.UserRepositoryTest.findAllUsersTest.executor": "Run",
     "JUnit.UserRepositoryTest.findByUsernameTest.executor": "Run",
@@ -73,8 +81,8 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserRepositoryImplTest$Update">
-    <configuration name="UserRepositoryImplTest$Delete" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.saveCustomerTest">
+    <configuration name="CustomerRepositoryTest.saveCustomerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -82,14 +90,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository.UserRepositoryImplTest" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryImplTest$Delete" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
+      <option name="METHOD_NAME" value="saveCustomerTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryImplTest$Exists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserRepositoryTest.existingByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -97,14 +106,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository.UserRepositoryImplTest" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryImplTest$Exists" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="existingByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryImplTest$FindAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserRepositoryTest.existingUserByUsernameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -112,14 +122,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository.UserRepositoryImplTest" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryImplTest$FindAll" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="existingUserByUsernameTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryImplTest$FindByUsername" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserRepositoryTest.findAllUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -127,14 +138,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository.UserRepositoryImplTest" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryImplTest$FindByUsername" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllUsersTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryImplTest$Update" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserRepositoryTest.testUpdateUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -142,9 +154,10 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository.UserRepositoryImplTest" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryImplTest$Update" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="testUpdateUser" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -162,11 +175,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserRepositoryImplTest$Update" />
-        <item itemvalue="JUnit.UserRepositoryImplTest$Delete" />
-        <item itemvalue="JUnit.UserRepositoryImplTest$Exists" />
-        <item itemvalue="JUnit.UserRepositoryImplTest$FindByUsername" />
-        <item itemvalue="JUnit.UserRepositoryImplTest$FindAll" />
+        <item itemvalue="JUnit.CustomerRepositoryTest.saveCustomerTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.findAllUsersTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.testUpdateUser" />
+        <item itemvalue="JUnit.UserRepositoryTest.existingByUserIdTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.existingUserByUsernameTest" />
       </list>
     </recent_temporary>
   </component>

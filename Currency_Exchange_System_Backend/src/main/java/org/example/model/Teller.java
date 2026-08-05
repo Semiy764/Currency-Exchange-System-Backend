@@ -1,8 +1,7 @@
 package org.example.model;
+public class Teller extends UsersInfo {
 
-public class Customer extends UsersInfo {
-
-    public Customer(String fullname, long id, String nationalId,long userId, String phoneNumber) {
+    public Teller (String fullname, long id, String nationalId,long userId, String phoneNumber) {
         this.fullname = fullname;
         this.id = id;
         this.userId = userId;
@@ -10,12 +9,11 @@ public class Customer extends UsersInfo {
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer(String fullname, String nationalId,long userId, String phoneNumber) {
+    public Teller (String fullname, String nationalId,long userId, String phoneNumber) {
         this.fullname = fullname;
         this.id = id;
         this.userId = userId;
         this.nationalId = nationalId;
         this.phoneNumber = phoneNumber;
     }
-
 }

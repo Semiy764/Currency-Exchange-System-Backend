@@ -27,14 +27,14 @@ public class UserRepositoryTest {
     public void userSavingTest() {
         String passHash = passwordEncoder.encode("Mohammad1022@");
         System.out.println(passHash);
-        User user = new User("erfan.simiyari4", passHash, UserRole.CUSTOMER, true);
+        User user = new User("erfan.simiyari6", passHash, UserRole.CUSTOMER, true);
         userRepsitory.save(user);
     }
 
     @Test
     public void findUserByIdTest() {
-        User foundUser = userRepsitory.findById(1);
-        assertThat(foundUser.getUsername()).isEqualTo("erfan.simiyari");
+        User foundUser = userRepsitory.findById(5);
+        assertThat(foundUser.getUsername()).isEqualTo("erfan.simiyari6");
         assertThat(foundUser.getRole().name()).isEqualTo("CUSTOMER");
         assertThat(foundUser.isActive()).isEqualTo(true);
 
@@ -50,8 +50,8 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsernameTest() {
-        User foundUser = userRepsitory.findByUsername("erfan.simiyari4");
-        assertThat(foundUser.getId()).isEqualTo(4);
+        User foundUser = userRepsitory.findByUsername("erfan.simiyari6");
+        assertThat(foundUser.getId()).isEqualTo(5);
         assertThat(foundUser.getRole().name()).isEqualTo("CUSTOMER");
         assertThat(foundUser.isActive()).isEqualTo(true);
         assertThat(passwordEncoder.matches("Mohammad1022@", foundUser.getPasswordHash())).isEqualTo(true);
@@ -59,12 +59,12 @@ public class UserRepositoryTest {
 
     @Test
     public void existingUserByUsernameTest() {
-        System.out.println(userRepsitory.existsByUsername("erfan.simiyari4"));
+        System.out.println(userRepsitory.existsByUsername("erfan.simiyari6"));
     }
 
     @Test
     public void existingByUserIdTest() {
-        System.out.println(userRepsitory.existsById(9));
+        System.out.println(userRepsitory.existsById(5));
     }
 
     @Test
@@ -74,15 +74,15 @@ public class UserRepositoryTest {
 
     @Test
     public void testUpdateUser() {
-        User user = userRepsitory.findById(3);
-        user.setUsername("erfan.simiyari10");
+        User user = userRepsitory.findById(5);
+        user.setUsername("erfan.simiyari12");
         user.setRole(UserRole.TELLER);
         user.setActive(false);
 
         userRepsitory.update(user);
 
-        User updatedUser = userRepsitory.findById(3);
-        assertThat(updatedUser.getUsername()).isEqualTo("erfan.simiyari10");
+        User updatedUser = userRepsitory.findById(5);
+        assertThat(updatedUser.getUsername()).isEqualTo("erfan.simiyari12");
         assertThat(updatedUser.getRole().name()).isEqualTo("TELLER");
         assertThat(updatedUser.isActive()).isEqualTo(false);
     }
