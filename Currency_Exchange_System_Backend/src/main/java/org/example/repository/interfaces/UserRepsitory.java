@@ -17,7 +17,7 @@ public interface UserRepsitory {
 
     boolean existsByUsername(String username);
 //
-//    boolean existsById(int userId);
+    boolean existsById(int userId);
 
 //    boolean existsByPhone(String phone);
 }
