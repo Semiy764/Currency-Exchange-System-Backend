@@ -48,4 +48,10 @@ public class CustomerRepositoryTest {
 
     }
 
+    @Test
+    public void findCustomerByUserIdTest() {
+        Customer customer = customerRepository.findByUserId(6);
+        assertThat(customer.getId()).isEqualTo(4);
+    }
+
 }

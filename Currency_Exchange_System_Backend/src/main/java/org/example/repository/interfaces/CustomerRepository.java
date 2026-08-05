@@ -17,6 +17,7 @@ public interface CustomerRepository {
 //    User findByUsername(String username);
 //
     List<Customer> findAll();
+    Customer findByUserId(int userId);
 //
 //    boolean existsByUsername(String username);
 //
