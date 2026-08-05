@@ -2,6 +2,8 @@ package org.example.model;
 
 public class Customer extends UsersInfo {
 
+    public Customer(){}
+
     public Customer(String fullname, long id, String nationalId,long userId, String phoneNumber) {
         this.fullname = fullname;
         this.id = id;
