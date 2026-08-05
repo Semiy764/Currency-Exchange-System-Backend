@@ -159,4 +159,27 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         return user;
     }
+
+    @Override
+    public boolean existsById(int userId) {
+
+        String sql = """
+                SELECT 1 FROM users WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
+
+
+        }
+    }
 }
