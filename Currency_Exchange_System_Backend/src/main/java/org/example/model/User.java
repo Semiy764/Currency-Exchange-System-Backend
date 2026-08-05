@@ -29,6 +29,8 @@ public class User {
         this.username = username;
     }
 
+    public User() {}
+
     public UserRole getRole() {
         return role;
     }
