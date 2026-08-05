@@ -101,6 +101,31 @@ public class UserRepositoryImpl implements UserRepsitory {
         }
     }
 
+    @Override
+    public User findByUsername(String username) {
+
+        String sql = """
+                SELECT * FROM users WHERE username = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapUser(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find user by username: " + e.getMessage(), e);
+
+        }
+    }
+
     private User mapUser(ResultSet res) throws SQLException {
 
         User user = new User();
