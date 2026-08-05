@@ -18,7 +18,7 @@ public class DatabaseInitializer {
                 ) {
 
             statement.execute("""
-                    CREATE TABLE IF NOT EXISTS "Users" (
+                    CREATE TABLE IF NOT EXISTS "users" (
                 	"id"	INTEGER,
                 	"username"	TEXT NOT NULL UNIQUE,
                 	"password_hash"	TEXT NOT NULL,
