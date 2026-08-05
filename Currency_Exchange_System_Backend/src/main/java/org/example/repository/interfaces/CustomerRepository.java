@@ -14,14 +14,14 @@ public interface CustomerRepository {
 //
     Customer findById(int customerId);
 //
-//    User findByUsername(String username);
+
 //
     List<Customer> findAll();
     Customer findByUserId(int userId);
 
     boolean existsByUserId(int userId);
 //
-//    boolean existsById(int userId);
+    boolean existsById(int userId);
 //
 ////    boolean existsByPhone(String phone); this is for customer
 }

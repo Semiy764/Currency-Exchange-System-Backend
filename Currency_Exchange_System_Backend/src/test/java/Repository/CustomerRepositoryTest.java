@@ -59,4 +59,9 @@ public class CustomerRepositoryTest {
         System.out.println(customerRepository.existsByUserId(234));
     }
 
+    @Test
+    public void existingCustomerByIdTest() {
+        System.out.println(customerRepository.existsById(7));
+    }
+
 }
