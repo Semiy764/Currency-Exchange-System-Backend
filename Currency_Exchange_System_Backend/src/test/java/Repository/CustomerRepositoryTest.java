@@ -87,4 +87,9 @@ public class CustomerRepositoryTest {
         assertThat(foundCustomer.getPhoneNumber()).isEqualTo("09107241801");
     }
 
+    @Test
+    public void deleteCustomerTest() {
+        customerRepository.delete(3);
+    }
+
 }
