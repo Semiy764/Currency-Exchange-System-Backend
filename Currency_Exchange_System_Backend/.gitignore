@@ -93,6 +93,9 @@ test-output/
 .surefire/
 .ensurefire/
 
+# Test source directory
+
+
 # Spring Boot
 .springBeans
 *.springBeans
