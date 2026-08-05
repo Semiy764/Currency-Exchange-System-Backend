@@ -126,6 +126,28 @@ public class UserRepositoryImpl implements UserRepsitory {
         }
     }
 
+    @Override
+    public boolean existsByUsername(String username) {
+        String sql = """
+                SELECT 1 FROM users WHERE username = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in determine existing user by username: " + e.getMessage(), e);
+
+        }
+    }
+
     private User mapUser(ResultSet res) throws SQLException {
 
         User user = new User();

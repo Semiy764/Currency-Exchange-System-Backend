@@ -14,8 +14,8 @@ public interface UserRepsitory {
     User findByUsername(String username);
 //
     List<User> findAll();
-//
-//    boolean existsByUsername(String username);
+
+    boolean existsByUsername(String username);
 //
 //    boolean existsById(int userId);
 
