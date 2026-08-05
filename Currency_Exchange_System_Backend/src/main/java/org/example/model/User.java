@@ -22,6 +22,13 @@ public class User {
         this.username = username;
     }
 
+    public User(String username, String passwordHash, UserRole role, boolean isActive) {
+        this.isActive = isActive;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.username = username;
+    }
+
     public UserRole getRole() {
         return role;
     }
