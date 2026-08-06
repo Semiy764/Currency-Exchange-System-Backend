@@ -56,4 +56,9 @@ public class TellerRepositoryTest {
         assertThat(teller.getPhoneNumber()).isEqualTo("09234566857");
         assertThat(teller.getFullname()).isEqualTo("Akbar asghari");
     }
+
+    @Test
+    public void existingByUserIdTest() {
+        System.out.println(tellerRepository.existsByUserId(6));
+    }
 }

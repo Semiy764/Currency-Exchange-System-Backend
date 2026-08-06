@@ -47,6 +47,7 @@
     "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.testUpateCustomer.executor": "Run",
+    "JUnit.TellerRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.TellerRepositoryTest.findAllTellersTest.executor": "Run",
     "JUnit.TellerRepositoryTest.findByTellerIdTest.executor": "Run",
     "JUnit.TellerRepositoryTest.findingTellerByUserIdTest.executor": "Run",
@@ -90,7 +91,23 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TellerRepositoryTest.findingTellerByUserIdTest">
+  <component name="RunManager" selected="JUnit.TellerRepositoryTest.existingByUserIdTest">
+    <configuration name="TellerRepositoryTest.existingByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
+      <option name="METHOD_NAME" value="existingByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TellerRepositoryTest.findAllTellersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -155,22 +172,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryTest.userSavingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
-      <option name="METHOD_NAME" value="userSavingTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -184,11 +185,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TellerRepositoryTest.existingByUserIdTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.findingTellerByUserIdTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.findByTellerIdTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.findAllTellersTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.savingTellerTest" />
-        <item itemvalue="JUnit.UserRepositoryTest.userSavingTest" />
       </list>
     </recent_temporary>
   </component>
