@@ -123,10 +123,31 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
-//    @Override
-//    public Currency findByName(String name) {
-//        return null;
-//    }
+    @Override
+    public Currency findByName(String name) {
+
+        String sql = """
+                SELECT * FROM currencies WHERE name = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapCurrency(resultSet);
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find currency by name: " + e, e);
+        }
+    }
 
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();

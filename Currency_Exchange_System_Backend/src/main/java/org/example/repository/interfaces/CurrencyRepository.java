@@ -9,5 +9,5 @@ public interface CurrencyRepository {
     List<Currency> findAll();
     Currency findById(int currencyId);
     Currency findBySymbol(String symbol);
-//    Currency findByName(String name);
+    Currency findByName(String name);
 }

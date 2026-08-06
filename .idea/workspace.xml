@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CustomerRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" afterDir="false" />
     </list>
@@ -39,6 +37,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.CurrencyRepositoryTest.findAllCurrenciesTest.executor": "Run",
+    "JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest.executor": "Run",
+    "JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor": "Run",
     "JUnit.CustomerRepositoryTest.deleteCustomerTest.executor": "Run",
@@ -133,6 +133,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CurrencyRepositoryTest.findingCurrencyByNameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="findingCurrencyByNameTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CurrencyRepositoryTest.savingCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -165,22 +181,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TellerRepositoryTest.updateTellerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
-      <option name="METHOD_NAME" value="updateTellerTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -195,10 +195,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.testFindCurrencyById" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.savingCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
-        <item itemvalue="JUnit.TellerRepositoryTest.updateTellerTest" />
       </list>
     </recent_temporary>
   </component>
