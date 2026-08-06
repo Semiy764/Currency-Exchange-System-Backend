@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @SpringBootTest(classes = App.class)
 public class TellerRepositoryTest {
 
@@ -33,5 +35,25 @@ public class TellerRepositoryTest {
                     teller.getPhoneNumber()
                     );
         }
+    }
+
+    @Test
+    public void findByTellerIdTest() {
+        Teller teller = tellerRepository.findById(2);
+        assertThat(teller.getId()).isEqualTo(2);
+        assertThat(teller.getNationalId()).isEqualTo("094948484");
+        assertThat(teller.getUserId()).isEqualTo(7);
+        assertThat(teller.getPhoneNumber()).isEqualTo("09234566857");
+        assertThat(teller.getFullname()).isEqualTo("Akbar asghari");
+    }
+
+    @Test
+    public void findingTellerByUserIdTest() {
+        Teller teller = tellerRepository.findByUserId(7);
+        assertThat(teller.getId()).isEqualTo(2);
+        assertThat(teller.getNationalId()).isEqualTo("094948484");
+        assertThat(teller.getUserId()).isEqualTo(7);
+        assertThat(teller.getPhoneNumber()).isEqualTo("09234566857");
+        assertThat(teller.getFullname()).isEqualTo("Akbar asghari");
     }
 }
