@@ -8,5 +8,6 @@ public interface CurrencyRepository {
     Currency save(Currency currency);
     List<Currency> findAll();
     Currency findById(int currencyId);
-//    Currency findBySymbol(String symbol);
+    Currency findBySymbol(String symbol);
+//    Currency findByName(String name);
 }
