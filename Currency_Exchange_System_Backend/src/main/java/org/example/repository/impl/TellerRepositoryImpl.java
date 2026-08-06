@@ -71,6 +71,74 @@ public class TellerRepositoryImpl implements TellerRepository {
         }
     }
 
+    @Override
+    public Teller findById(int tellerId) {
+
+        String sql = """
+                SELECT * FROM tellers WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setInt(1, tellerId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapTeller(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find teller by teller id: " + e, e);
+        }
+    }
+
+    @Override
+    public Teller findByUserId(int tellerId) {
+        String sql = """
+                SELECT * FROM tellers WHERE user_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, tellerId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapTeller(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find teller by user id: " + e, e);
+        }
+    }
+
+//    @Override
+//    public boolean existsByUserId(int userId) {
+//
+//        String sql = """
+//                SELECT 1 FROM tellers WHERE user_id = ?
+//                """;
+//
+//        try(
+//                Connection connection = DatabaseManager.getConnection();
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                ) {
+//
+//            statement.setInt(1, userId);
+//            ResultSet resultSet = statement.executeQuery();
+//            return resultSet.next();
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error in existing teller by user id: " + e, e);
+//        }
+//    }
+
     private Teller mapTeller(ResultSet resultSet) throws SQLException {
 
         Teller teller = new Teller();

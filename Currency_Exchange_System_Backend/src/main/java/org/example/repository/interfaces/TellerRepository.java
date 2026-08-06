@@ -13,13 +13,13 @@ public interface TellerRepository {
 //
 //    void delete(int tellerId);
 //
-//    Teller findById(int tellerId);
-//
+    Teller findByUserId(int tellerId);
+
     List<Teller> findAll();
-//
-//    Teller findByUserId(int tellerId);
-//
-//    boolean existsByUserId(int tellerId);
+
+    Teller findById(int tellerId);
+
+//    boolean existsByUserId(int userId);
 //
 //    boolean existsById(int tellerId);
 //
