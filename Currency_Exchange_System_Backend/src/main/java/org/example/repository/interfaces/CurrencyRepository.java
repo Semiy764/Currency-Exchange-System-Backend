@@ -12,6 +12,6 @@ public interface CurrencyRepository {
     Currency findByName(String name);
     Currency findByCode(String code);
     void delete(int currencyId);
-//    boolean existsById(int currencyId);
+    boolean existsById(int currencyId);
 
 }
