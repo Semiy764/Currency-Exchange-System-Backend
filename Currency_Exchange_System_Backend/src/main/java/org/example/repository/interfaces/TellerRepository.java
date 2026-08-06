@@ -19,7 +19,7 @@ public interface TellerRepository {
 
     Teller findById(int tellerId);
 
-//    boolean existsByUserId(int userId);
+    boolean existsByUserId(int userId);
 //
 //    boolean existsById(int tellerId);
 //

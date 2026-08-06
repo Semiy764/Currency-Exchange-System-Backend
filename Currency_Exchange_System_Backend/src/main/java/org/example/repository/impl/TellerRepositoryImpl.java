@@ -118,26 +118,26 @@ public class TellerRepositoryImpl implements TellerRepository {
         }
     }
 
-//    @Override
-//    public boolean existsByUserId(int userId) {
-//
-//        String sql = """
-//                SELECT 1 FROM tellers WHERE user_id = ?
-//                """;
-//
-//        try(
-//                Connection connection = DatabaseManager.getConnection();
-//                PreparedStatement statement = connection.prepareStatement(sql);
-//                ) {
-//
-//            statement.setInt(1, userId);
-//            ResultSet resultSet = statement.executeQuery();
-//            return resultSet.next();
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error in existing teller by user id: " + e, e);
-//        }
-//    }
+    @Override
+    public boolean existsByUserId(int userId) {
+
+        String sql = """
+                SELECT 1 FROM tellers WHERE user_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing teller by user id: " + e, e);
+        }
+    }
 
     private Teller mapTeller(ResultSet resultSet) throws SQLException {
 
