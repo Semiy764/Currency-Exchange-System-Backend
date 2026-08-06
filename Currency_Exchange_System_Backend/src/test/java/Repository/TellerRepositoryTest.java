@@ -77,4 +77,9 @@ public class TellerRepositoryTest {
     public void deleteTellerTest() {
         tellerRepository.delete(2);
     }
+
+    @Test
+    public void deleteByUserIdTest() {
+        tellerRepository.deleteByUserId(6);
+    }
 }
