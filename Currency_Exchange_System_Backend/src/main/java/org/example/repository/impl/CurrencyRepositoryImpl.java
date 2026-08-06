@@ -195,6 +195,27 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
+    @Override
+    public boolean existsById(int currencyId) {
+
+        String sql = """
+                SELECT 1 FROM currencies WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing currency by id: " + e, e);
+        }
+    }
+
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();
         currency.setId(resultSet.getLong("id"));

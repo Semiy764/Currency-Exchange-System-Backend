@@ -85,4 +85,9 @@ public class CurrencyRepositoryTest {
     public void deleteCurrencyTest() {
         currencyRepository.delete(1);
     }
+
+    @Test
+    public void existingCurrencyByIdTest() {
+        System.out.println(currencyRepository.existsById(1));
+    }
 }
