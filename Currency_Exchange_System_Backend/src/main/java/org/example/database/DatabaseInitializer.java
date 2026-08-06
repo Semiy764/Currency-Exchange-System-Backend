@@ -43,6 +43,19 @@ public class DatabaseInitializer {
 
 
             statement.execute("""
+                CREATE TABLE IF NOT EXISTS "tellers" (
+                	"id"	INTEGER,
+                	"full_name"	TEXT NOT NULL,
+                	"national_id"	TEXT NOT NULL,
+                	"phone_number"	TEXT,
+                	"user_id"	INTEGER NOT NULL UNIQUE,
+                	PRIMARY KEY("id" AUTOINCREMENT),
+                	FOREIGN KEY("user_id") REFERENCES "users"("id")
+                );
+                """);
+
+
+            statement.execute("""
                     CREATE TABLE IF NOT EXISTS "currencies" (
                 	"id"	INTEGER,
                 	"code"	TEXT NOT NULL UNIQUE,
