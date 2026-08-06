@@ -206,6 +206,27 @@ public class TellerRepositoryImpl implements TellerRepository {
         }
     }
 
+    @Override
+    public void deleteByUserId(int userId) {
+
+        String sql = """
+                DELETE FROM tellers WHERE user_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in delete teller: " + e, e);
+
+        }
+    }
+
     private Teller mapTeller(ResultSet resultSet) throws SQLException {
 
         Teller teller = new Teller();

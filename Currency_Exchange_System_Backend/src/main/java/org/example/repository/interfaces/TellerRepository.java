@@ -12,6 +12,8 @@ public interface TellerRepository {
 //    Teller update(Teller teller);
 //
     void delete(int tellerId);
+
+    void deleteByUserId(int userId);
 //
     Teller findByUserId(int tellerId);
 

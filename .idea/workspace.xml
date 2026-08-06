@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TellerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TellerRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/TellerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/TellerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TellerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TellerRepositoryTest.java" afterDir="false" />
@@ -47,6 +46,7 @@
     "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.testUpateCustomer.executor": "Run",
+    "JUnit.TellerRepositoryTest.deleteTellerTest.executor": "Run",
     "JUnit.TellerRepositoryTest.existingByPhoneNumberTest.executor": "Run",
     "JUnit.TellerRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.TellerRepositoryTest.existsByIdTest.executor": "Run",
@@ -94,6 +94,22 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.TellerRepositoryTest.findAllTellersTest">
+    <configuration name="TellerRepositoryTest.deleteByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
+      <option name="METHOD_NAME" value="deleteByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TellerRepositoryTest.deleteTellerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -121,22 +137,6 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
       <option name="METHOD_NAME" value="existingByPhoneNumberTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TellerRepositoryTest.existingByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
-      <option name="METHOD_NAME" value="existingByUserIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -188,10 +188,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.TellerRepositoryTest.findAllTellersTest" />
+        <item itemvalue="JUnit.TellerRepositoryTest.deleteByUserIdTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.deleteTellerTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.existingByPhoneNumberTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.existsByIdTest" />
-        <item itemvalue="JUnit.TellerRepositoryTest.existingByUserIdTest" />
       </list>
     </recent_temporary>
   </component>
@@ -222,20 +222,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TellerRepositoryTest.java</url>
-          <line>71</line>
-          <properties class="Repository.TellerRepositoryTest" method="existingByPhoneNumberTest">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
