@@ -149,6 +149,31 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
+    @Override
+    public Currency findByCode(String code) {
+        String sql = """
+                SELECT * FROM currencies WHERE code = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, code);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapCurrency(resultSet);
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find currency by code: " + e, e);
+        }
+    }
+
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();
         currency.setId(resultSet.getLong("id"));

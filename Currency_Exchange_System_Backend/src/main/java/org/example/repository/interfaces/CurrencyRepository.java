@@ -10,4 +10,7 @@ public interface CurrencyRepository {
     Currency findById(int currencyId);
     Currency findBySymbol(String symbol);
     Currency findByName(String name);
+    Currency findByCode(String code);
+//    void delete(int currencyId);
+
 }
