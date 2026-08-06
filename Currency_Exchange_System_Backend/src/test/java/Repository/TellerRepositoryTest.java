@@ -6,6 +6,7 @@ import org.example.repository.interfaces.TellerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -60,5 +61,20 @@ public class TellerRepositoryTest {
     @Test
     public void existingByUserIdTest() {
         System.out.println(tellerRepository.existsByUserId(6));
+    }
+
+    @Test
+    public void existsByIdTest() {
+        System.out.println(tellerRepository.existsById(3));
+    }
+
+    @Test
+    public void existingByPhoneNumberTest() {
+        System.out.println(tellerRepository.existsByPhone("09234566856"));
+    }
+
+    @Test
+    public void deleteTellerTest() {
+        tellerRepository.delete(2);
     }
 }

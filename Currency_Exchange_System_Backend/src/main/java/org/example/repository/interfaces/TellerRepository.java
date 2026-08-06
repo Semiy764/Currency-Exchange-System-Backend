@@ -11,7 +11,7 @@ public interface TellerRepository {
 
 //    Teller update(Teller teller);
 //
-//    void delete(int tellerId);
+    void delete(int tellerId);
 //
     Teller findByUserId(int tellerId);
 
@@ -20,8 +20,8 @@ public interface TellerRepository {
     Teller findById(int tellerId);
 
     boolean existsByUserId(int userId);
-//
-//    boolean existsById(int tellerId);
-//
-//    boolean existsByPhone(String phone);
+
+    boolean existsById(int tellerId);
+
+    boolean existsByPhone(String phone);
 }

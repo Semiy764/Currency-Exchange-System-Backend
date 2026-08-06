@@ -139,6 +139,73 @@ public class TellerRepositoryImpl implements TellerRepository {
         }
     }
 
+    @Override
+    public boolean existsById(int tellerId) {
+
+        String sql = """
+                SELECT 1 FROM tellers WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, tellerId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing teller by id: " + e, e);
+
+        }
+    }
+
+    @Override
+    public boolean existsByPhone(String phone) {
+
+        String sql = """
+                SELECT 1 FROM tellers WHERE phone_number = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, phone);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing teller by phone_number: " + e, e);
+
+        }
+
+
+    }
+
+    @Override
+    public void delete(int tellerId) {
+
+        String sql = """
+                DELETE FROM tellers WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, tellerId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in delete teller: " + e, e);
+
+        }
+    }
+
     private Teller mapTeller(ResultSet resultSet) throws SQLException {
 
         Teller teller = new Teller();
