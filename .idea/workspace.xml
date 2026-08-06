@@ -37,6 +37,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.CurrencyRepositoryTest.findAllCurrenciesTest.executor": "Run",
+    "JUnit.CurrencyRepositoryTest.findCurrencyByCodeTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
@@ -100,8 +101,8 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest">
-    <configuration name="CurrencyRepositoryTest.findAllCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.findCurrencyByCodeTest">
+    <configuration name="CurrencyRepositoryTest.findCurrencyByCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -111,7 +112,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
-      <option name="METHOD_NAME" value="findAllCurrenciesTest" />
+      <option name="METHOD_NAME" value="findCurrencyByCodeTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -194,11 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyRepositoryTest.findCurrencyByCodeTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.testFindCurrencyById" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.savingCurrencyTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
       </list>
     </recent_temporary>
   </component>
