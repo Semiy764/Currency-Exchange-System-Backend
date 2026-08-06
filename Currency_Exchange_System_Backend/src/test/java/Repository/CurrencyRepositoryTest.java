@@ -95,4 +95,9 @@ public class CurrencyRepositoryTest {
     public void existingCurrencyByNameTest() {
         System.out.println(currencyRepository.existsByName("Yua"));
     }
+
+    @Test
+    public void existingCurrencyByCodeTest() {
+        System.out.println(currencyRepository.existsByCode("CNN"));
+    }
 }

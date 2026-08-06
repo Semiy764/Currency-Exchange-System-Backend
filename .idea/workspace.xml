@@ -105,7 +105,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.existingCurrencyByNameTest">
+  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest">
     <configuration name="CurrencyRepositoryTest.deleteCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -117,6 +117,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="deleteCurrencyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CurrencyRepositoryTest.existingCurrencyByCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="existingCurrencyByCodeTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -170,22 +186,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CurrencyRepositoryTest.findCurrencyByCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
-      <option name="METHOD_NAME" value="findCurrencyByCodeTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -199,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.existingCurrencyByNameTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.existingCurrencyByIdTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.deleteCurrencyTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.findCurrencyByCodeTest" />
       </list>
     </recent_temporary>
   </component>
