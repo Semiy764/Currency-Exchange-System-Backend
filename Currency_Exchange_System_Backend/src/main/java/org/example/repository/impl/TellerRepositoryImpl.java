@@ -227,6 +227,38 @@ public class TellerRepositoryImpl implements TellerRepository {
         }
     }
 
+    @Override
+    public Teller update(Teller teller) {
+
+        String sql = """
+                UPDATE tellers SET
+                full_name = ?,
+                national_id = ?,
+                phone_number = ?,
+                user_id = ?
+                WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, teller.getFullname());
+            statement.setString(2, teller.getNationalId());
+            statement.setString(3, teller.getPhoneNumber());
+            statement.setInt(4, teller.getUserId().intValue());
+            statement.setInt(5, teller.getId().intValue());
+
+            statement.executeUpdate();
+            return teller;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in delete teller: " + e, e);
+
+        }
+    }
+
     private Teller mapTeller(ResultSet resultSet) throws SQLException {
 
         Teller teller = new Teller();
