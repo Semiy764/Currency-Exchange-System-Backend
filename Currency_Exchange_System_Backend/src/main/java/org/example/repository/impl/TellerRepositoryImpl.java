@@ -48,5 +48,38 @@ public class TellerRepositoryImpl implements TellerRepository {
         }
     }
 
-    
+    @Override
+    public List<Teller> findAll() {
+
+        List<Teller> allTellers = new ArrayList<>();
+        String sql = """
+                SELECT * FROM tellers
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                allTellers.add(mapTeller(resultSet));
+            }
+            return allTellers;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all tellers: " + e, e);
+        }
+    }
+
+    private Teller mapTeller(ResultSet resultSet) throws SQLException {
+
+        Teller teller = new Teller();
+        teller.setId(resultSet.getInt("id"));
+        teller.setUserId(resultSet.getLong("user_id"));
+        teller.setFullname(resultSet.getString("full_name"));
+        teller.setNationalId(resultSet.getString("national_id"));
+        teller.setPhoneNumber(resultSet.getString("phone_number"));
+
+        return teller;
+    }
 }
