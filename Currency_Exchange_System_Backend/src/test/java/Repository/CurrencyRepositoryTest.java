@@ -55,5 +55,18 @@ public class CurrencyRepositoryTest {
 
         Currency currency = currencyRepository.findBySymbol("¥");
         assertThat(currency.getId()).isEqualTo(3);
+        assertThat(currency.getCode()).isEqualTo("CNY");
+        assertThat(currency.getName()).isEqualTo("Yuan");
+        assertThat(currency.getSymbol()).isEqualTo("¥");
+    }
+
+    @Test
+    public void findingCurrencyByNameTest() {
+
+        Currency currency = currencyRepository.findByName("Yuan");
+        assertThat(currency.getId()).isEqualTo(3);
+        assertThat(currency.getCode()).isEqualTo("CNY");
+        assertThat(currency.getName()).isEqualTo("Yuan");
+        assertThat(currency.getSymbol()).isEqualTo("¥");
     }
 }
