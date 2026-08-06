@@ -82,4 +82,21 @@ public class TellerRepositoryTest {
     public void deleteByUserIdTest() {
         tellerRepository.deleteByUserId(6);
     }
+
+    @Test
+    public void updateTellerTest() {
+        Teller teller = tellerRepository.findById(3);
+        teller.setFullname("Erfan Simiyari");
+        teller.setNationalId("0313464200");
+        teller.setPhoneNumber("09107855814");
+
+        tellerRepository.update(teller);
+
+        Teller updatedTeller = tellerRepository.findById(3);
+        assertThat(updatedTeller.getId()).isEqualTo(3);
+        assertThat(updatedTeller.getUserId()).isEqualTo(7);
+        assertThat(updatedTeller.getFullname()).isEqualTo("Erfan Simiyari");
+        assertThat(updatedTeller.getNationalId()).isEqualTo("0313464200");
+        assertThat(updatedTeller.getPhoneNumber()).isEqualTo("09107855814");
+    }
 }
