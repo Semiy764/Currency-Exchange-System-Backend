@@ -13,5 +13,7 @@ public interface CurrencyRepository {
     Currency findByCode(String code);
     void delete(int currencyId);
     boolean existsById(int currencyId);
+    boolean existsByName(String name);
+//    boolean existsByCode(String code);
 
 }
