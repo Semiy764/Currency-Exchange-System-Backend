@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.tokens.ScalarToken;
 
 import java.sql.*;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,21 +47,40 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
-//    @Override
-//    public List<Currency> findAll() {
-//
-//        String sql = """
-//                SELECT * FROM currencies
-//                """;
-//
-//        try(
-//                Connection connection = DatabaseManager.getConnection();
-//                PreparedStatement statement = connection.prepareStatement(sql);
-//                ) {
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error in save currency: " + e, e);
-//
-//        }
-//    }
+    @Override
+    public List<Currency> findAll() {
+
+        List<Currency> allCurrencies = new ArrayList<>();
+        String sql = """
+                SELECT * FROM currencies
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                allCurrencies.add(mapCurrency(resultSet));
+            }
+
+            return allCurrencies;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in save currency: " + e, e);
+
+        }
+    }
+
+    private Currency mapCurrency(ResultSet resultSet) throws SQLException {
+        Currency currency = new Currency();
+        currency.setId(resultSet.getLong("id"));
+        currency.setCode(resultSet.getString("code"));
+        currency.setName(resultSet.getString("name"));
+        currency.setSymbol(resultSet.getString("symbol"));
+
+        return currency;
+
+    }
 }
