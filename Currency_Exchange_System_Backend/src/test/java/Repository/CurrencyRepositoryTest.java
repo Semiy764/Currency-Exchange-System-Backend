@@ -79,4 +79,10 @@ public class CurrencyRepositoryTest {
         assertThat(currency.getName()).isEqualTo("Yuan");
         assertThat(currency.getSymbol()).isEqualTo("¥");
     }
+    // exist ha
+
+    @Test
+    public void deleteCurrencyTest() {
+        currencyRepository.delete(1);
+    }
 }
