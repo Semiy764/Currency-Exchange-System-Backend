@@ -97,22 +97,35 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
+    @Override
+    public Currency findBySymbol(String symbol) {
+
+        String sql = """
+                SELECT * FROM currencies WHERE symbol = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, symbol);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapCurrency(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find currency by symbol: " + e, e);
+
+        }
+    }
+
 //    @Override
-//    public Currency findBySymbol(String symbol) {
-//
-//        String sql = """
-//                SELECT * FROM currencies WHERE symbol = ?
-//                """;
-//
-//        try(
-//                Connection connection = DatabaseManager.getConnection();
-//                PreparedStatement statement = connection.prepareStatement(sql);
-//                ) {
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error in find currency by id: " + e, e);
-//
-//        }
+//    public Currency findByName(String name) {
+//        return null;
 //    }
 
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
