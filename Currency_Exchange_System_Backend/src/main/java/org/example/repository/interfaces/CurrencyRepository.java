@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CurrencyRepository {
     Currency save(Currency currency);
-//    List<Currency> findAll();
+    List<Currency> findAll();
+//    Currency findById();
 }
