@@ -68,10 +68,52 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             return allCurrencies;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in save currency: " + e, e);
+            throw new RuntimeException("Error in find all currencies: " + e, e);
 
         }
     }
+
+    @Override
+    public Currency findById(int currencyId) {
+
+        String sql = """
+                SELECT * FROM currencies WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setInt(1, currencyId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapCurrency(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find currency by id: " + e, e);
+        }
+    }
+
+//    @Override
+//    public Currency findBySymbol(String symbol) {
+//
+//        String sql = """
+//                SELECT * FROM currencies WHERE symbol = ?
+//                """;
+//
+//        try(
+//                Connection connection = DatabaseManager.getConnection();
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                ) {
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error in find currency by id: " + e, e);
+//
+//        }
+//    }
 
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();

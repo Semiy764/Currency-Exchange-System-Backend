@@ -40,4 +40,13 @@ public class CurrencyRepositoryTest {
         }
 
     }
+
+    @Test
+    public void testFindCurrencyById() {
+        Currency currency = currencyRepository.findById(3);
+        assertThat(currency.getId()).isEqualTo(3);
+        assertThat(currency.getCode()).isEqualTo("CNY");
+        assertThat(currency.getName()).isEqualTo("Yuan");
+        assertThat(currency.getSymbol()).isEqualTo("¥");
+    }
 }
