@@ -100,4 +100,21 @@ public class CurrencyRepositoryTest {
     public void existingCurrencyByCodeTest() {
         System.out.println(currencyRepository.existsByCode("CNN"));
     }
+
+    @Test
+    public void updatingCurrencyTest() {
+        Currency currency = currencyRepository.findById(3);
+        currency.setName("dollor");
+        currency.setCode("USD");
+        currency.setSymbol("$");
+
+        currencyRepository.update(currency);
+
+        Currency foundCurrency = currencyRepository.findById(3);
+        assertThat(foundCurrency.getId()).isEqualTo(3);
+        assertThat(foundCurrency.getName()).isEqualTo("dollor");
+        assertThat(foundCurrency.getCode()).isEqualTo("USD");
+        assertThat(foundCurrency.getSymbol()).isEqualTo("$");
+
+    }
 }
