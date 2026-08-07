@@ -21,6 +21,14 @@ public class ExchangeRate {
         this.id = id;
     }
 
+    public ExchangeRate(BigDecimal buyRate, BigDecimal cellRate, long createdBy, LocalDateTime effectiveDate, long currencyId) {
+        this.buyRate = buyRate;
+        this.cellRate = cellRate;
+        this.createdBy = createdBy;
+        this.effectiveDate = effectiveDate;
+        this.currencyId = currencyId;
+    }
+
     public LocalDateTime getEffectiveDate() {
         return effectiveDate;
     }
@@ -37,7 +45,7 @@ public class ExchangeRate {
         this.buyRate = buyRate;
     }
 
-    public long getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
@@ -45,7 +53,7 @@ public class ExchangeRate {
         this.createdBy = createdBy;
     }
 
-    public BigDecimal getCellRate() {
+    public BigDecimal getsellRate() {
         return cellRate;
     }
 
@@ -53,7 +61,7 @@ public class ExchangeRate {
         this.cellRate = cellRate;
     }
 
-    public long getCurrencyId() {
+    public Long getCurrencyId() {
         return currencyId;
     }
 
