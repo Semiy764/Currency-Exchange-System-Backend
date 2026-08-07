@@ -115,4 +115,9 @@ public class ExchangeRatesRepositoryTest {
             );
         }
     }
+
+    @Test
+    public void deletingRatesTest() {
+        exchangeRatesRepository.delete(7);
+    }
 }
