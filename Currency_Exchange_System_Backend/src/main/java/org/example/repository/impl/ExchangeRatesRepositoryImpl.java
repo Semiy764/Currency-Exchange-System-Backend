@@ -78,6 +78,34 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         }
     }
 
+    @Override
+    public ExchangeRate findLastRate(int currency_id) {
+
+        String sql = """
+                SELECT * FROM exchange_rates
+                WHERE currency_id = ?
+                ORDER BY effective_date DESC
+                LIMIT 1
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ) {
+
+            statement.setInt(1, currency_id);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapRates(resultSet);
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find last rate: " + e, e);
+        }
+    }
+
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
 
         ExchangeRate exchangeRate = new ExchangeRate();
