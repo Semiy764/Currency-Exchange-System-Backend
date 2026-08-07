@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultBalanceRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultBalanceRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultBalanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultBalanceRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultBalanceRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultBalanceRepositoryTest.java" afterDir="false" />
@@ -97,6 +96,7 @@
     "JUnit.UserRepositoryTest.testExistingUserByUserId.executor": "Run",
     "JUnit.UserRepositoryTest.testUpdateUser.executor": "Run",
     "JUnit.UserRepositoryTest.userSavingTest.executor": "Run",
+    "JUnit.VaultBalanceRepositoryTest.adjustBalanceTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.existsByCurrencyIdTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.findAllBalancesTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.findByCurrencyIdTest.executor": "Run",
@@ -121,8 +121,8 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaultBalanceRepositoryTest.findByCurrencyIdTest">
-    <configuration name="ExchangeRatesRepositoryTest.findLatestRateForAllCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.VaultBalanceRepositoryTest.findAllBalancesTest">
+    <configuration name="VaultBalanceRepositoryTest.adjustBalanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -131,8 +131,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="findLatestRateForAllCurrenciesTest" />
+      <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
+      <option name="METHOD_NAME" value="adjustBalanceTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -215,11 +215,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VaultBalanceRepositoryTest.findAllBalancesTest" />
+        <item itemvalue="JUnit.VaultBalanceRepositoryTest.adjustBalanceTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.findByCurrencyIdTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.existsByCurrencyIdTest" />
-        <item itemvalue="JUnit.VaultBalanceRepositoryTest.findAllBalancesTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findLatestRateForAllCurrenciesTest" />
       </list>
     </recent_temporary>
   </component>

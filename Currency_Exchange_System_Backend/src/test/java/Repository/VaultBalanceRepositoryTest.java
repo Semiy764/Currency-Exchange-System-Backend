@@ -60,4 +60,11 @@ public class VaultBalanceRepositoryTest {
         AssertionsForClassTypes.assertThat(balance.getLastUpdated()).isNotNull();
 
     }
+
+    @Test
+    public void adjustBalanceTest() {
+        vaultBalanceRepository.adjustBalance(3, new BigDecimal(2980));
+        VaultBalance balance = vaultBalanceRepository.findByCurrencyId(3);
+        assertThat(balance.getBalance().intValue()).isEqualTo(2980);
+    }
 }
