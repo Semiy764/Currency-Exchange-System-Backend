@@ -5,7 +5,11 @@ import org.example.model.ExchangeRate;
 import org.example.repository.interfaces.ExchangeRatesRepository;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
@@ -45,5 +49,46 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in save exchange rate: " + e, e);
         }
+    }
+
+    @Override
+    public List<ExchangeRate> findAll() {
+
+        List<ExchangeRate> allRates = new ArrayList<>();
+        String sql = """
+                SELECT * FROM exchange_rates
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                allRates.add(mapRates(resultSet));
+            }
+
+            return allRates;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all exchange rate: " + e, e);
+
+        }
+    }
+
+    private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
+
+        ExchangeRate exchangeRate = new ExchangeRate();
+        // id currncyid buyrate sellrate
+        exchangeRate.setId(resultSet.getInt("id"));
+        exchangeRate.setCurrencyId(resultSet.getInt("currency_id"));
+        exchangeRate.setBuyRate(new BigDecimal(resultSet.getString("buy_rate")));
+        exchangeRate.setSellRate(new BigDecimal(resultSet.getString("sell_rate")));
+        exchangeRate.setEffectiveDate(LocalDateTime.parse(resultSet.getString("effective_date")));
+        exchangeRate.setCreatedBy(resultSet.getInt("created_by"));
+
+        return exchangeRate;
     }
 }

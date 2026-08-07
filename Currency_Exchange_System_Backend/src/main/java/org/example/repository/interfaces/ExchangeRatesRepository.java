@@ -7,5 +7,5 @@ import java.util.List;
 public interface ExchangeRatesRepository {
 
     ExchangeRate save(ExchangeRate exchangeRate);
-//    List<ExchangeRate> findAll();
+    List<ExchangeRate> findAll();
 }
