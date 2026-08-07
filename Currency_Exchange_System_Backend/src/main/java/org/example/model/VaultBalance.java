@@ -7,7 +7,7 @@ public class VaultBalance {
 
     private long id;
     private long currencyId;
-    private BigDecimal balance;
+    private BigDecimal balance;  // it can be + or -
     private LocalDateTime lastUpdated;
 
     public VaultBalance(BigDecimal balance, long currencyId, long id, LocalDateTime lastUpdated) {
