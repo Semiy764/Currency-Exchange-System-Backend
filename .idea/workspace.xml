@@ -38,6 +38,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.CurrencyRepositoryTest.deleteCurrencyTest.executor": "Run",
+    "JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.existingCurrencyByIdTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.existingCurrencyByNameTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.findAllCurrenciesTest.executor": "Run",
@@ -46,6 +47,7 @@
     "JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor": "Run",
+    "JUnit.CurrencyRepositoryTest.updatingCurrencyTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.deleteCustomerTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
@@ -94,7 +96,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "D:/Currency_Exchange_System_Project/Currency_Exchange_System_Backend/src/test/java",
-    "last_opened_file_path": "D:/Currency_Exchange_System_Project/Currency_Exchange_System_Backend",
+    "last_opened_file_path": "D:/Currency_Exchange_System_Project",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0"
@@ -105,23 +107,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest">
-    <configuration name="CurrencyRepositoryTest.deleteCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
-      <option name="METHOD_NAME" value="deleteCurrencyTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest">
     <configuration name="CurrencyRepositoryTest.existingCurrencyByCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -186,6 +172,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CurrencyRepositoryTest.updatingCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="updatingCurrencyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -199,11 +201,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.updatingCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.existingCurrencyByNameTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.existingCurrencyByIdTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.deleteCurrencyTest" />
       </list>
     </recent_temporary>
   </component>

@@ -256,6 +256,35 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
+    @Override
+    public Currency update(Currency currency) {
+
+        String sql = """
+                UPDATE currencies SET
+                code = ?,
+                name = ?,
+                symbol = ?
+                WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setString(1, currency.getCode());
+            statement.setString(2, currency.getName());
+            statement.setString(3, currency.getSymbol());
+            statement.setInt(4, currency.getId().intValue());
+
+            statement.executeUpdate();
+            return currency;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in update currency: " + e, e);
+
+        }
+    }
+
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();
         currency.setId(resultSet.getLong("id"));

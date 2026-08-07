@@ -15,5 +15,6 @@ public interface CurrencyRepository {
     boolean existsById(int currencyId);
     boolean existsByName(String name);
     boolean existsByCode(String code);
+    Currency update(Currency currency);
 
 }
