@@ -10,6 +10,8 @@ public class VaultBalance {
     private BigDecimal balance;  // it can be + or -
     private LocalDateTime lastUpdated;
 
+    public VaultBalance() {}
+
     public VaultBalance(BigDecimal balance, long currencyId, long id, LocalDateTime lastUpdated) {
         this.balance = balance;
         this.currencyId = currencyId;

@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -29,5 +30,16 @@ public class VaultBalanceRepositoryTest {
         assertThat(savedBalance.getBalance()).isEqualTo(balance);
         assertThat(savedBalance.getCurrencyId()).isEqualTo(3);
         assertThat(savedBalance.getLastUpdated()).isNotNull();
+    }
+
+    @Test
+    public void findAllBalancesTest() {
+        List<VaultBalance> allBalances = vaultBalanceRepository.findAll();
+        for(VaultBalance balance : allBalances) {
+            System.out.println(balance.getId() + " - " +
+                    balance.getBalance().toString() + " - " +
+                    balance.getCurrencyId() + " - " +
+                    balance.getLastUpdated());
+        }
     }
 }
