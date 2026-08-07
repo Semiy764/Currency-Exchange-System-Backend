@@ -25,10 +25,10 @@ public class ExchangeRatesRepositoryTest {
     @Test
     public void savingRatesTest() {
 
-        BigDecimal buyRate = new BigDecimal(194250);
-        BigDecimal sellRate = new BigDecimal(196840);
+        BigDecimal buyRate = new BigDecimal(205000);
+        BigDecimal sellRate = new BigDecimal(210000);
 
-        ExchangeRate exchangeRate = new ExchangeRate(buyRate, sellRate, 7, LocalDateTime.now(), 2);
+        ExchangeRate exchangeRate = new ExchangeRate(buyRate, sellRate, 6, LocalDateTime.now(), 2);
         ExchangeRate saved = exchangeRatesRepository.save(exchangeRate);
 
 //        assertThat(saved.getId()).isEqualTo(4);
@@ -119,5 +119,20 @@ public class ExchangeRatesRepositoryTest {
     @Test
     public void deletingRatesTest() {
         exchangeRatesRepository.delete(7);
+    }
+
+    @Test
+    public void findByCreatedByTest() {
+        List<ExchangeRate> rates = exchangeRatesRepository.findByCreatedBy(6);
+        for(ExchangeRate rate : rates) {
+            System.out.println(
+                    rate.getId() + " - " +
+                            rate.getBuyRate() + " - " +
+                            rate.getsellRate() + " - " +
+                            rate.getCreatedBy() + " - " +
+                            rate.getEffectiveDate() + " - " +
+                            rate.getCurrencyId()
+            );
+        }
     }
 }

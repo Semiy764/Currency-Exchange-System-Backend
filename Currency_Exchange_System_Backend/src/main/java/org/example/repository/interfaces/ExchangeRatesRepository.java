@@ -13,4 +13,5 @@ public interface ExchangeRatesRepository {
     List<ExchangeRate> findAllRatesOfCurrency(int currencyId);
     List<ExchangeRate> findAllCurrencyRatesToday(int currencyId);
     void delete(int exchangeRateId);
+    List<ExchangeRate> findByCreatedBy(int userId);  // mige in user che nerkh hayi ro sabt karde
 }

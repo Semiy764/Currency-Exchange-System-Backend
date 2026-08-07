@@ -193,6 +193,33 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         }
     }
 
+    @Override
+    public List<ExchangeRate> findByCreatedBy(int userId) {
+        List<ExchangeRate> rates = new ArrayList<>();
+        String sql = """
+                SELECT * FROM exchange_rates
+                WHERE created_by = ?
+                ORDER BY effective_date
+                DESC
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                rates.add(mapRates(resultSet));
+            }
+            return rates;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in delete currency rates: " + e, e);
+        }
+
+    }
+
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
 
         ExchangeRate exchangeRate = new ExchangeRate();

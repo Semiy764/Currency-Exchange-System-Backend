@@ -7,6 +7,7 @@
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/ExchangeRatesRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/ExchangeRatesRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/ExchangeRatesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/ExchangeRatesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/ExchangeRatesRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/ExchangeRatesRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +57,10 @@
     &quot;JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CustomerRepositoryTest.saveCustomerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CustomerRepositoryTest.testUpateCustomer.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.deletingRatesTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.findByCreatedByTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ExchangeRatesRepositoryTest.findingLastRateTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ExchangeRatesRepositoryTest.savingRatesTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ExchangeRatesRepositoryTest.testfindAllRates.executor&quot;: &quot;Run&quot;,
@@ -111,8 +114,8 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExchangeRatesRepositoryTest.testfindAllRates">
-    <configuration name="ExchangeRatesRepositoryTest.deletingRatesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ExchangeRatesRepositoryTest.findByCreatedByTest">
+    <configuration name="ExchangeRatesRepositoryTest.findByCreatedByTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -122,13 +125,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="deletingRatesTest" />
+      <option name="METHOD_NAME" value="findByCreatedByTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ExchangeRatesRepositoryTest.savingRatesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -138,13 +141,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="findAllCurrencyRatesTodayTest" />
+      <option name="METHOD_NAME" value="savingRatesTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TellerRepositoryTest.findAllTellersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -153,14 +156,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="findAllRatesOfCurrencyTest" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllTellersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRatesRepositoryTest.findingLastRateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TellerRepositoryTest.savingTellerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -169,14 +172,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="findingLastRateTest" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
+      <option name="METHOD_NAME" value="savingTellerTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRatesRepositoryTest.testfindAllRates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserRepositoryTest.findAllUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -185,8 +188,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="testfindAllRates" />
+      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllUsersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -205,11 +208,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.testfindAllRates" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.deletingRatesTest" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findingLastRateTest" />
+        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findByCreatedByTest" />
+        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.savingRatesTest" />
+        <item itemvalue="JUnit.TellerRepositoryTest.savingTellerTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.findAllUsersTest" />
+        <item itemvalue="JUnit.TellerRepositoryTest.findAllTellersTest" />
       </list>
     </recent_temporary>
   </component>
