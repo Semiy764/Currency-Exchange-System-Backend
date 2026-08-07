@@ -6,7 +6,11 @@ import org.example.repository.interfaces.VaultBalanceRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.ldap.PagedResultsControl;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
@@ -43,4 +47,42 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
             throw new RuntimeException("Error in save vault balance: " + e, e);
         }
     }
-}
+
+    @Override
+    public List<VaultBalance> findAll() {
+
+        List<VaultBalance> allBalances = new ArrayList<>();
+        String sql = """
+                SELECT * FROM vault_balances
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                allBalances.add(mapBalances(resultSet));
+            }
+            return allBalances;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all balances: " + e, e);
+        }
+    }
+
+    private VaultBalance mapBalances(ResultSet resultSet) throws SQLException {
+
+        VaultBalance vaultBalance = new VaultBalance();
+
+        vaultBalance.setId(resultSet.getInt("id"));
+        vaultBalance.setCurrencyId(resultSet.getInt("currency_id"));
+        vaultBalance.setBalance(new BigDecimal(resultSet.getString("balance")));
+        vaultBalance.setLastUpdated(LocalDateTime.parse(resultSet.getString("lastUpdated")));
+
+        return vaultBalance;
+    }
+ }
