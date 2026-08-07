@@ -123,6 +123,28 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
 
     }
 
+    @Override
+    public void adjustBalance(int currencyId, BigDecimal amount) {
+
+        String sql = """
+                UPDATE vault_balances SET balance = ?
+                WHERE currency_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, amount.toString());
+            statement.setInt(2, currencyId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in adjust balance: " + e, e);
+        }
+    }
+
     private VaultBalance mapBalances(ResultSet resultSet) throws SQLException {
 
         VaultBalance vaultBalance = new VaultBalance();

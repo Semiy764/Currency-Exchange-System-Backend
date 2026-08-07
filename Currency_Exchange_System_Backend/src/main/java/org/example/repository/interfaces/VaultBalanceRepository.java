@@ -2,6 +2,7 @@ package org.example.repository.interfaces;
 
 import org.example.model.VaultBalance;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface VaultBalanceRepository {
@@ -10,4 +11,5 @@ public interface VaultBalanceRepository {
     List<VaultBalance> findAll();
     boolean existsByCurrencyId(int currencyId);
     VaultBalance findByCurrencyId(int currencyId);
+    void adjustBalance(int currencyId, BigDecimal amount);
 }
