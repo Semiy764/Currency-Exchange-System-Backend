@@ -215,9 +215,41 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
             return rates;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in delete currency rates: " + e, e);
+            throw new RuntimeException("Error in find rate by created by " + e, e);
         }
 
+    }
+
+    @Override
+    public List<ExchangeRate> findByCurrencyIdAndEffectiveDateBetween(int currencyId, LocalDateTime start, LocalDateTime end) {
+
+        List<ExchangeRate> rates = new ArrayList<>();
+        String sql = """
+                SELECT * FROM exchange_rates WHERE
+                effective_date BETWEEN ? AND ?
+                and currency_id = ?
+                ORDER BY effective_date DESC
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setString(1, start.toString());
+            statement.setString(2, end.toString());
+            statement.setInt(3, currencyId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                rates.add(mapRates(resultSet));
+            }
+
+            return rates;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find by currencyId and effective date between: " + e, e);
+
+        }
     }
 
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
