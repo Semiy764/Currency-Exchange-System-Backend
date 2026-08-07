@@ -1,5 +1,6 @@
 package Repository;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.example.App;
 import org.example.model.VaultBalance;
 import org.example.repository.interfaces.VaultBalanceRepository;
@@ -41,5 +42,22 @@ public class VaultBalanceRepositoryTest {
                     balance.getCurrencyId() + " - " +
                     balance.getLastUpdated());
         }
+    }
+
+    @Test
+    public void existsByCurrencyIdTest() {
+        System.out.println(vaultBalanceRepository.existsByCurrencyId(4));
+    }
+
+    @Test
+    public void findByCurrencyIdTest() {
+        VaultBalance balance = vaultBalanceRepository.findByCurrencyId(3);
+
+        BigDecimal balanceAmount = new BigDecimal(200);
+        AssertionsForClassTypes.assertThat(balance.getId()).isEqualTo(1);
+        AssertionsForClassTypes.assertThat(balance.getBalance()).isEqualTo(balanceAmount);
+        AssertionsForClassTypes.assertThat(balance.getCurrencyId()).isEqualTo(3);
+        AssertionsForClassTypes.assertThat(balance.getLastUpdated()).isNotNull();
+
     }
 }

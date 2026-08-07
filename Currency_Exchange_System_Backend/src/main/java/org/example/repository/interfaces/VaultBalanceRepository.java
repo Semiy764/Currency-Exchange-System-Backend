@@ -8,4 +8,6 @@ public interface VaultBalanceRepository {
 
     VaultBalance save(VaultBalance vaultBalance);
     List<VaultBalance> findAll();
+    boolean existsByCurrencyId(int currencyId);
+    VaultBalance findByCurrencyId(int currencyId);
 }

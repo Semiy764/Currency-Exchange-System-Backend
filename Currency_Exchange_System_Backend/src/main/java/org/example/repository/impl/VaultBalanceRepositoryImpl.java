@@ -58,7 +58,7 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
 
         try(
                 Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             ResultSet resultSet = statement.executeQuery();
@@ -72,6 +72,55 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all balances: " + e, e);
         }
+    }
+
+    @Override
+    public boolean existsByCurrencyId(int currencyId) {
+
+        String sql = """
+                SELECT 1 FROM vault_balances WHERE
+                currency_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in exist balance by currency id: " + e, e);
+        }
+    }
+
+    @Override
+    public VaultBalance findByCurrencyId(int currencyId) {
+        String sql = """
+                SELECT * FROM vault_balances WHERE currency_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapBalances(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find balance by currency id: " + e, e);
+
+        }
+
     }
 
     private VaultBalance mapBalances(ResultSet resultSet) throws SQLException {
