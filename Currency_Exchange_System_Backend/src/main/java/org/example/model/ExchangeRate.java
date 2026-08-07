@@ -8,22 +8,24 @@ public class ExchangeRate {
     private long id;
     private long currencyId;
     private BigDecimal buyRate;
-    private BigDecimal cellRate;
+    private BigDecimal sellRate;
     private LocalDateTime effectiveDate;
     private long createdBy;   // userId
 
-    public ExchangeRate(BigDecimal buyRate, BigDecimal cellRate, long createdBy, LocalDateTime effectiveDate, long currencyId, long id) {
+    public ExchangeRate() {}
+
+    public ExchangeRate(BigDecimal buyRate, BigDecimal sellRate, long createdBy, LocalDateTime effectiveDate, long currencyId, long id) {
         this.buyRate = buyRate;
-        this.cellRate = cellRate;
+        this.sellRate = sellRate;
         this.createdBy = createdBy;
         this.effectiveDate = effectiveDate;
         this.currencyId = currencyId;
         this.id = id;
     }
 
-    public ExchangeRate(BigDecimal buyRate, BigDecimal cellRate, long createdBy, LocalDateTime effectiveDate, long currencyId) {
+    public ExchangeRate(BigDecimal buyRate, BigDecimal sellRate, long createdBy, LocalDateTime effectiveDate, long currencyId) {
         this.buyRate = buyRate;
-        this.cellRate = cellRate;
+        this.sellRate = sellRate;
         this.createdBy = createdBy;
         this.effectiveDate = effectiveDate;
         this.currencyId = currencyId;
@@ -54,11 +56,11 @@ public class ExchangeRate {
     }
 
     public BigDecimal getsellRate() {
-        return cellRate;
+        return sellRate;
     }
 
-    public void setCellRate(BigDecimal cellRate) {
-        this.cellRate = cellRate;
+    public void setSellRate(BigDecimal sellRate) {
+        this.sellRate = sellRate;
     }
 
     public Long getCurrencyId() {
