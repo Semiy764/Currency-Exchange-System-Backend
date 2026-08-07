@@ -2,6 +2,7 @@ package Repository;
 
 import org.example.App;
 import org.example.model.Currency;
+import org.example.model.ExchangeRate;
 import org.example.repository.interfaces.CurrencyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,4 +118,6 @@ public class CurrencyRepositoryTest {
         assertThat(foundCurrency.getSymbol()).isEqualTo("$");
 
     }
+
+
 }
