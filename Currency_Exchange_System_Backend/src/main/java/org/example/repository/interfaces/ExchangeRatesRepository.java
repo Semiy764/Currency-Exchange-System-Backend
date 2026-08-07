@@ -9,6 +9,7 @@ public interface ExchangeRatesRepository {
 
     ExchangeRate save(ExchangeRate exchangeRate);
     List<ExchangeRate> findAll();
-    ExchangeRate findLastRate(int currencyId);
-//    List<ExchangeRate> findAllRatesOfCurrency(int currencyId);
+    ExchangeRate findLastRateToday(int currencyId);
+    List<ExchangeRate> findAllRatesOfCurrency(int currencyId);
+    List<ExchangeRate> findAllCurrencyRatesToday(int currencyId);
 }

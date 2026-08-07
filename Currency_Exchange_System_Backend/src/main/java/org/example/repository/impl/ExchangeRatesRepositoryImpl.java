@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
         try(
                 Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             ResultSet resultSet = statement.executeQuery();
@@ -79,21 +80,25 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
     }
 
     @Override
-    public ExchangeRate findLastRate(int currency_id) {
+    public ExchangeRate findLastRateToday(int currency_id) {
 
         String sql = """
                 SELECT * FROM exchange_rates
-                WHERE currency_id = ?
+                WHERE DATE (effective_date) = ?
+                AND currency_id = ?
                 ORDER BY effective_date DESC
                 LIMIT 1
                 """;
 
         try(
                 Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
-            statement.setInt(1, currency_id);
+            String justDate = LocalDate.now().toString();
+            statement.setString(1, justDate);
+            statement.setInt(2, currency_id);
+
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
                 return mapRates(resultSet);
@@ -103,6 +108,69 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find last rate: " + e, e);
+        }
+    }
+
+    @Override
+    public List<ExchangeRate> findAllRatesOfCurrency(int currencyId) {
+
+        List<ExchangeRate> rates = new ArrayList<>();
+        String sql = """
+                SELECT * FROM exchange_rates
+                WHERE currency_id = ?
+                ORDER BY effective_date DESC
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                rates.add(mapRates(resultSet));
+            }
+            return rates;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all rates of currency: " + e, e);
+
+        }
+    }
+
+    @Override
+    public List<ExchangeRate> findAllCurrencyRatesToday(int currencyId) {
+
+        List<ExchangeRate> rates = new ArrayList<>();
+        String sql = """
+                SELECT * FROM exchange_rates 
+                WHERE DATE(effective_date) = ?
+                AND currency_id = ?
+                ORDER BY effective_date DESC
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+
+            String justDate = LocalDate.now().toString();
+            statement.setString(1, justDate);
+            statement.setInt(2, currencyId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                rates.add(mapRates(resultSet));
+            }
+            return rates;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all currency rates today: " + e, e);
+
         }
     }
 
