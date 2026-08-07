@@ -174,6 +174,25 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         }
     }
 
+    @Override
+    public void delete(int exchangeRateId) {
+        String sql = """
+                DELETE FROM exchange_rates WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, exchangeRateId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in delete currency rates: " + e, e);
+        }
+    }
+
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
 
         ExchangeRate exchangeRate = new ExchangeRate();

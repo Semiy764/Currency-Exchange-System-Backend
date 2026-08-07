@@ -12,4 +12,5 @@ public interface ExchangeRatesRepository {
     ExchangeRate findLastRateToday(int currencyId);
     List<ExchangeRate> findAllRatesOfCurrency(int currencyId);
     List<ExchangeRate> findAllCurrencyRatesToday(int currencyId);
+    void delete(int exchangeRateId);
 }

@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/ExchangeRatesRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/ExchangeRatesRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/ExchangeRatesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/ExchangeRatesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/ExchangeRatesRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/ExchangeRatesRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,85 +33,101 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.CurrencyRepositoryTest.deleteCurrencyTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.existingCurrencyByIdTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.existingCurrencyByNameTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.findAllCurrenciesTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.findCurrencyByCodeTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor": "Run",
-    "JUnit.CurrencyRepositoryTest.updatingCurrencyTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.deleteCustomerTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.existingCustomerByIdTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.existingCustomerByPhoneNumberTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.findAllCustomersTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.findCustomerByIdTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
-    "JUnit.CustomerRepositoryTest.testUpateCustomer.executor": "Run",
-    "JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest.executor": "Run",
-    "JUnit.ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest.executor": "Run",
-    "JUnit.ExchangeRatesRepositoryTest.findingLastRateTest.executor": "Run",
-    "JUnit.ExchangeRatesRepositoryTest.savingRatesTest.executor": "Run",
-    "JUnit.ExchangeRatesRepositoryTest.testfindAllRates.executor": "Run",
-    "JUnit.TellerRepositoryTest.deleteByUserIdTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.deleteTellerTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.existingByPhoneNumberTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.existingByUserIdTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.existsByIdTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.findAllTellersTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.findByTellerIdTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.findingTellerByUserIdTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.savingTellerTest.executor": "Run",
-    "JUnit.TellerRepositoryTest.updateTellerTest.executor": "Run",
-    "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
-    "JUnit.UserRepositoryImplTest$Exists.executor": "Run",
-    "JUnit.UserRepositoryImplTest$FindAll.executor": "Run",
-    "JUnit.UserRepositoryImplTest$FindById.findById_found_returnsUser.executor": "Run",
-    "JUnit.UserRepositoryImplTest$FindById.findById_notFound_returnsNull.executor": "Run",
-    "JUnit.UserRepositoryImplTest$FindById.findById_sqlException_throwsRuntimeException.executor": "Run",
-    "JUnit.UserRepositoryImplTest$FindByUsername.executor": "Run",
-    "JUnit.UserRepositoryImplTest$Save.save_sqlException_throwsRuntimeException.executor": "Run",
-    "JUnit.UserRepositoryImplTest$Save.save_success_setsGeneratedId.executor": "Run",
-    "JUnit.UserRepositoryImplTest$Update.executor": "Run",
-    "JUnit.UserRepositoryTest.deletingByUserIdTest.executor": "Run",
-    "JUnit.UserRepositoryTest.executor": "Run",
-    "JUnit.UserRepositoryTest.existingByUserIdTest.executor": "Run",
-    "JUnit.UserRepositoryTest.existingUserByUsernameTest.executor": "Run",
-    "JUnit.UserRepositoryTest.findAllUsersTest.executor": "Run",
-    "JUnit.UserRepositoryTest.findByUsernameTest.executor": "Run",
-    "JUnit.UserRepositoryTest.findUserByIdTest.executor": "Run",
-    "JUnit.UserRepositoryTest.testExistingUserByUserId.executor": "Run",
-    "JUnit.UserRepositoryTest.testUpdateUser.executor": "Run",
-    "JUnit.UserRepositoryTest.userSavingTest.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.App.executor": "Run",
-    "git-widget-placeholder": "feature/backend",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "D:/Currency_Exchange_System_Project/Currency_Exchange_System_Backend/src/test/java",
-    "last_opened_file_path": "D:/Currency_Exchange_System_Project",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.CurrencyRepositoryTest.deleteCurrencyTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.existingCurrencyByIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.existingCurrencyByNameTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.findAllCurrenciesTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.findCurrencyByCodeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.findCurrencyBySymbolTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.findingCurrencyByNameTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CurrencyRepositoryTest.updatingCurrencyTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.deleteCustomerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.existingByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.existingCustomerByIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.existingCustomerByPhoneNumberTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.findAllCustomersTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.findCustomerByIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.saveCustomerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerRepositoryTest.testUpateCustomer.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.findingLastRateTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.savingRatesTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExchangeRatesRepositoryTest.testfindAllRates.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.deleteByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.deleteTellerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.existingByPhoneNumberTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.existingByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.existsByIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.findAllTellersTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.findByTellerIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.findingTellerByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.savingTellerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TellerRepositoryTest.updateTellerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$Delete.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$Exists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$FindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$FindById.findById_found_returnsUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$FindById.findById_notFound_returnsNull.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$FindById.findById_sqlException_throwsRuntimeException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$FindByUsername.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$Save.save_sqlException_throwsRuntimeException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$Save.save_success_setsGeneratedId.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryImplTest$Update.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.deletingByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.existingByUserIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.existingUserByUsernameTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.findAllUsersTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.findByUsernameTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.findUserByIdTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.testExistingUserByUserId.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserRepositoryTest.userSavingTest.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.App.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/backend&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;D:/Currency_Exchange_System_Project/Currency_Exchange_System_Backend/src/test/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Currency_Exchange_System_Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest">
+  <component name="RunManager" selected="JUnit.ExchangeRatesRepositoryTest.testfindAllRates">
+    <configuration name="ExchangeRatesRepositoryTest.deletingRatesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
+      <option name="METHOD_NAME" value="deletingRatesTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -167,22 +176,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRatesRepositoryTest.savingRatesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="savingRatesTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ExchangeRatesRepositoryTest.testfindAllRates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -212,11 +205,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.testfindAllRates" />
+        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.deletingRatesTest" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findingLastRateTest" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.testfindAllRates" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.savingRatesTest" />
       </list>
     </recent_temporary>
   </component>
