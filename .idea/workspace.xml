@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultBalanceRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultBalanceRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultBalanceRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/VaultBalance.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/VaultBalance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultBalanceRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultBalanceRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultBalanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultBalanceRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +97,7 @@
     "JUnit.UserRepositoryTest.testExistingUserByUserId.executor": "Run",
     "JUnit.UserRepositoryTest.testUpdateUser.executor": "Run",
     "JUnit.UserRepositoryTest.userSavingTest.executor": "Run",
+    "JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -116,7 +118,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExchangeRatesRepositoryTest.findLatestRateForAllCurrenciesTest">
+  <component name="RunManager" selected="JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest">
     <configuration name="ExchangeRatesRepositoryTest.findByCreatedByTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -165,22 +167,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRatesRepositoryTest.savingRatesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
-      <option name="METHOD_NAME" value="savingRatesTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ExchangeRatesRepositoryTest.testfindAllRates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -192,6 +178,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
       <option name="METHOD_NAME" value="testfindAllRates" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VaultBalanceRepositoryTest.savingVaultBalanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
+      <option name="METHOD_NAME" value="savingVaultBalanceTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -210,11 +212,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findLatestRateForAllCurrenciesTest" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findByCurrencyIdAndEffectiveDateBetweenTest" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.testfindAllRates" />
         <item itemvalue="JUnit.ExchangeRatesRepositoryTest.findByCreatedByTest" />
-        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.savingRatesTest" />
       </list>
     </recent_temporary>
   </component>

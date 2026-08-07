@@ -17,6 +17,12 @@ public class VaultBalance {
         this.lastUpdated = lastUpdated;
     }
 
+    public VaultBalance(BigDecimal balance, long currencyId, LocalDateTime lastUpdated) {
+        this.balance = balance;
+        this.currencyId = currencyId;
+        this.lastUpdated = lastUpdated;
+    }
+
     public LocalDateTime getLastUpdated() {
         return lastUpdated;
     }
@@ -33,7 +39,7 @@ public class VaultBalance {
         this.id = id;
     }
 
-    public long getCurrencyId() {
+    public Long getCurrencyId() {
         return currencyId;
     }
 
