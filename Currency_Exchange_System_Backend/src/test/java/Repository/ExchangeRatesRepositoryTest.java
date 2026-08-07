@@ -135,4 +135,21 @@ public class ExchangeRatesRepositoryTest {
             );
         }
     }
+
+    @Test
+    public void findByCurrencyIdAndEffectiveDateBetweenTest() {
+        LocalDateTime start = LocalDateTime.of(2026, 8, 1, 0, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2026, 8, 7, 23, 59, 59);
+        List<ExchangeRate> rates = exchangeRatesRepository.findByCurrencyIdAndEffectiveDateBetween(2, start, end);
+        for(ExchangeRate rate : rates) {
+            System.out.println(
+                    rate.getId() + " - " +
+                            rate.getBuyRate() + " - " +
+                            rate.getsellRate() + " - " +
+                            rate.getCreatedBy() + " - " +
+                            rate.getEffectiveDate() + " - " +
+                            rate.getCurrencyId()
+            );
+        }
+    }
 }
