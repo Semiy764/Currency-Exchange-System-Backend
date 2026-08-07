@@ -152,4 +152,20 @@ public class ExchangeRatesRepositoryTest {
             );
         }
     }
+
+    @Test
+    public void findLatestRateForAllCurrenciesTest() {
+
+        List<ExchangeRate> rates = exchangeRatesRepository.findLatestRateForAllCurrencies();
+        for(ExchangeRate rate : rates) {
+            System.out.println(
+                    rate.getId() + " - " +
+                            rate.getBuyRate() + " - " +
+                            rate.getsellRate() + " - " +
+                            rate.getCreatedBy() + " - " +
+                            rate.getEffectiveDate() + " - " +
+                            rate.getCurrencyId()
+            );
+        }
+    }
 }

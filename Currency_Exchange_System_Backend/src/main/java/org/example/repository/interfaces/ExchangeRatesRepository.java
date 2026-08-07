@@ -15,5 +15,9 @@ public interface ExchangeRatesRepository {
     List<ExchangeRate> findAllCurrencyRatesToday(int currencyId);
     void delete(int exchangeRateId);
     List<ExchangeRate> findByCreatedBy(int userId);  // mige in user che nerkh hayi ro sabt karde
-    List<ExchangeRate> findByCurrencyIdAndEffectiveDateBetween(int currencyId, LocalDateTime start, LocalDateTime end);
+    List<ExchangeRate> findByCurrencyIdAndEffectiveDateBetween(int currencyId,
+                                                               LocalDateTime start,
+                                                               LocalDateTime end);
+
+    List<ExchangeRate> findLatestRateForAllCurrencies();
 }

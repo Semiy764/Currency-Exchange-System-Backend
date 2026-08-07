@@ -252,6 +252,36 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         }
     }
 
+    @Override
+    public List<ExchangeRate> findLatestRateForAllCurrencies() {
+
+        List<ExchangeRate> rates = new ArrayList<>();
+        String sql = """
+                SELECT * FROM exchange_rates WHERE
+                effective_date IN (
+                SELECT MAX (effective_date)
+                FROM exchange_rates
+                GROUP BY currency_id)
+                ORDER BY currency_id
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                rates.add(mapRates(resultSet));
+            }
+            return rates;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find latest rate for all currencies: " + e, e);
+        }
+
+    }
+
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
 
         ExchangeRate exchangeRate = new ExchangeRate();
