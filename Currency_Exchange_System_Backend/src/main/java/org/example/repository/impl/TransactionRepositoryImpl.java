@@ -130,33 +130,33 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
-//    @Override
-//    public List<Transaction> findAllByOrderByCreatedAtDesc() {
-//
-//        List<Transaction> allTransactions = new ArrayList<>();
-//        String sql = """
-//                SELECT * FROM transactions
-//                ORDER BY created_at DESC
-//                """;
-//
-//        try(
-//                Connection connection = DatabaseManager.getConnection();
-//                PreparedStatement statement = connection.prepareStatement(sql);
-//                ) {
-//
-//            ResultSet resultSet = statement.executeQuery();
-//            while(resultSet.next()) {
-//                allTransactions.add(mapTranasction(resultSet));
-//            }
-//
-//            return allTransactions;
-//
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error in find transactions order by created at desc:" + e, e);
-//        }
-//    }
-//
+    @Override
+    public List<Transaction> findAllByOrderByCreatedAtDesc() {
+
+        List<Transaction> allTransactions = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions
+                ORDER BY created_at DESC
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                allTransactions.add(mapTranasction(resultSet));
+            }
+
+            return allTransactions;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find transactions order by created at desc:" + e, e);
+        }
+    }
+
 //    @Override
 //    public List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId) {
 //

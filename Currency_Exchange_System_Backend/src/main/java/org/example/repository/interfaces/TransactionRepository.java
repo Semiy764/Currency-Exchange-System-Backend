@@ -9,7 +9,7 @@ public interface TransactionRepository {
     Transaction save(Transaction transaction);
     List<Transaction> findAll();
     Transaction findById(int id);
-//    List<Transaction> findAllByOrderByCreatedAtDesc();
+    List<Transaction> findAllByOrderByCreatedAtDesc();
 //    List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
 
 }
