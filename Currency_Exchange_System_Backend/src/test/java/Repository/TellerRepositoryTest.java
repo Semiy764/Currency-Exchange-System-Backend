@@ -20,7 +20,7 @@ public class TellerRepositoryTest {
 
     @Test
     public void savingTellerTest() {
-        Teller teller = new Teller("Akbar asghari", "094948484", 6, "09234566857");
+        Teller teller = new Teller("Akbar asghari", "094948484", 3, "09234566857");
         Teller savedTeller = tellerRepository.save(teller);
         System.out.println(savedTeller.getId());
     }

@@ -13,5 +13,6 @@ public interface TransactionRepository {
     List<Transaction> findAllByOrderByCreatedAtDesc();
     List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
     List<Transaction> findByStatusOrderByCreatedAtDesc(TxStatus status);
+    List<Transaction> findByPreformedByUserId(int userId);
 
 }

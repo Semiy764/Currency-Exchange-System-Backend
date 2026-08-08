@@ -46,8 +46,8 @@ public class TransactionRepositoryTest {
                 LocalDateTime.now(),
                 1,
                 2,
-                null,
-                true,
+                3L,
+                false,
                 rateUsed,
                 rateRequest,
                 TxStatus.COMPLETED,
@@ -187,6 +187,26 @@ public class TransactionRepositoryTest {
         }
     }
 
+    @Test
+    public void findByPreformedByUserIdTest() {
 
+        List<Transaction> foundTransactions = transactionRepository.findByPreformedByUserId(3);
+        for(Transaction transaction : foundTransactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+    }
 
 }
