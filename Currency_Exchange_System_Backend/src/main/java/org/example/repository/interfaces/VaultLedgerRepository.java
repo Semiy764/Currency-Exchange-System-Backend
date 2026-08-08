@@ -4,6 +4,7 @@ import org.example.model.VaultBalance;
 import org.example.model.VaultLedger;
 import org.springframework.cglib.core.Local;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface VaultLedgerRepository {
 
     List<VaultLedger> findByPerformedByUserId(int userId);
     List<VaultLedger> findTopNByOrderByCreatedAtDesc(int limit);
+    BigDecimal sumChangeAmountBycurrencyIdAndCreatedAtBetween(int currencyId, LocalDateTime start, LocalDateTime finish);
 }

@@ -227,6 +227,37 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
         }
     }
 
+    @Override
+    public BigDecimal sumChangeAmountBycurrencyIdAndCreatedAtBetween(int currencyId, LocalDateTime start, LocalDateTime finish) {
+
+        String sql = """
+                SELECT SUM(change_amount) AS total_change
+                FROM vault_ledgers WHERE currency_id = ?
+                AND created_at between ? AND ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+            statement.setString(2, start.toString());
+            statement.setString(3, finish.toString());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return resultSet.getBigDecimal("total_change");
+            }
+            return BigDecimal.ZERO;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in calculate sum change amounts: " + e, e);
+
+        }
+    }
+
     private VaultLedger mapVaultLedger(ResultSet resultSet) throws SQLException {
 
         VaultLedger vaultLedger = new VaultLedger();
