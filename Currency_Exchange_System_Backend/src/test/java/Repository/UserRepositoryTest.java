@@ -29,7 +29,8 @@ public class UserRepositoryTest {
         System.out.println(passHash);
         User user = new User("erfan.simiyari100", passHash, UserRole.CUSTOMER, true);
         User savedUser = userRepsitory.save(user);
-        System.out.println(user.getId());
+//        System.out.println(user.getId());
+        System.out.println(savedUser.getId());
     }
 
     @Test

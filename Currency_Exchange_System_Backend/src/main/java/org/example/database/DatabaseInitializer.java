@@ -92,8 +92,8 @@ public class DatabaseInitializer {
                 	"requested_rate"	TEXT,
                 	"rate_used"	TEXT,
                 	"requested_by_customer"	INTEGER NOT NULL DEFAULT 0,
-                	"performed_dy_userId"	INTEGER NOT NULL,
-                	"approved_by_userId"	INTEGER NOT NULL,
+                	"performed_by_userId"	INTEGER,
+                	"approved_by_userId"	INTEGER,
                 	"created_at"	TEXT NOT NULL,
                 	"approved_at"	TEXT,
                 	"status"	TEXT NOT NULL,
@@ -101,7 +101,7 @@ public class DatabaseInitializer {
                 	FOREIGN KEY("approved_by_userId") REFERENCES "users"("id"),
                 	FOREIGN KEY("currency_id") REFERENCES "currencies"("id"),
                 	FOREIGN KEY("customer_id") REFERENCES "customers"("id"),
-                	FOREIGN KEY("performed_dy_userId") REFERENCES "users"("id")
+                	FOREIGN KEY("performed_by_userId") REFERENCES "users"("id")
                 );
                 """);
 

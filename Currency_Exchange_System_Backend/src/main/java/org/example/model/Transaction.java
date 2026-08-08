@@ -1,5 +1,6 @@
 package org.example.model;
 
+import jakarta.annotation.Nullable;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 
@@ -8,17 +9,17 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
-    private long id;
+    private Long id;
     private TxType txType;
-    private long currencyId;
-    private long customerId;
+    private Long currencyId;
+    private Long customerId;
     private BigDecimal amountCurrency;
     private BigDecimal amountToman;
     private BigDecimal requestedRate;
     private BigDecimal rateUsed;
     private boolean requestedByCustomer;
-    private long performedByUserId;
-    private long approvedByUserId;
+    private Long performedByUserId;
+    private Long approvedByUserId;
     private LocalDateTime createdAt;
     private LocalDateTime approvedAt;
     private TxStatus status;
@@ -26,12 +27,12 @@ public class Transaction {
     public Transaction(BigDecimal amountCurrency,
                        BigDecimal amountToman,
                        LocalDateTime approvedAt,
-                       long approvedByUserId,
+                       Long approvedByUserId,
                        LocalDateTime createdAt,
                        long currencyId,
                        long customerId,
-                       long id,
-                       long performedByUserId,
+                       Long id,
+                       Long performedByUserId,
                        boolean requestedByCustomer,
                        BigDecimal rateUsed,
                        BigDecimal requestedRate,
@@ -46,6 +47,35 @@ public class Transaction {
         this.currencyId = currencyId;
         this.customerId = customerId;
         this.id = id;
+        this.performedByUserId = performedByUserId;
+        this.requestedByCustomer = requestedByCustomer;
+        this.rateUsed = rateUsed;
+        this.requestedRate = requestedRate;
+        this.status = status;
+        this.txType = txType;
+    }
+
+    public Transaction(BigDecimal amountCurrency,
+                       BigDecimal amountToman,
+                       LocalDateTime approvedAt,
+                       Long approvedByUserId,
+                       LocalDateTime createdAt,
+                       long currencyId,
+                       long customerId,
+                       Long performedByUserId,
+                       boolean requestedByCustomer,
+                       BigDecimal rateUsed,
+                       BigDecimal requestedRate,
+                       TxStatus status,
+                       TxType txType) {
+
+        this.amountCurrency = amountCurrency;
+        this.amountToman = amountToman;
+        this.approvedAt = approvedAt;
+        this.approvedByUserId = approvedByUserId;
+        this.createdAt = createdAt;
+        this.currencyId = currencyId;
+        this.customerId = customerId;
         this.performedByUserId = performedByUserId;
         this.requestedByCustomer = requestedByCustomer;
         this.rateUsed = rateUsed;
@@ -78,7 +108,7 @@ public class Transaction {
         this.approvedAt = approvedAt;
     }
 
-    public long getApprovedByUserId() {
+    public Long getApprovedByUserId() {
         return approvedByUserId;
     }
 
@@ -94,7 +124,7 @@ public class Transaction {
         this.createdAt = createdAt;
     }
 
-    public long getCurrencyId() {
+    public Long getCurrencyId() {
         return currencyId;
     }
 
@@ -102,7 +132,7 @@ public class Transaction {
         this.currencyId = currencyId;
     }
 
-    public long getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
@@ -118,7 +148,7 @@ public class Transaction {
         this.id = id;
     }
 
-    public long getPerformedByUserId() {
+    public Long getPerformedByUserId() {
         return performedByUserId;
     }
 
