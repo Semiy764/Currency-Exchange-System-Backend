@@ -5,7 +5,7 @@ import org.example.enums.LedgerReason;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class VaultLedger {
+public class VaultLedger {  // har rooydade taghire mojoodi ro negah midare va hichvaght update ya delete nemishe
 
     private long id;
     private long currencyId;
@@ -29,6 +29,19 @@ public class VaultLedger {
         this.reason = reason;
     }
 
+    public VaultLedger(BigDecimal changeAmount,
+                       LocalDateTime createdAt,
+                       long currencyId,
+                       long preformedByUserId,
+                       LedgerReason reason) {
+
+        this.changeAmount = changeAmount;
+        this.createdAt = createdAt;
+        this.currencyId = currencyId;
+        this.preformedByUserId = preformedByUserId;
+        this.reason = reason;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -45,7 +58,7 @@ public class VaultLedger {
         this.changeAmount = changeAmount;
     }
 
-    public long getCurrencyId() {
+    public Long getCurrencyId() {
         return currencyId;
     }
 
@@ -61,7 +74,7 @@ public class VaultLedger {
         this.id = id;
     }
 
-    public long getPreformedByUserId() {
+    public Long getPreformedByUserId() {
         return preformedByUserId;
     }
 
