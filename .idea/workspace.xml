@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultLedgerRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultLedgerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/VaultLedger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/VaultLedger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultLedgerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultLedgerRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultLedgerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultLedgerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +126,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaultLedgerRepositoryTest.savingVaultLedgerTest">
+  <component name="RunManager" selected="JUnit.VaultLedgerRepositoryTest.findAllLedgersTest">
     <configuration name="TellerRepositoryTest.findAllTellersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -176,7 +175,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VaultBalanceRepositoryTest.savingVaultBalanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="VaultLedgerRepositoryTest.findAllLedgersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -185,8 +184,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
-      <option name="METHOD_NAME" value="savingVaultBalanceTest" />
+      <option name="MAIN_CLASS_NAME" value="Repository.VaultLedgerRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllLedgersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -221,11 +220,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VaultLedgerRepositoryTest.findAllLedgersTest" />
         <item itemvalue="JUnit.VaultLedgerRepositoryTest.savingVaultLedgerTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.findAllTellersTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.findBalancLessThanTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.findAllBalancesTest" />
-        <item itemvalue="JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest" />
       </list>
     </recent_temporary>
   </component>

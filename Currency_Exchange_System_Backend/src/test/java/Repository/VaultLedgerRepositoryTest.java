@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,5 +33,19 @@ public class VaultLedgerRepositoryTest {
         assertThat(saved.getCurrencyId()).isEqualTo(3);
         assertThat(saved.getReason().name()).isEqualTo("WITHDRAW");
 
+    }
+
+    @Test
+    public void findAllLedgersTest() {
+        List<VaultLedger> allLedgers = vaultLedgerRepository.findAll();
+        for(VaultLedger ledger : allLedgers) {
+            System.out.println(ledger.getId() + " - " +
+                    ledger.getCurrencyId() + " - " +
+                    ledger.getPreformedByUserId() + " - " +
+                    ledger.getReason().name() + " - " +
+                    ledger.getCreatedAt() + " - " +
+                    ledger.getChangeAmount()
+                    );
+        }
     }
 }
