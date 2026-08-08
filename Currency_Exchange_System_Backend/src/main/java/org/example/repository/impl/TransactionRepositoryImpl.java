@@ -183,6 +183,33 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
+    @Override
+    public List<Transaction> findByStatusOrderByCreatedAtDesc(TxStatus status) {
+
+        List<Transaction> transactions = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions WHERE status = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, status.name());
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                transactions.add(mapTranasction(resultSet));
+            }
+            return transactions;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find transactions by status order by desc: " + e, e);
+        }
+    }
+
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
 
         Transaction transaction = new Transaction();
