@@ -1,5 +1,6 @@
 package org.example.repository.interfaces;
 
+import org.example.enums.TxStatus;
 import org.example.model.Transaction;
 
 import java.util.List;
@@ -11,5 +12,6 @@ public interface TransactionRepository {
     Transaction findById(int id);
     List<Transaction> findAllByOrderByCreatedAtDesc();
     List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
+    List<Transaction> findByStatusOrderByCreatedAtDesc(TxStatus status);
 
 }
