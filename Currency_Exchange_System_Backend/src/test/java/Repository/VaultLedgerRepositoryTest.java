@@ -108,4 +108,19 @@ public class VaultLedgerRepositoryTest {
             );
         }
     }
+
+    @Test
+    public void findTopNByOrderByCreatedAtDescTest() {
+
+        List<VaultLedger> ledgers = vaultLedgerRepository.findTopNByOrderByCreatedAtDesc(4);
+        for(VaultLedger ledger : ledgers) {
+            System.out.println(ledger.getId() + " - " +
+                    ledger.getCurrencyId() + " - " +
+                    ledger.getPreformedByUserId() + " - " +
+                    ledger.getReason().name() + " - " +
+                    ledger.getCreatedAt() + " - " +
+                    ledger.getChangeAmount()
+            );
+        }
+    }
 }
