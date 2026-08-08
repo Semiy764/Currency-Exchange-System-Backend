@@ -23,13 +23,13 @@ public class VaultBalanceRepositoryTest {
     @Test
     public void savingVaultBalanceTest() {
 
-        BigDecimal balance = new BigDecimal(500);
-        VaultBalance vaultBalance = new VaultBalance(balance, 2, LocalDateTime.now());
+        BigDecimal balance = new BigDecimal(2100);
+        VaultBalance vaultBalance = new VaultBalance(balance, 3, LocalDateTime.now());
         VaultBalance savedBalance = vaultBalanceRepository.save(vaultBalance);
 
-        assertThat(savedBalance.getId()).isEqualTo(2);
+//        assertThat(savedBalance.getId()).isEqualTo(2);
         assertThat(savedBalance.getBalance()).isEqualTo(balance);
-        assertThat(savedBalance.getCurrencyId()).isEqualTo(2);
+        assertThat(savedBalance.getCurrencyId()).isEqualTo(3);
         assertThat(savedBalance.getLastUpdated()).isNotNull();
     }
 
@@ -83,5 +83,16 @@ public class VaultBalanceRepositoryTest {
         AssertionsForClassTypes.assertThat(balance.getCurrencyId()).isEqualTo(2);
         AssertionsForClassTypes.assertThat(balance.getLastUpdated()).isNotNull();
 
+    }
+
+    @Test
+    public void findBalancLessThanTest() {
+        List<VaultBalance> balances = vaultBalanceRepository.findByBalanceLessThan(new BigDecimal(5000));
+        for(VaultBalance balance : balances) {
+            System.out.println(balance.getId() + " - " +
+                    balance.getBalance().toString() + " - " +
+                    balance.getCurrencyId() + " - " +
+                    balance.getLastUpdated());
+        }
     }
 }

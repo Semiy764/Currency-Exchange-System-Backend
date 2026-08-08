@@ -14,4 +14,5 @@ public interface VaultBalanceRepository {
     void adjustBalance(int currencyId, BigDecimal amount);
     void deleteById(int id);
     VaultBalance findById(int id);
+    List<VaultBalance> findByBalanceLessThan(BigDecimal threshold);
 }
