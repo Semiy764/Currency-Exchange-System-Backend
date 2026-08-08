@@ -187,6 +187,35 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
         }
     }
 
+    @Override
+    public List<VaultBalance> findByBalanceLessThan(BigDecimal threshold) {
+
+        List<VaultBalance> balances = new ArrayList<>();
+        String sql = """
+                SELECT * FROM vault_balances WHERE 
+                CAST (balance AS REAL) <= ?
+                ORDER BY CAST (balance AS REAL) DESC 
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setBigDecimal(1, threshold);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                balances.add(mapBalances(resultSet));
+            }
+            return balances;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find by balance less than: " + e, e);
+        }
+    }
+
     private VaultBalance mapBalances(ResultSet resultSet) throws SQLException {
 
         VaultBalance vaultBalance = new VaultBalance();

@@ -101,6 +101,7 @@
     "JUnit.VaultBalanceRepositoryTest.deleteBalanceTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.existsByCurrencyIdTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.findAllBalancesTest.executor": "Run",
+    "JUnit.VaultBalanceRepositoryTest.findBalancLessThanTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.findBalanceByIdTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.findByCurrencyIdTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest.executor": "Run",
@@ -124,23 +125,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaultBalanceRepositoryTest.findBalanceByIdTest">
-    <configuration name="VaultBalanceRepositoryTest.adjustBalanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
-      <option name="METHOD_NAME" value="adjustBalanceTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.VaultBalanceRepositoryTest.findBalancLessThanTest">
     <configuration name="VaultBalanceRepositoryTest.deleteBalanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -168,6 +153,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
       <option name="METHOD_NAME" value="findAllBalancesTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VaultBalanceRepositoryTest.findBalancLessThanTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
+      <option name="METHOD_NAME" value="findBalancLessThanTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -218,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.VaultBalanceRepositoryTest.findBalanceByIdTest" />
+        <item itemvalue="JUnit.VaultBalanceRepositoryTest.findBalancLessThanTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.findAllBalancesTest" />
-        <item itemvalue="JUnit.VaultBalanceRepositoryTest.deleteBalanceTest" />
-        <item itemvalue="JUnit.VaultBalanceRepositoryTest.adjustBalanceTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest" />
+        <item itemvalue="JUnit.VaultBalanceRepositoryTest.findBalanceByIdTest" />
+        <item itemvalue="JUnit.VaultBalanceRepositoryTest.deleteBalanceTest" />
       </list>
     </recent_temporary>
   </component>
