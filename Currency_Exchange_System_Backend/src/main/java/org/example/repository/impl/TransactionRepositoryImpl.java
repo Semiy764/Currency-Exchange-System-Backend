@@ -157,33 +157,31 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
-//    @Override
-//    public List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId) {
-//
-//        List<Transaction> allTrans = new ArrayList<>();
-//        String sql = """
-//                SELECT * FROM transactions WHERE customer_id = ?
-//                ORDER BY created_at DESC
-//                """;
-//
-//        try(
-//                Connection connection = DatabaseManager.getConnection();
-//                PreparedStatement statement = connection.prepareStatement(sql);
-//                ) {
-//
-//            statement.setInt(1, customerId);
-//            ResultSet resultSet = statement.executeQuery();
-//
-//            while(resultSet.next()) {
-//                allTrans.add(mapTranasction(resultSet));
-//            }
-//
-//            return allTrans;
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error in find transactions by customer id order by desc: " + e, e);
-//        }
-//    }
+    @Override
+    public List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId) {
+
+        List<Transaction> allTrans = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions WHERE customer_id = ?
+                ORDER BY created_at DESC
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                allTrans.add(mapTranasction(resultSet));
+            }
+            return allTrans;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find transactions by customer id order by desc: " + e, e);
+        }
+    }
 
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
 

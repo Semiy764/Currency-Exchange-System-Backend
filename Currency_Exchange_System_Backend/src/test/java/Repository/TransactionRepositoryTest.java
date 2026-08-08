@@ -45,7 +45,7 @@ public class TransactionRepositoryTest {
                 null,
                 LocalDateTime.now(),
                 1,
-                1,
+                2,
                 null,
                 true,
                 rateUsed,
@@ -125,6 +125,29 @@ public class TransactionRepositoryTest {
 
         List<Transaction> allTransactions = transactionRepository.findAllByOrderByCreatedAtDesc();
         for(Transaction transaction : allTransactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+    }
+
+
+    @Test
+    public void findByCustomerIdOrderByCreatedAtDescTest() {
+
+        List<Transaction> allTrans = transactionRepository.findByCustomerIdOrderByCreatedAtDesc(1);
+        for(Transaction transaction : allTrans) {
             System.out.println(transaction.getId() + " - " +
                     transaction.getAmountCurrency().toString() + " - " +
                     transaction.getAmountToman().toString() + " - " +

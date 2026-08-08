@@ -20,7 +20,7 @@ public class CustomerRepositoryTest {
 
     @Test
     public void saveCustomerTest() {
-        Customer customer = new Customer("Ahmad Mohammadi", "08793838", 1, "049494");
+        Customer customer = new Customer("Ahmad Mohammadi", "08793838", 2, "049494");
         customerRepository.save(customer);
     }
 

@@ -10,6 +10,6 @@ public interface TransactionRepository {
     List<Transaction> findAll();
     Transaction findById(int id);
     List<Transaction> findAllByOrderByCreatedAtDesc();
-//    List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
+    List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
 
 }
