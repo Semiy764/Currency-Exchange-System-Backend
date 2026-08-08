@@ -36,6 +36,19 @@ public class VaultLedgerRepositoryTest {
     }
 
     @Test
+    public void findVaultLedgerByIdTest() {
+
+        VaultLedger ledger = vaultLedgerRepository.findById(1);
+
+        BigDecimal changeAmount = new BigDecimal(782);
+        assertThat(ledger).isNotNull();
+        assertThat(ledger.getChangeAmount()).isEqualTo(changeAmount);
+        assertThat(ledger.getPreformedByUserId()).isEqualTo(7);
+        assertThat(ledger.getCurrencyId()).isEqualTo(3);
+        assertThat(ledger.getReason().name()).isEqualTo("WITHDRAW");
+    }
+
+    @Test
     public void findAllLedgersTest() {
         List<VaultLedger> allLedgers = vaultLedgerRepository.findAll();
         for(VaultLedger ledger : allLedgers) {
