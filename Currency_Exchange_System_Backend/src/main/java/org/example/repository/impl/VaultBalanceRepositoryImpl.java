@@ -145,6 +145,48 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
         }
     }
 
+    @Override
+    public void deleteById(int id) {
+        String sql = """
+                DELETE FROM vault_balances WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in delete vault balance: " + e, e);
+        }
+    }
+
+    @Override
+    public VaultBalance findById(int id) {
+
+        String sql = """
+                SELECT * FROM vault_balances WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapBalances(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find balance by id: " + e, e);
+        }
+    }
+
     private VaultBalance mapBalances(ResultSet resultSet) throws SQLException {
 
         VaultBalance vaultBalance = new VaultBalance();
