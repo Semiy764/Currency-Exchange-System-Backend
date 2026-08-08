@@ -1,12 +1,17 @@
 package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
+import org.example.enums.LedgerReason;
 import org.example.model.VaultLedger;
 import org.example.repository.interfaces.VaultLedgerRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.ldap.PagedResultsControl;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
@@ -46,5 +51,45 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in save vault ledger: " + e, e);
         }
+    }
+
+    @Override
+    public List<VaultLedger> findAll() {
+
+        List<VaultLedger> allLedgers = new ArrayList<>();
+        String sql = """
+                SELECT * FROM vault_ledgers
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                allLedgers.add(mapVaultLedger(resultSet));
+            }
+
+            return allLedgers;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all vault ledgers: " + e, e);
+
+        }
+    }
+
+    private VaultLedger mapVaultLedger(ResultSet resultSet) throws SQLException {
+
+        VaultLedger vaultLedger = new VaultLedger();
+        vaultLedger.setId(resultSet.getInt("id"));
+        vaultLedger.setCreatedAt(LocalDateTime.parse(resultSet.getString("created_at")));
+        vaultLedger.setPreformedByUserId(resultSet.getInt("performed_by_userId"));
+        vaultLedger.setChangeAmount(new BigDecimal(resultSet.getString("change_amount")));
+        vaultLedger.setReason(LedgerReason.valueOf(resultSet.getString("reason")));
+        vaultLedger.setCurrencyId(resultSet.getInt("currency_id"));
+
+        return vaultLedger;
+
     }
 }

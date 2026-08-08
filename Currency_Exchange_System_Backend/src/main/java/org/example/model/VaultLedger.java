@@ -14,6 +14,8 @@ public class VaultLedger {  // har rooydade taghire mojoodi ro negah midare va h
     private LocalDateTime createdAt;
     private long preformedByUserId;
 
+    public VaultLedger() {}
+
     public VaultLedger(BigDecimal changeAmount,
                        LocalDateTime createdAt,
                        long currencyId,
