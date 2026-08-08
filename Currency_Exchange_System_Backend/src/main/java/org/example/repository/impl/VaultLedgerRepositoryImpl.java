@@ -79,6 +79,32 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
         }
     }
 
+    @Override
+    public VaultLedger findById(int id) {
+
+        String sql = """
+                SELECT * FROM vault_ledgers WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return mapVaultLedger(resultSet);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find vault ledger by id: " + e, e);
+
+        }
+    }
+
     private VaultLedger mapVaultLedger(ResultSet resultSet) throws SQLException {
 
         VaultLedger vaultLedger = new VaultLedger();

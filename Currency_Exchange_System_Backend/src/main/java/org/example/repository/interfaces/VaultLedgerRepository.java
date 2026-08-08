@@ -9,4 +9,5 @@ public interface VaultLedgerRepository {
 
     VaultLedger save(VaultLedger vaultLedger);
     List<VaultLedger> findAll();
+    VaultLedger findById(int id);
 }

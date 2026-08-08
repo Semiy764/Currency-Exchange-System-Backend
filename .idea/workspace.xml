@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/VaultLedger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/VaultLedger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultLedgerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/VaultLedgerRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultLedgerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/VaultLedgerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" afterDir="false" />
@@ -105,6 +104,8 @@
     "JUnit.VaultBalanceRepositoryTest.findBalanceByIdTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.findByCurrencyIdTest.executor": "Run",
     "JUnit.VaultBalanceRepositoryTest.savingVaultBalanceTest.executor": "Run",
+    "JUnit.VaultLedgerRepositoryTest.findAllLedgersTest.executor": "Run",
+    "JUnit.VaultLedgerRepositoryTest.findVaultLedgerByIdTest.executor": "Run",
     "JUnit.VaultLedgerRepositoryTest.savingVaultLedgerTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -126,7 +127,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaultLedgerRepositoryTest.findAllLedgersTest">
+  <component name="RunManager" selected="JUnit.VaultLedgerRepositoryTest.findVaultLedgerByIdTest">
     <configuration name="TellerRepositoryTest.findAllTellersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -138,22 +139,6 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.TellerRepositoryTest" />
       <option name="METHOD_NAME" value="findAllTellersTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VaultBalanceRepositoryTest.findAllBalancesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.VaultBalanceRepositoryTest" />
-      <option name="METHOD_NAME" value="findAllBalancesTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -191,6 +176,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="VaultLedgerRepositoryTest.findVaultLedgerByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.VaultLedgerRepositoryTest" />
+      <option name="METHOD_NAME" value="findVaultLedgerByIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="VaultLedgerRepositoryTest.savingVaultLedgerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -220,11 +221,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VaultLedgerRepositoryTest.findVaultLedgerByIdTest" />
         <item itemvalue="JUnit.VaultLedgerRepositoryTest.findAllLedgersTest" />
         <item itemvalue="JUnit.VaultLedgerRepositoryTest.savingVaultLedgerTest" />
         <item itemvalue="JUnit.TellerRepositoryTest.findAllTellersTest" />
         <item itemvalue="JUnit.VaultBalanceRepositoryTest.findBalancLessThanTest" />
-        <item itemvalue="JUnit.VaultBalanceRepositoryTest.findAllBalancesTest" />
       </list>
     </recent_temporary>
   </component>
