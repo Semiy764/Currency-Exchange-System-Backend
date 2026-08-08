@@ -24,6 +24,8 @@ public class Transaction {
     private LocalDateTime approvedAt;
     private TxStatus status;
 
+    public Transaction() {}
+
     public Transaction(BigDecimal amountCurrency,
                        BigDecimal amountToman,
                        LocalDateTime approvedAt,
@@ -112,7 +114,7 @@ public class Transaction {
         return approvedByUserId;
     }
 
-    public void setApprovedByUserId(long approvedByUserId) {
+    public void setApprovedByUserId(Long approvedByUserId) {
         this.approvedByUserId = approvedByUserId;
     }
 
@@ -128,7 +130,7 @@ public class Transaction {
         return currencyId;
     }
 
-    public void setCurrencyId(long currencyId) {
+    public void setCurrencyId(Long currencyId) {
         this.currencyId = currencyId;
     }
 
@@ -136,15 +138,15 @@ public class Transaction {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -152,7 +154,7 @@ public class Transaction {
         return performedByUserId;
     }
 
-    public void setPerformedByUserId(long performedByUserId) {
+    public void setPerformedByUserId(Long performedByUserId) {
         this.performedByUserId = performedByUserId;
     }
 
