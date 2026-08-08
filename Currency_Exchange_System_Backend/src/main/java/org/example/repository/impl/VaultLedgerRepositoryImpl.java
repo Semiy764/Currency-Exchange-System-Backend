@@ -168,6 +168,37 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
         }
     }
 
+    @Override
+    public List<VaultLedger> findByPerformedByUserId(int userId) {
+
+        List<VaultLedger> ledgers = new ArrayList<>();
+        String sql = """
+                SELECT * FROM vault_ledgers WHERE performed_by_userId = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                ledgers.add(mapVaultLedger(resultSet));
+            }
+
+            return ledgers;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find by performed by user id: " + e, e);
+
+        }
+
+
+    }
+
     private VaultLedger mapVaultLedger(ResultSet resultSet) throws SQLException {
 
         VaultLedger vaultLedger = new VaultLedger();
