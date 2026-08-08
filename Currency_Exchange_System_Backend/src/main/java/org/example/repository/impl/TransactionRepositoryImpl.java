@@ -2,15 +2,21 @@ package org.example.repository.impl;
 
 import jdk.jfr.Registered;
 import org.example.database.DatabaseManager;
+import org.example.enums.TxStatus;
+import org.example.enums.TxType;
 import org.example.model.Transaction;
 import org.example.repository.interfaces.TransactionRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.HTMLDocument;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class TransactionRepositoryImpl implements TransactionRepository {
@@ -67,6 +73,82 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in save transaction:" + e, e);
         }
+
+
+
+    }
+
+    @Override
+    public List<Transaction> findAll() {
+
+        List<Transaction> allTransactions = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                allTransactions.add(mapTranasction(resultSet));
+            }
+
+            return allTransactions;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all transactions:" + e, e);
+
+        }
+    }
+
+//    @Override
+//    public Transaction findById(int id) {
+//
+//        String sql = """
+//                SELECT * FROM transactions WHERE id = ?
+//                """;
+//
+//        try(
+//
+//                )
+//    }
+
+    private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
+
+        Transaction transaction = new Transaction();
+        transaction.setId(resultSet.getLong("id"));
+        transaction.setTxType(TxType.valueOf(resultSet.getString("type")));
+        transaction.setCurrencyId(resultSet.getLong("currency_id"));
+        transaction.setCustomerId(resultSet.getLong("customer_id"));
+        transaction.setAmountCurrency(new BigDecimal(resultSet.getString("amount_currency")));
+        transaction.setAmountToman(new BigDecimal(resultSet.getString("amount_toman")));
+        transaction.setRequestedRate(new BigDecimal(resultSet.getString("requested_rate")));
+        transaction.setRateUsed(new BigDecimal(resultSet.getString("rate_used")));
+        transaction.setRequestedByCustomer(resultSet.getInt("requested_by_customer") == 1);
+
+//        Long performedByUserId = resultSet.getObject("performed_by_userId", Long.class);
+//        transaction.setPerformedByUserId(performedByUserId);
+//
+//        Long approvedByUserId = resultSet.getObject("approved_by_userId", Long.class);
+//        transaction.setApprovedByUserId(approvedByUserId);
+
+        long performedByUserIdRaw = resultSet.getLong("performed_by_userId");
+        transaction.setPerformedByUserId(resultSet.wasNull() ? null : performedByUserIdRaw);
+
+        long approvedByUserIdRaw = resultSet.getLong("approved_by_userId");
+        transaction.setApprovedByUserId(resultSet.wasNull() ? null : approvedByUserIdRaw);
+
+        transaction.setCreatedAt(LocalDateTime.parse(resultSet.getString("created_at")));
+
+        String approvedAt = resultSet.getObject("approved_at", String.class);
+        transaction.setApprovedAt(approvedAt != null ? LocalDateTime.parse(approvedAt) : null);
+
+        transaction.setStatus(TxStatus.valueOf(resultSet.getString("status")));
+
+        return transaction;
 
     }
 }

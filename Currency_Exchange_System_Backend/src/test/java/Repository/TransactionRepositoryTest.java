@@ -2,6 +2,7 @@ package Repository;
 
 
 import org.example.App;
+import org.example.database.DatabaseManager;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Transaction;
@@ -11,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,4 +70,29 @@ public class TransactionRepositoryTest {
         assertThat(transaction.getStatus()).isEqualTo(TxStatus.PENDING);
         assertThat(transaction.getTxType()).isEqualTo(TxType.BUY);
     }
+
+    @Test
+    public void findAllTransactionsTest() {
+
+        List<Transaction> allTransactions = transactionRepository.findAll();
+        for(Transaction transaction : allTransactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+    }
+
+
+
 }
