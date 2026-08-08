@@ -18,5 +18,5 @@ public interface VaultLedgerRepository {
                                                           LocalDateTime end);
 
     List<VaultLedger> findByPerformedByUserId(int userId);
-
+    List<VaultLedger> findTopNByOrderByCreatedAtDesc(int limit);
 }

@@ -193,10 +193,38 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by performed by user id: " + e, e);
-
         }
 
 
+    }
+
+    @Override
+    public List<VaultLedger> findTopNByOrderByCreatedAtDesc(int limit) {
+
+        List<VaultLedger> ledgers = new ArrayList<>();
+        String sql = """
+                SELECT * FROM vault_ledgers ORDER BY 
+                created_at DESC LIMIT ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, limit);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                ledgers.add(mapVaultLedger(resultSet));
+            }
+            return ledgers;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find top N: " + e, e);
+
+        }
     }
 
     private VaultLedger mapVaultLedger(ResultSet resultSet) throws SQLException {
