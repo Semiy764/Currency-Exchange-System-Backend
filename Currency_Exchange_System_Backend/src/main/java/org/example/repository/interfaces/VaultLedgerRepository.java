@@ -17,4 +17,6 @@ public interface VaultLedgerRepository {
                                                           LocalDateTime start,
                                                           LocalDateTime end);
 
+    List<VaultLedger> findByPerformedByUserId(int userId);
+
 }
