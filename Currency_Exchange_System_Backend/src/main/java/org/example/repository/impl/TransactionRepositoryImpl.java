@@ -9,6 +9,7 @@ import org.example.repository.interfaces.TransactionRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.HTMLDocument;
+import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,16 +105,84 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
+    @Override
+    public Transaction findById(int id) {
+
+        String sql = """
+                SELECT * FROM transactions WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapTranasction(resultSet);
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find transaction by id:" + e, e);
+        }
+    }
+
 //    @Override
-//    public Transaction findById(int id) {
+//    public List<Transaction> findAllByOrderByCreatedAtDesc() {
 //
+//        List<Transaction> allTransactions = new ArrayList<>();
 //        String sql = """
-//                SELECT * FROM transactions WHERE id = ?
+//                SELECT * FROM transactions
+//                ORDER BY created_at DESC
 //                """;
 //
 //        try(
+//                Connection connection = DatabaseManager.getConnection();
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                ) {
 //
-//                )
+//            ResultSet resultSet = statement.executeQuery();
+//            while(resultSet.next()) {
+//                allTransactions.add(mapTranasction(resultSet));
+//            }
+//
+//            return allTransactions;
+//
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error in find transactions order by created at desc:" + e, e);
+//        }
+//    }
+//
+//    @Override
+//    public List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId) {
+//
+//        List<Transaction> allTrans = new ArrayList<>();
+//        String sql = """
+//                SELECT * FROM transactions WHERE customer_id = ?
+//                ORDER BY created_at DESC
+//                """;
+//
+//        try(
+//                Connection connection = DatabaseManager.getConnection();
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                ) {
+//
+//            statement.setInt(1, customerId);
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            while(resultSet.next()) {
+//                allTrans.add(mapTranasction(resultSet));
+//            }
+//
+//            return allTrans;
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error in find transactions by customer id order by desc: " + e, e);
+//        }
 //    }
 
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
@@ -128,12 +197,6 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         transaction.setRequestedRate(new BigDecimal(resultSet.getString("requested_rate")));
         transaction.setRateUsed(new BigDecimal(resultSet.getString("rate_used")));
         transaction.setRequestedByCustomer(resultSet.getInt("requested_by_customer") == 1);
-
-//        Long performedByUserId = resultSet.getObject("performed_by_userId", Long.class);
-//        transaction.setPerformedByUserId(performedByUserId);
-//
-//        Long approvedByUserId = resultSet.getObject("approved_by_userId", Long.class);
-//        transaction.setApprovedByUserId(approvedByUserId);
 
         long performedByUserIdRaw = resultSet.getLong("performed_by_userId");
         transaction.setPerformedByUserId(resultSet.wasNull() ? null : performedByUserIdRaw);
