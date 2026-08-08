@@ -12,4 +12,6 @@ public interface VaultBalanceRepository {
     boolean existsByCurrencyId(int currencyId);
     VaultBalance findByCurrencyId(int currencyId);
     void adjustBalance(int currencyId, BigDecimal amount);
+    void deleteById(int id);
+    VaultBalance findById(int id);
 }
