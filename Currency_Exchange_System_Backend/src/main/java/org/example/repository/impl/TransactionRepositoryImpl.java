@@ -210,6 +210,34 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
+    @Override
+    public List<Transaction> findByPreformedByUserId(int userId) {
+
+        List<Transaction> allTrans = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions 
+                WHERE performed_by_userId = ? 
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                allTrans.add(mapTranasction(resultSet));
+            }
+            return allTrans;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find transactions by performed by user id: " + e, e);
+        }
+    }
+
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
 
         Transaction transaction = new Transaction();
