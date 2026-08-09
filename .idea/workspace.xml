@@ -80,6 +80,7 @@
     "JUnit.TransactionRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByCustomerIdOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByPreformedByUserIdTest.executor": "Run",
+    "JUnit.TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByStatusOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findingTransactionByIdTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc.executor": "Run",
@@ -141,7 +142,23 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.findAllTransactionsTest">
+  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest">
+    <configuration name="TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
+      <option name="METHOD_NAME" value="existsByCustomerIdAndCurrencyIdAndStatusTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TransactionRepositoryTest.findAllTransactionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -206,22 +223,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionRepositoryTest.transactionSaveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="transactionSaveTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -235,11 +236,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findAllTransactionsTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findByApprovedByUserIdTest" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.transactionSaveTest" />
       </list>
     </recent_temporary>
   </component>

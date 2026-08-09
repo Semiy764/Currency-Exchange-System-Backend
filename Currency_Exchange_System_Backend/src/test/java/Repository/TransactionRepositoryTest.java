@@ -283,4 +283,11 @@ public class TransactionRepositoryTest {
         }
     }
 
+    @Test
+    public void existsByCustomerIdAndCurrencyIdAndStatusTest() {
+
+        System.out.println(transactionRepository.existsByCustomerIdAndCurrencyIdAndStatus(1, 1, TxStatus.PENDING));
+        System.out.println(transactionRepository.existsByCustomerIdAndCurrencyIdAndStatus(2, 1, TxStatus.COMPLETED));
+    }
+
 }
