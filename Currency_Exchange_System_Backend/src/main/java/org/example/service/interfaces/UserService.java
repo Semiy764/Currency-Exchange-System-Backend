@@ -12,5 +12,8 @@ public interface UserService {
     List<User> findAll();
     List<User> findByRole(UserRole role);
     List<User> findActiveUsers();
+    boolean existsByUsername(String username);
+    User updateUser(int userId, User user);
+    // we dont have method for deactive user because we are doinng this in update user;
 
 }

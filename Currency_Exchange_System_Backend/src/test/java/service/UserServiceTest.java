@@ -3,6 +3,7 @@ package service;
 import org.example.App;
 import org.example.enums.UserRole;
 import org.example.model.User;
+import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class UserServiceTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepsitory userRepsitory;
 
 
     @Test
@@ -74,5 +78,21 @@ public class UserServiceTest {
                             user.getPasswordHash()
             );
         }
+    }
+
+    @Test
+    public void existingByUsernameTest() {
+        System.out.println(userService.existsByUsername("erfan.simiyari2"));
+    }
+
+    @Test
+    public void updatingUserTest() {
+
+        User foundUser = userRepsitory.findById(1);
+        foundUser.setActive(true);
+        User user = userService.updateUser(1, foundUser);
+
+        User updatedUser = userRepsitory.findById(1);
+        assertThat(updatedUser.isActive()).isEqualTo(true);
     }
 }
