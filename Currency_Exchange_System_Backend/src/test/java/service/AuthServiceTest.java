@@ -67,4 +67,20 @@ public class AuthServiceTest {
                 teller.getNationalId() + " - " +
                 teller.getPhoneNumber());
     }
+
+
+
+    @Test
+    public void testLogin() {
+
+        User user = authService.login("erfan.simiyari", "Mohammad1022@");
+        System.out.println(
+                user.isActive() + " - " +
+                user.getRole() + " - " +
+                user.getId() + " - " +
+                user.getUsername() + " - " +
+                user.getPasswordHash()
+        );
+
+    }
 }
