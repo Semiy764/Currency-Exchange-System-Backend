@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/UserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/UserRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/UserRepsitory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/UserRepsitory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/AuthServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +38,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.AuthServiceTest.changePasswordTest.executor": "Run",
+    "JUnit.AuthServiceTest.findindActiveUsersTest.executor": "Run",
     "JUnit.AuthServiceTest.registerUserTest.executor": "Run",
     "JUnit.AuthServiceTest.testLogin.executor": "Run",
     "JUnit.CurrencyRepositoryTest.deleteCurrencyTest.executor": "Run",
@@ -106,6 +107,7 @@
     "JUnit.UserRepositoryTest.executor": "Run",
     "JUnit.UserRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.UserRepositoryTest.existingUserByUsernameTest.executor": "Run",
+    "JUnit.UserRepositoryTest.findActiveUsresTest.executor": "Debug",
     "JUnit.UserRepositoryTest.findAllUsersTest.executor": "Run",
     "JUnit.UserRepositoryTest.findByUsernameTest.executor": "Run",
     "JUnit.UserRepositoryTest.findUserByIdTest.executor": "Run",
@@ -154,7 +156,23 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserRepositoryTest.findActiveUsresTest">
+  <component name="RunManager" selected="JUnit.AuthServiceTest.findindActiveUsersTest">
+    <configuration name="AuthServiceTest.findindActiveUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="METHOD_NAME" value="findindActiveUsersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserRepositoryTest.findActiveUsresTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -203,22 +221,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.findUserByUsernameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
-      <option name="METHOD_NAME" value="findUserByUsernameTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserServiceTest.findUsersByRoleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -248,11 +250,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AuthServiceTest.findindActiveUsersTest" />
         <item itemvalue="JUnit.UserRepositoryTest.findActiveUsresTest" />
         <item itemvalue="JUnit.UserServiceTest.findUsersByRoleTest" />
         <item itemvalue="JUnit.UserRepositoryTest.findUserByRoleTest" />
         <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
-        <item itemvalue="JUnit.UserServiceTest.findUserByUsernameTest" />
       </list>
     </recent_temporary>
   </component>

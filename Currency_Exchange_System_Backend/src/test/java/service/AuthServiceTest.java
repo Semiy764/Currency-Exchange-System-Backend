@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = App.class)
@@ -102,6 +104,21 @@ public class AuthServiceTest {
         User user = userRepsitory.findById(1);
 
         System.out.println(passwordEncoder.matches("Mohammad1022@", user.getPasswordHash()));
+    }
+
+    @Test
+    public void findindActiveUsersTest() {
+
+        List<User> users = userRepsitory.findActiveUsers();
+        for(User user : users) {
+            System.out.println(
+                    user.isActive() + " - " +
+                            user.getRole() + " - " +
+                            user.getId() + " - " +
+                            user.getUsername() + " - " +
+                            user.getPasswordHash()
+            );
+        }
     }
 
 
