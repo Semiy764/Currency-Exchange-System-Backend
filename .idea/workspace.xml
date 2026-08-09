@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TransactionRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TransactionRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/AuthServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +37,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.AuthServiceTest.changePasswordTest.executor": "Run",
+    "JUnit.AuthServiceTest.registerUserTest.executor": "Run",
+    "JUnit.AuthServiceTest.testLogin.executor": "Run",
     "JUnit.CurrencyRepositoryTest.deleteCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.existingCurrencyByIdTest.executor": "Run",
@@ -84,6 +89,7 @@
     "JUnit.TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByStatusOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findingTransactionByIdTest.executor": "Run",
+    "JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc.executor": "Run",
     "JUnit.TransactionRepositoryTest.transactionSaveTest.executor": "Run",
     "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
@@ -143,56 +149,56 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest">
-    <configuration name="TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AuthServiceTest.changePasswordTest">
+    <configuration name="AuthServiceTest.changePasswordTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Repository.*" />
+          <option name="PATTERN" value="service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="existsByCustomerIdAndCurrencyIdAndStatusTest" />
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="METHOD_NAME" value="changePasswordTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionRepositoryTest.findAllTransactionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AuthServiceTest.registerUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Repository.*" />
+          <option name="PATTERN" value="service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="findAllTransactionsTest" />
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="METHOD_NAME" value="registerUserTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AuthServiceTest.testLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Repository.*" />
+          <option name="PATTERN" value="service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="findByCurrencyIdAndCreatedAtBetweenTest" />
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="METHOD_NAME" value="testLogin" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserRepositoryTest.findAllUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -201,24 +207,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="findByStatusAndCreatedAtBetweenTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" />
+      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllUsersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -235,13 +225,27 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.App" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.findAllTransactionsTest" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest" />
+        <item itemvalue="JUnit.AuthServiceTest.changePasswordTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.findAllUsersTest" />
+        <item itemvalue="JUnit.AuthServiceTest.testLogin" />
+        <item itemvalue="JUnit.AuthServiceTest.registerUserTest" />
+        <item itemvalue="Spring Boot.App" />
       </list>
     </recent_temporary>
   </component>
