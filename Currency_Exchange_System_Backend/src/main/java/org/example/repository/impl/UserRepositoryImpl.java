@@ -222,6 +222,32 @@ public class UserRepositoryImpl implements UserRepsitory {
         }
     }
 
+    @Override
+    public List<User> findByRole(UserRole role) {
+
+        List<User> users = new ArrayList<>();
+        String sql = """
+                SELECT * FROM users WHERE role = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, role.name());
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                users.add(mapUser(resultSet));
+            }
+            return users;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find users by role " + e.getMessage(), e);
+        }
+    }
+
     private User mapUser(ResultSet res) throws SQLException {
 
         User user = new User();
