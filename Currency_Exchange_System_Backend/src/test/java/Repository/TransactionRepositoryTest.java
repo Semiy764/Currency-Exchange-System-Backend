@@ -258,4 +258,29 @@ public class TransactionRepositoryTest {
         }
     }
 
+    @Test
+    public void findByStatusAndCreatedAtBetweenTest() {
+
+        LocalDateTime start = LocalDateTime.of(2025, 8, 1, 0, 0, 0);
+        LocalDateTime finish = LocalDateTime.of(2027, 8, 7, 23, 59, 59);
+        List<Transaction> trans = transactionRepository.findByStatusAndCreatedAtBetween(TxStatus.COMPLETED, start, finish);
+
+        for(Transaction transaction : trans) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+    }
+
 }
