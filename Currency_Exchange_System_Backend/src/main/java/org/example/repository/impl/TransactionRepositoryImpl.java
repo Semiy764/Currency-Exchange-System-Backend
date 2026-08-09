@@ -358,6 +358,38 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
+    @Override
+    public BigDecimal sumAmountTomanByTypeAndStatusAndCreatedAtBetween(TxType type, TxStatus status, LocalDateTime start, LocalDateTime end) {
+
+        String sql = """
+                SELECT SUM(amount_toman) as total_amount
+                FROM transactions WHERE 
+                type = ? AND status = ? AND created_at 
+                BETWEEN ? AND ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, type.name());
+            statement.setString(2, status.name());
+            statement.setString(3, start.toString());
+            statement.setString(4, end.toString());
+
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return resultSet.getBigDecimal("total_amount");
+            }
+            return BigDecimal.ZERO;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in calculate sum amount tomans between: " + e, e);
+        }
+    }
+
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
 
         Transaction transaction = new Transaction();

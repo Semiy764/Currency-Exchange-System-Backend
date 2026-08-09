@@ -290,4 +290,14 @@ public class TransactionRepositoryTest {
         System.out.println(transactionRepository.existsByCustomerIdAndCurrencyIdAndStatus(2, 1, TxStatus.COMPLETED));
     }
 
+    @Test
+    public void sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest() {
+
+        LocalDateTime start = LocalDateTime.of(2025, 8, 1, 0, 0, 0);
+        LocalDateTime finish = LocalDateTime.of(2027, 8, 7, 23, 59, 59);
+
+        System.out.println(transactionRepository.sumAmountTomanByTypeAndStatusAndCreatedAtBetween(TxType.BUY, TxStatus.PENDING, start, finish));
+
+    }
+
 }
