@@ -17,5 +17,5 @@ public interface TransactionRepository {
     List<Transaction> findByPreformedByUserId(int userId);
     List<Transaction> findByApprovedByUserId(int userId);
     List<Transaction> findByCurrencyIdAndCreatedAtBetween(int currencyId, LocalDateTime start, LocalDateTime finish);
-
+    List<Transaction> findByStatusAndCreatedAtBetween(TxStatus status, LocalDateTime start, LocalDateTime finish);
 }
