@@ -98,9 +98,9 @@ public class AuthServiceTest {
     @Test
     public void changePasswordTest() {
 
-        authService.changePassword(1, "Mohammad1025@", "Mohammad1026@");
+        authService.changePassword(1, "Mohammad1026@", "Mohammad1022@");
         User user = userRepsitory.findById(1);
 
-        System.out.println(passwordEncoder.matches("Mohammad1026@", user.getPasswordHash()));
+        System.out.println(passwordEncoder.matches("Mohammad1022@", user.getPasswordHash()));
     }
 }

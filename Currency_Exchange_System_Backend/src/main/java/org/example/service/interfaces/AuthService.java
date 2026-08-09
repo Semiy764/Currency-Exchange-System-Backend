@@ -10,5 +10,4 @@ public interface AuthService {
     User login(String username, String password);
     void changePassword(int userId, String oldPassword, String newPassword);
 
-
 }
