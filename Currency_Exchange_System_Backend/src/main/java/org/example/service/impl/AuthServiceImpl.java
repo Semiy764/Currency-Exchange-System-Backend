@@ -86,4 +86,26 @@ public class AuthServiceImpl implements AuthService {
         return saved;
 
     }
+
+    @Override
+    public User login(String username, String password) {
+
+        User user = userRepsitory.findByUsername(username);
+
+        if(user == null || !passwordEncoder.matches(password, user.getPasswordHash())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Invalid username or password"
+            );
+        }
+
+        if(!user.isActive()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Account is deactivated. Please contact support"
+            );
+        }
+
+        return user;
+    }
 }

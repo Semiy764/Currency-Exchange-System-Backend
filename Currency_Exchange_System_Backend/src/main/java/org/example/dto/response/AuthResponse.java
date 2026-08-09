@@ -11,6 +11,7 @@ public class AuthResponse {
     private String username;
     private UserRole role;
 
+    public AuthResponse() {}
     public AuthResponse(UserRole role, String token, Long userId, String username) {
         this.role = role;
         this.token = token;
