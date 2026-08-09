@@ -1,4 +1,5 @@
 package org.example.repository.interfaces;
+import org.example.enums.UserRole;
 import org.example.model.User;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface UserRepsitory {
     boolean existsByUsername(String username);
 
     boolean existsById(int userId);
+
+    List<User> findByRole(UserRole role);
 
 //    boolean existsByPhone(String phone); this is for customer
 }

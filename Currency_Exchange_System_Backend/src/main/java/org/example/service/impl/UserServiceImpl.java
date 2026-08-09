@@ -1,8 +1,12 @@
 package org.example.service.impl;
 
+import org.example.enums.UserRole;
 import org.example.exception.ResourceNotFoundException;
+import org.example.model.Teller;
 import org.example.model.User;
 import org.example.repository.impl.UserRepositoryImpl;
+import org.example.repository.interfaces.CustomerRepository;
+import org.example.repository.interfaces.TellerRepository;
 import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.UserService;
 import org.springframework.http.HttpStatus;
@@ -16,9 +20,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepsitory userRepsitory;
+    private final CustomerRepository customerRepository;
+    private final TellerRepository tellerRepository;
 
-    public UserServiceImpl(UserRepsitory userRepsitory) {
+    public UserServiceImpl(UserRepsitory userRepsitory, CustomerRepository customerRepository, TellerRepository tellerRepository) {
         this.userRepsitory = userRepsitory;
+        this.customerRepository = customerRepository;
+        this.tellerRepository = tellerRepository;
     }
 
 
@@ -48,4 +56,9 @@ public class UserServiceImpl implements UserService {
         List<User> allUsers = userRepsitory.findAll();
         return allUsers;
     }
+
+//    @Override
+//    public List<User> findByRole(UserRole role) {
+//
+//    }
 }

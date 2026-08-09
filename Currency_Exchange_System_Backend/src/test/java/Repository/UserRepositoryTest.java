@@ -88,4 +88,19 @@ public class UserRepositoryTest {
         assertThat(updatedUser.getRole().name()).isEqualTo("TELLER");
         assertThat(updatedUser.isActive()).isEqualTo(false);
     }
+
+    @Test
+    public void findUserByRoleTest() {
+
+        List<User> users = userRepsitory.findByRole(UserRole.CUSTOMER);
+        for(User user : users) {
+            System.out.println(
+                    user.isActive() + " - " +
+                            user.getRole() + " - " +
+                            user.getId() + " - " +
+                            user.getUsername() + " - " +
+                            user.getPasswordHash()
+            );
+        }
+    }
 }
