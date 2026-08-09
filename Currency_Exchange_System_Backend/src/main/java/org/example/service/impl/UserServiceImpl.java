@@ -57,8 +57,9 @@ public class UserServiceImpl implements UserService {
         return allUsers;
     }
 
-//    @Override
-//    public List<User> findByRole(UserRole role) {
-//
-//    }
+    @Override
+    public List<User> findByRole(UserRole role) {
+        List<User> users = userRepsitory.findByRole(role);
+        return users;
+    }
 }

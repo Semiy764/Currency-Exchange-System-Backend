@@ -60,4 +60,19 @@ public class UserServiceTest {
             );
         }
     }
+
+    @Test
+    public void findUsersByRoleTest() {
+
+        List<User> users = userService.findByRole(UserRole.TELLER);
+        for(User user : users) {
+            System.out.println(
+                    user.isActive() + " - " +
+                            user.getRole() + " - " +
+                            user.getId() + " - " +
+                            user.getUsername() + " - " +
+                            user.getPasswordHash()
+            );
+        }
+    }
 }
