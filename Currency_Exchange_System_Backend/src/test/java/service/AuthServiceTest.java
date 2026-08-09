@@ -1,5 +1,6 @@
 package service;
 
+import io.jsonwebtoken.security.Password;
 import org.example.App;
 import org.example.dto.request.CustomerRegisterRequest;
 import org.example.dto.request.RegisterRequest;
@@ -10,10 +11,14 @@ import org.example.model.Teller;
 import org.example.model.User;
 import org.example.repository.interfaces.CustomerRepository;
 import org.example.repository.interfaces.TellerRepository;
+import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.AuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = App.class)
 public class AuthServiceTest {
@@ -26,6 +31,12 @@ public class AuthServiceTest {
 
     @Autowired
     private TellerRepository tellerRepository;
+
+    @Autowired
+    private UserRepsitory userRepsitory;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void registerUserTest() {
@@ -82,5 +93,14 @@ public class AuthServiceTest {
                 user.getPasswordHash()
         );
 
+    }
+
+    @Test
+    public void changePasswordTest() {
+
+        authService.changePassword(1, "Mohammad1025@", "Mohammad1026@");
+        User user = userRepsitory.findById(1);
+
+        System.out.println(passwordEncoder.matches("Mohammad1026@", user.getPasswordHash()));
     }
 }

@@ -198,7 +198,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 UPDATE users SET
                 username = ?,
                 role = ?,
-                is_active = ?
+                is_active = ?,
+                password_hash = ?
                 WHERE id = ?
                 """;
 
@@ -210,7 +211,8 @@ public class UserRepositoryImpl implements UserRepsitory {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getRole().name());
             statement.setInt(3, user.isActive() ? 1 : 0);
-            statement.setInt(4, user.getId().intValue());
+            statement.setString(4, user.getPasswordHash());
+            statement.setInt(5, user.getId().intValue());
 
             statement.executeUpdate();
             return user;

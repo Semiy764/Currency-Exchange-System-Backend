@@ -8,6 +8,7 @@ public interface AuthService {
 
     User register(RegisterRequest request);
     User login(String username, String password);
+    void changePassword(int userId, String oldPassword, String newPassword);
 
 
 }

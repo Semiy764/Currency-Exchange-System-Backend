@@ -108,4 +108,41 @@ public class AuthServiceImpl implements AuthService {
 
         return user;
     }
+
+    @Override
+    public void changePassword(int userId, String oldPassword, String newPassword) {
+
+        if(oldPassword == null || oldPassword.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "old password is required"
+            );
+        }
+
+        if(newPassword == null || newPassword.length() < 8) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "your new password must be at least 8 characters"
+            );
+        }
+
+         User user = userRepsitory.findById(userId);
+
+         if(!passwordEncoder.matches(oldPassword, user.getPasswordHash())) {
+             throw new ResponseStatusException(
+                     HttpStatus.UNAUTHORIZED,
+                     "old password is incorrect"
+             );
+         }
+
+         if(passwordEncoder.matches(newPassword, user.getPasswordHash())) {
+             throw new ResponseStatusException(
+                     HttpStatus.BAD_REQUEST,
+                     "new password must be different from old password"
+             );
+         }
+
+         user.setPasswordHash(passwordEncoder.encode(newPassword));
+         userRepsitory.update(user);
+    }
 }
