@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = App.class)
@@ -43,5 +45,19 @@ public class UserServiceTest {
         assertThat(user.getRole()).isEqualTo(UserRole.CUSTOMER);
         assertThat(user.isActive()).isEqualTo(true);
 
+    }
+
+    @Test
+    public void findAllUsersTest() {
+        List<User> allUsers = userService.findAll();
+        for(User user : allUsers) {
+            System.out.println(
+                    user.isActive() + " - " +
+                            user.getRole() + " - " +
+                            user.getId() + " - " +
+                            user.getUsername() + " - " +
+                            user.getPasswordHash()
+            );
+        }
     }
 }

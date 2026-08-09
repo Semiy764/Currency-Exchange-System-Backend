@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -39,5 +41,11 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("User not found with username: " + username);
         }
         return user;
+    }
+
+    @Override
+    public List<User> findAll() {
+        List<User> allUsers = userRepsitory.findAll();
+        return allUsers;
     }
 }
