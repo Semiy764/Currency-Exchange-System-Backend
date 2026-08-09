@@ -10,6 +10,6 @@ public interface UserService {
     User findById(int userId);
     User findByUsername(String username);
     List<User> findAll();
-//    List<User> findByRole(UserRole role);
+    List<User> findByRole(UserRole role);
 
 }
