@@ -103,4 +103,18 @@ public class UserRepositoryTest {
             );
         }
     }
+
+    @Test
+    public void findActiveUsresTest() {
+        List<User> users = userRepsitory.findActiveUsers();
+        for(User user : users) {
+            System.out.println(
+                    user.isActive() + " - " +
+                            user.getRole() + " - " +
+                            user.getId() + " - " +
+                            user.getUsername() + " - " +
+                            user.getPasswordHash()
+            );
+        }
+    }
 }

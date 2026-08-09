@@ -22,5 +22,7 @@ public interface UserRepsitory {
 
     List<User> findByRole(UserRole role);
 
+    List<User> findActiveUsers();
+
 //    boolean existsByPhone(String phone); this is for customer
 }

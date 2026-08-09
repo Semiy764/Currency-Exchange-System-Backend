@@ -244,7 +244,34 @@ public class UserRepositoryImpl implements UserRepsitory {
             return users;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in find users by role " + e.getMessage(), e);
+            throw new RuntimeException("Error in find users by role: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<User> findActiveUsers() {
+
+        List<User> users = new ArrayList<>();
+        String sql = """
+                SELECT * FROM users
+                WHERE is_active = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, 1);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                users.add(mapUser(resultSet));
+            }
+            return users;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find active users: " + e.getMessage(), e);
         }
     }
 
