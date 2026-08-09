@@ -330,6 +330,34 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
+    @Override
+    public boolean existsByCustomerIdAndCurrencyIdAndStatus(int customerId, int currencyId, TxStatus status) {
+
+        String sql = """
+                SELECT 1 FROM transactions 
+                WHERE customer_id = ?
+                AND currency_id = ?
+                AND status = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, customerId);
+            statement.setInt(2, currencyId);
+            statement.setString(3, status.name());
+
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find by customer id & currency id & status: " + e, e);
+
+        }
+    }
+
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
 
         Transaction transaction = new Transaction();
