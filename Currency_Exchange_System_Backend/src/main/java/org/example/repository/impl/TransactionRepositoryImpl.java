@@ -266,6 +266,38 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         }
     }
 
+    @Override
+    public List<Transaction> findByCurrencyIdAndCreatedAtBetween(int currencyId, LocalDateTime start, LocalDateTime finish) {
+
+        List<Transaction> trans = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions WHERE currency_id = ?
+                AND created_at BETWEEN ? AND ?
+                ORDER BY created_at DESC 
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+            statement.setString(2, start.toString());
+            statement.setString(3, finish.toString());
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                trans.add(mapTranasction(resultSet));
+            }
+
+            return trans;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find transactions by currency id and dates between: " + e, e);
+        }
+    }
+
     private Transaction mapTranasction(ResultSet resultSet) throws SQLException {
 
         Transaction transaction = new Transaction();
