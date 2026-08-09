@@ -32,4 +32,16 @@ public class UserServiceTest {
         assertThat(user.getRole()).isEqualTo(UserRole.CUSTOMER);
         assertThat(user.isActive()).isEqualTo(true);
     }
+
+    @Test
+    public void findUserByUsernameTest() {
+
+        User user = userService.findByUsername("erfan.simiyari");
+        assertThat(user.getId()).isEqualTo(1);
+        assertThat(user.getUsername()).isEqualTo("erfan.simiyari");
+        assertThat(passwordEncoder.matches("Mohammad1022@", user.getPasswordHash())).isEqualTo(true);
+        assertThat(user.getRole()).isEqualTo(UserRole.CUSTOMER);
+        assertThat(user.isActive()).isEqualTo(true);
+
+    }
 }

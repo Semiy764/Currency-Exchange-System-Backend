@@ -29,4 +29,15 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public User findByUsername(String username) {
+
+        User user = userRepsitory.findByUsername(username);
+
+        if(user == null) {
+            throw new ResourceNotFoundException("User not found with username: " + username);
+        }
+        return user;
+    }
 }
