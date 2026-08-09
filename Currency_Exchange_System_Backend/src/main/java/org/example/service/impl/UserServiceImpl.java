@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @Service
@@ -67,5 +68,28 @@ public class UserServiceImpl implements UserService {
     public List<User> findActiveUsers() {
         List<User> users = userRepsitory.findActiveUsers();
         return users;
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepsitory.existsByUsername(username);
+    }
+
+    @Override
+    public User updateUser(int userId, User user) {
+
+        if(userId != user.getId()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "user id in path does not match user id in request body"
+            );
+        }
+
+        User existing = userRepsitory.findById(userId);
+        if(existing == null) {
+            throw new ResourceNotFoundException("user not found with ID: " + userId);
+        }
+
+        return userRepsitory.update(user);
     }
 }
