@@ -1,8 +1,10 @@
 package org.example.repository.interfaces;
 
 import org.example.enums.TxStatus;
+import org.example.enums.TxType;
 import org.example.model.Transaction;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,4 +21,8 @@ public interface TransactionRepository {
     List<Transaction> findByCurrencyIdAndCreatedAtBetween(int currencyId, LocalDateTime start, LocalDateTime finish);
     List<Transaction> findByStatusAndCreatedAtBetween(TxStatus status, LocalDateTime start, LocalDateTime finish);
     boolean existsByCustomerIdAndCurrencyIdAndStatus(int customerId, int currencyId, TxStatus status);
+    BigDecimal sumAmountTomanByTypeAndStatusAndCreatedAtBetween(TxType type,
+                                                                TxStatus status,
+                                                                LocalDateTime start,
+                                                                LocalDateTime end);
 }

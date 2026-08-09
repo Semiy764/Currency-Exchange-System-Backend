@@ -75,6 +75,7 @@
     "JUnit.TellerRepositoryTest.findingTellerByUserIdTest.executor": "Run",
     "JUnit.TellerRepositoryTest.savingTellerTest.executor": "Run",
     "JUnit.TellerRepositoryTest.updateTellerTest.executor": "Run",
+    "JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findAllTransactionsTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByApprovedByUserIdTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest.executor": "Run",
@@ -142,7 +143,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest">
+  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest">
     <configuration name="TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -170,22 +171,6 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
       <option name="METHOD_NAME" value="findAllTransactionsTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TransactionRepositoryTest.findByApprovedByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="findByApprovedByUserIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -223,6 +208,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
+      <option name="METHOD_NAME" value="sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -236,11 +237,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" />
+        <item itemvalue="JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findAllTransactionsTest" />
+        <item itemvalue="JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.findByApprovedByUserIdTest" />
       </list>
     </recent_temporary>
   </component>
