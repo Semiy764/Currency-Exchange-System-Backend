@@ -42,7 +42,7 @@ public class TransactionRepositoryTest {
                 amoutncurrency,
                 amountToman,
                 null,
-                null,
+                1L,
                 LocalDateTime.now(),
                 1,
                 2,
@@ -69,6 +69,7 @@ public class TransactionRepositoryTest {
 //        assertThat(transaction.getRequestedRate()).isEqualTo(rateRequest);
 //        assertThat(transaction.getStatus()).isEqualTo(TxStatus.PENDING);
 //        assertThat(transaction.getTxType()).isEqualTo(TxType.BUY);
+        System.out.println(saved.getId());
     }
 
     @Test
@@ -207,6 +208,29 @@ public class TransactionRepositoryTest {
                     transaction.getStatus().name() + " - " +
                     transaction.getTxType().name());
         }
+    }
+
+    @Test
+    public void findByApprovedByUserIdTest() {
+
+        List<Transaction> trans = transactionRepository.findByApprovedByUserId(2);
+        for(Transaction transaction : trans) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+
     }
 
 }
