@@ -275,6 +275,34 @@ public class UserRepositoryImpl implements UserRepsitory {
         }
     }
 
+    @Override
+    public boolean isActive(int userId) {
+
+        String sql = """
+                SELECT COUNT(*) FROM users WHERE id = ?
+                AND is_active = 1 LIMIT 1
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                int count = resultSet.getInt(1);
+                boolean isActive = count > 0;
+                return isActive;
+            }
+
+            return false;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in is Active: " + e.getMessage(), e);
+        }
+    }
+
     private User mapUser(ResultSet res) throws SQLException {
 
         User user = new User();

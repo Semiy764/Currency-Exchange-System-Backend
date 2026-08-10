@@ -117,4 +117,9 @@ public class UserRepositoryTest {
             );
         }
     }
+
+    @Test
+    public void isUserActive() {
+        System.out.println(userRepsitory.isActive(1));
+    }
 }
