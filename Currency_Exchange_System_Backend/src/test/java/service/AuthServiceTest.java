@@ -61,7 +61,7 @@ public class AuthServiceTest {
 //                customer.getNationalId() + " - " +
 //                customer.getPhoneNumber()
 //        );
-        TellerRegisterRequest request = new TellerRegisterRequest("Sobhan Simiyari", "0314628665", "Mohammad1022@", "09107241801", UserRole.TELLER, "sobhan.simiyari");
+        TellerRegisterRequest request = new TellerRegisterRequest("Mohammad Simiyari", "0314628665", "Mohammad1022@", "09107241801", UserRole.TELLER, "mohammad.simiyari");
         User user = authService.register(request);
         System.out.println(
                 user.getId() + " - " +
