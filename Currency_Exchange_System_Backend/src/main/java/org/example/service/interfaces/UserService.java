@@ -14,6 +14,8 @@ public interface UserService {
     List<User> findActiveUsers();
     boolean existsByUsername(String username);
     User updateUser(int userId, User user);
-    // we dont have method for deactive user because we are doinng this in update user;
+    void deactivateUser(int userId);
+//    void activateUser(int userId);
+    // we dont have method for deactive and activate user because we are doinng this in update user;
 
 }

@@ -92,4 +92,29 @@ public class UserServiceImpl implements UserService {
 
         return userRepsitory.update(user);
     }
+
+    @Override
+    public void deactivateUser(int userId) {
+
+        User user = userRepsitory.findById(userId);
+        if(user == null) {
+            throw new ResourceNotFoundException("User not found with userId: " + userId);
+        }
+
+        user.setActive(false);
+        userRepsitory.update(user);
+
+    }
+
+//    @Override
+//    public void activateUser(int userId) {
+//
+//        User user = userRepsitory.findById(userId);
+//        if(user == null) {
+//            throw new ResourceNotFoundException("User not found with userId: " + userId);
+//        }
+//
+//        user.setActive(true);
+//        userRepsitory.update(user);
+//    }
 }
