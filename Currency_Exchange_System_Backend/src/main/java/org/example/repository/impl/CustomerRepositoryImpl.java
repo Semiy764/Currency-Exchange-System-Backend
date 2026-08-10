@@ -291,6 +291,32 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     }
 
+    @Override
+    public Customer findByNationalId(String nationalId) {
+
+        String sql = """
+                SELECT * FROM customers WHERE national_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, nationalId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                return mapCustomer(resultSet);
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find customer by national id: " + e, e);
+
+        }
+    }
+
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 
         Customer customer = new Customer();

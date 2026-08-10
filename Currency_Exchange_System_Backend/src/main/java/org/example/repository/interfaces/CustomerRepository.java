@@ -27,4 +27,6 @@ public interface CustomerRepository {
     boolean existsByNationalId(String nationalId);
 
     List<Customer> searchByName(String name);
+
+    Customer findByNationalId(String nationalId);
 }

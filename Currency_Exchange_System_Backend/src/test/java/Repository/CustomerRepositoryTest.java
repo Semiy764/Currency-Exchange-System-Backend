@@ -114,4 +114,19 @@ public class CustomerRepositoryTest {
         }
     }
 
+    @Test
+    public void findCustomerByNationalIdTest() {
+
+        Customer customer = customerRepository.findByNationalId("031346420");
+        if(customer != null) {
+            System.out.println(customer.getId() + " - " +
+                    customer.getFullname() + " - " +
+                    customer.getNationalId() + " - " +
+                    customer.getUserId() + " - " +
+                    customer.getPhoneNumber()
+            );
+        }
+
+    }
+
 }
