@@ -39,4 +39,16 @@ public class TellerServiceImpl implements TellerService {
         List<Teller> allTellers = tellerRepository.findAll();
         return allTellers;
     }
+
+    @Override
+    public boolean existsById(int tellerId) {
+
+        if(tellerId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Enter a valid number for teller id"
+            );
+        }
+        return tellerRepository.existsById(tellerId);
+    }
 }

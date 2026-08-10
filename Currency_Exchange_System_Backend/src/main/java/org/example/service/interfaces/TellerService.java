@@ -8,4 +8,5 @@ public interface TellerService {
 
     Teller findById(int tellerId);
     List<Teller> findAll();
+    boolean existsById(int tellerId);
 }
