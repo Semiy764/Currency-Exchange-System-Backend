@@ -76,4 +76,21 @@ public class TellerServiceImpl implements TellerService {
 
         return tellerRepository.update(teller);
     }
+
+    @Override
+    public Teller findByUserId(int userId) {
+
+        if(userId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Enter a valid number for user id"
+            );
+        }
+
+        Teller teller = tellerRepository.findByUserId(userId);
+        if(teller == null) {
+            throw new ResourceNotFoundException("teller not found");
+        }
+        return teller;
+    }
 }

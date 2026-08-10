@@ -10,4 +10,5 @@ public interface TellerService {
     List<Teller> findAll();
     boolean existsById(int tellerId);
     Teller updateTeller(int tellerId, Teller teller);
+    Teller findByUserId(int userId);
 }
