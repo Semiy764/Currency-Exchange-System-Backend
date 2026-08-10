@@ -102,5 +102,10 @@ public class UserServiceTest {
         userService.deactivateUser(1);
     }
 
+    @Test
+    public void activateUserTest() {
+        userService.activateUser(1);
+    }
+
 
 }
