@@ -51,4 +51,29 @@ public class TellerServiceImpl implements TellerService {
         }
         return tellerRepository.existsById(tellerId);
     }
+
+    @Override
+    public Teller updateTeller(int tellerId, Teller teller) {
+
+        if(tellerId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Enter a valid number for teller id"
+            );
+        }
+
+        if(tellerId != teller.getId()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "teller id in path does not match teller id in request body"
+
+            );
+        }
+
+        if(!tellerRepository.existsById(tellerId)) {
+            throw new ResourceNotFoundException("teller not found");
+        }
+
+        return tellerRepository.update(teller);
+    }
 }
