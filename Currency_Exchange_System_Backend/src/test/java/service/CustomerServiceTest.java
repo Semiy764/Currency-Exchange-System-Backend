@@ -117,4 +117,10 @@ public class CustomerServiceTest {
         assertThat(foundCustomeer.getPhoneNumber()).isEqualTo("09107855810");
 
     }
+
+    @Test
+    public void isCustomerActiveTest() {
+
+        System.out.println(customerService.isActive(1));
+    }
 }
