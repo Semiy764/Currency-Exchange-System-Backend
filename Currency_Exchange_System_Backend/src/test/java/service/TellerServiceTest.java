@@ -65,4 +65,16 @@ public class TellerServiceTest {
         assertThat(foundTeller.getId()).isEqualTo(2);
         assertThat(foundTeller.getUserId()).isEqualTo(3);
     }
+
+    @Test
+    public void findingTellerByUserIdTest() {
+
+        Teller foundTeller = tellerService.findByUserId(3);
+        assertThat(foundTeller.getFullname()).isEqualTo("fatemeh amookht");
+        assertThat(foundTeller.getPhoneNumber()).isEqualTo("09380301761");
+        assertThat(foundTeller.getNationalId()).isEqualTo("4899005989");
+        assertThat(foundTeller.getId()).isEqualTo(2);
+        assertThat(foundTeller.getUserId()).isEqualTo(3);
+
+    }
 }
