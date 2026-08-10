@@ -160,7 +160,7 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.UserServiceTest.findAllUsersTest">
-    <configuration name="AuthServiceTest.findindActiveUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.activateUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -169,8 +169,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="METHOD_NAME" value="findindActiveUsersTest" />
+      <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
+      <option name="METHOD_NAME" value="activateUserTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -254,10 +254,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
+        <item itemvalue="JUnit.UserServiceTest.activateUserTest" />
         <item itemvalue="JUnit.UserServiceTest.deactivateUserTest" />
         <item itemvalue="JUnit.UserServiceTest.updatingUserTest" />
         <item itemvalue="JUnit.UserServiceTest.existingByUsernameTest" />
-        <item itemvalue="JUnit.AuthServiceTest.findindActiveUsersTest" />
       </list>
     </recent_temporary>
   </component>
