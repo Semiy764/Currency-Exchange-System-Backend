@@ -25,4 +25,6 @@ public interface CustomerRepository {
     boolean existsByPhone(String phone);
 
     boolean existsByNationalId(String nationalId);
+
+    List<Customer> searchByName(String name);
 }

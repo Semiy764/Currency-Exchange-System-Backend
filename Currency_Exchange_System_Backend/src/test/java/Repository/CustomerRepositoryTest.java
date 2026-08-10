@@ -100,4 +100,18 @@ public class CustomerRepositoryTest {
 
     }
 
+    @Test
+    public void searchCustomerByNameTest() {
+
+        List<Customer> customers = customerRepository.searchByName("Erf");
+        for(Customer customer : customers) {
+            System.out.println(customer.getId() + " - " +
+                    customer.getFullname() + " - " +
+                    customer.getNationalId() + " - " +
+                    customer.getUserId() + " - " +
+                    customer.getPhoneNumber()
+            );
+        }
+    }
+
 }
