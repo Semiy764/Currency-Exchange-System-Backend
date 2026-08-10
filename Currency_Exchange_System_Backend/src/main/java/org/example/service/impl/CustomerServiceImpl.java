@@ -64,4 +64,36 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> foundCusomers = customerRepository.searchByName(name);
         return foundCusomers;
     }
+
+    @Override
+    public Customer findByNationalId(String nationalId) {
+
+        if(nationalId == null || nationalId.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "please enter a valid national id"
+            );
+        }
+
+        Customer customer = customerRepository.findByNationalId(nationalId);
+        return customer;
+    }
+
+    @Override
+    public Customer updateCustomer(int customerId, Customer customer) {
+
+        if(customerId != customer.getId()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "customer id in path does not match customer id in request body"
+            );
+
+        }
+
+        Customer foundCustomer = customerRepository.findById(customerId);
+        if(foundCustomer == null) {
+            throw new ResourceNotFoundException("customer not found with id: " + customerId);
+        }
+        return customerRepository.update(customer);
+    }
 }
