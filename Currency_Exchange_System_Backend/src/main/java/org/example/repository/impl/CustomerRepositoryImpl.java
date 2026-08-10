@@ -261,6 +261,36 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
     }
 
+    @Override
+    public List<Customer> searchByName(String name) {
+
+        List<Customer> customers = new ArrayList<>();
+        String sql = """
+                SELECT * FROM customers WHERE full_name LIKE ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            String searchTerm = "%" + name + "%";
+            statement.setString(1, searchTerm);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                customers.add(mapCustomer(resultSet));
+            }
+
+            return customers;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in search customer by name: " + e, e);
+        }
+
+    }
+
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 
         Customer customer = new Customer();
