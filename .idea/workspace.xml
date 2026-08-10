@@ -121,6 +121,7 @@
     &quot;JUnit.UserServiceTest.findUserByUserIdTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserServiceTest.findUserByUsernameTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserServiceTest.findUsersByRoleTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.updatingUserTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.VaultBalanceRepositoryTest.adjustBalanceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.VaultBalanceRepositoryTest.deleteBalanceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.VaultBalanceRepositoryTest.existsByCurrencyIdTest.executor&quot;: &quot;Run&quot;,
@@ -158,7 +159,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserServiceTest.updatingUserTest">
+  <component name="RunManager" selected="JUnit.UserServiceTest.findAllUsersTest">
     <configuration name="AuthServiceTest.findindActiveUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -175,17 +176,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserRepositoryTest.findActiveUsresTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.deactivateUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Repository.*" />
+          <option name="PATTERN" value="service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.UserRepositoryTest" />
-      <option name="METHOD_NAME" value="findActiveUsresTest" />
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
+      <option name="METHOD_NAME" value="deactivateUserTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -207,7 +208,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.findUsersByRoleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.findAllUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -217,7 +218,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
-      <option name="METHOD_NAME" value="findUsersByRoleTest" />
+      <option name="METHOD_NAME" value="findAllUsersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -252,11 +253,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
+        <item itemvalue="JUnit.UserServiceTest.deactivateUserTest" />
         <item itemvalue="JUnit.UserServiceTest.updatingUserTest" />
         <item itemvalue="JUnit.UserServiceTest.existingByUsernameTest" />
         <item itemvalue="JUnit.AuthServiceTest.findindActiveUsersTest" />
-        <item itemvalue="JUnit.UserRepositoryTest.findActiveUsresTest" />
-        <item itemvalue="JUnit.UserServiceTest.findUsersByRoleTest" />
       </list>
     </recent_temporary>
   </component>

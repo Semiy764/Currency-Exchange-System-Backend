@@ -95,4 +95,12 @@ public class UserServiceTest {
         User updatedUser = userRepsitory.findById(1);
         assertThat(updatedUser.isActive()).isEqualTo(true);
     }
+
+    @Test
+    public void deactivateUserTest() {
+
+        userService.deactivateUser(1);
+    }
+
+
 }
