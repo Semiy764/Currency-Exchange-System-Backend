@@ -108,10 +108,12 @@ public class UserServiceTest {
 
     @Test
     public void resetPasswordTest() {
-        userService.resetPassword(1, "Mohammad1028@");
+        userService.resetPassword(1, "Mohammad1022@");
         User user = userRepsitory.findById(1);
-        assertThat(passwordEncoder.matches("Mohammad1028@", user.getPasswordHash())).isEqualTo(true);
+        assertThat(passwordEncoder.matches("Mohammad1022@", user.getPasswordHash())).isEqualTo(true);
     }
+
+    // we don't have deleteUser() method we set isactive = false 'cause we wanna have a compelete history of even all deleted users!!
 
 
 }
