@@ -24,5 +24,7 @@ public interface UserRepsitory {
 
     List<User> findActiveUsers();
 
+    boolean isActive(int userId);
+
 //    boolean existsByPhone(String phone); this is for customer
 }
