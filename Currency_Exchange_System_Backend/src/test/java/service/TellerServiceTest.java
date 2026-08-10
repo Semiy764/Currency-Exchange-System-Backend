@@ -40,4 +40,9 @@ public class TellerServiceTest {
             );
         }
     }
+
+    @Test
+    public void existingByTellerIdTest() {
+        System.out.println(tellerService.existsById(3));
+    }
 }
