@@ -113,6 +113,8 @@ public class UserServiceTest {
         assertThat(passwordEncoder.matches("Mohammad1022@", user.getPasswordHash())).isEqualTo(true);
     }
 
+
+
     // we don't have deleteUser() method we set isactive = false 'cause we wanna have a compelete history of even all deleted users!!
 
 

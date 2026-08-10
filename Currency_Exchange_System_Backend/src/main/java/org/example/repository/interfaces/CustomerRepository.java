@@ -23,4 +23,6 @@ public interface CustomerRepository {
     boolean existsById(int userId);
 
     boolean existsByPhone(String phone);
+
+    boolean existsByNationalId(String nationalId);
 }

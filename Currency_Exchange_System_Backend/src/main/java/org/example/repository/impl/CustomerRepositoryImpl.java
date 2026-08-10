@@ -240,7 +240,26 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
     }
 
+    @Override
+    public boolean existsByNationalId(String nationalId) {
 
+        String sql = """
+                SELECT 1 FROM customers WHERE national_id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, nationalId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in existing customer by national id: " + e, e);
+        }
+    }
 
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
 

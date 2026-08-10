@@ -92,4 +92,12 @@ public class CustomerRepositoryTest {
         customerRepository.delete(3);
     }
 
+
+    @Test
+    public void existingCustomerByNationalIdTest() {
+
+        System.out.println(customerRepository.existsByNationalId("0313464200"));
+
+    }
+
 }
