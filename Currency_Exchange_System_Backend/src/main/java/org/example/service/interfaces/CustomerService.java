@@ -10,4 +10,5 @@ public interface CustomerService {
 //    Customer findByNationalId(String nationalId);
     Customer findByUserId(int userId);
     List<Customer> findAll();
+    boolean existsByNationalId(String nationalId);
 }

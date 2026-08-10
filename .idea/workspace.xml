@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="" />
+    <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CustomerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CustomerServiceTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,12 +56,14 @@
     "JUnit.CustomerRepositoryTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingCustomerByIdTest.executor": "Run",
+    "JUnit.CustomerRepositoryTest.existingCustomerByNationalIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingCustomerByPhoneNumberTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findAllCustomersTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.testUpateCustomer.executor": "Run",
+    "JUnit.CustomerServiceTest.existingByNationalIdTest.executor": "Run",
     "JUnit.CustomerServiceTest.findAllCustomersTest.executor": "Run",
     "JUnit.CustomerServiceTest.findCustomerByIdTest.executor": "Run",
     "JUnit.CustomerServiceTest.findCustomerByUserIdTest.executor": "Run",
@@ -160,23 +166,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerRepositoryTest.existingCustomerByNationalIdTest">
-    <configuration name="AuthServiceTest.findindActiveUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="METHOD_NAME" value="findindActiveUsersTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.CustomerServiceTest.existingByNationalIdTest">
     <configuration name="CustomerRepositoryTest.existingCustomerByNationalIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -188,6 +178,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CustomerRepositoryTest" />
       <option name="METHOD_NAME" value="existingCustomerByNationalIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerServiceTest.existingByNationalIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.CustomerServiceTest" />
+      <option name="METHOD_NAME" value="existingByNationalIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -254,11 +260,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CustomerServiceTest.existingByNationalIdTest" />
         <item itemvalue="JUnit.CustomerRepositoryTest.existingCustomerByNationalIdTest" />
         <item itemvalue="JUnit.CustomerServiceTest.findAllCustomersTest" />
         <item itemvalue="JUnit.CustomerServiceTest.findCustomerByUserIdTest" />
         <item itemvalue="JUnit.CustomerServiceTest.findCustomerByIdTest" />
-        <item itemvalue="JUnit.AuthServiceTest.findindActiveUsersTest" />
       </list>
     </recent_temporary>
   </component>

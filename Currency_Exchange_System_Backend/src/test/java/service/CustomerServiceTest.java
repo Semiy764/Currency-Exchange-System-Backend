@@ -60,4 +60,9 @@ public class CustomerServiceTest {
                     );
         }
     }
+
+    @Test
+    public void existingByNationalIdTest() {
+        System.out.println(customerService.existsByNationalId("0313464200"));
+    }
 }

@@ -43,4 +43,9 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> allCustomers = customerRepository.findAll();
         return allCustomers;
     }
+
+    @Override
+    public boolean existsByNationalId(String nationalId) {
+        return customerRepository.existsByNationalId(nationalId);
+    }
 }
