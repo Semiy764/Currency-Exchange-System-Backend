@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Repository
 public class TellerServiceImpl implements TellerService {
 
@@ -30,5 +32,11 @@ public class TellerServiceImpl implements TellerService {
             throw new ResourceNotFoundException("Teller not found");
         }
         return teller;
+    }
+
+    @Override
+    public List<Teller> findAll() {
+        List<Teller> allTellers = tellerRepository.findAll();
+        return allTellers;
     }
 }

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest(classes = App.class)
 public class TellerServiceTest {
 
@@ -23,5 +25,19 @@ public class TellerServiceTest {
                 teller.getFullname() + " - " +
                 teller.getNationalId()
                 );
+    }
+
+    @Test
+    public void findingAllTellersTest() {
+        List<Teller> tellerList = tellerService.findAll();
+        for(Teller teller : tellerList) {
+            System.out.println(
+                    teller.getId() + " - " +
+                            teller.getUserId() + " - " +
+                            teller.getPhoneNumber() + " - " +
+                            teller.getFullname() + " - " +
+                            teller.getNationalId()
+            );
+        }
     }
 }
