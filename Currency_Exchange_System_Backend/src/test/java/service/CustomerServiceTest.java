@@ -22,6 +22,8 @@ public class CustomerServiceTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     @Test
     public void findCustomerByIdTest() {
 
@@ -79,5 +81,40 @@ public class CustomerServiceTest {
                             customer.getNationalId()
             );
         }
+    }
+
+    @Test
+    public void findCustomerByNationalIdTest() {
+
+        Customer customer = customerService.findByNationalId("031346420");
+
+        if(customer != null) {
+            System.out.println(
+                    customer.getId() + " - " +
+                            customer.getUserId() + " - " +
+                            customer.getPhoneNumber() + " - " +
+                            customer.getFullname() + " - " +
+                            customer.getNationalId()
+            );
+        }
+    }
+
+    @Test
+    public void updateCustomerTest() {
+
+        Customer customer = customerService.findById(1);
+        customer.setFullname("Erfan Simiyari new");
+        customer.setNationalId("0313464201");
+        customer.setPhoneNumber("09107855810");
+
+        customerService.updateCustomer(1, customer);
+
+        Customer foundCustomeer = customerService.findById(1);
+        assertThat(foundCustomeer.getId()).isEqualTo(1);
+        assertThat(foundCustomeer.getUserId()).isEqualTo(1);
+        assertThat(foundCustomeer.getFullname()).isEqualTo("Erfan Simiyari new");
+        assertThat(foundCustomeer.getNationalId()).isEqualTo("0313464201");
+        assertThat(foundCustomeer.getPhoneNumber()).isEqualTo("09107855810");
+        
     }
 }
