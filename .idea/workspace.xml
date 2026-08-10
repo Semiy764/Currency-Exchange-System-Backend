@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CustomerServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CustomerServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CustomerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CustomerServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +62,8 @@
     "JUnit.CustomerRepositoryTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.saveCustomerTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.testUpateCustomer.executor": "Run",
+    "JUnit.CustomerServiceTest.findCustomerByIdTest.executor": "Run",
+    "JUnit.CustomerServiceTest.findCustomerByUserIdTest.executor": "Run",
     "JUnit.ExchangeRatesRepositoryTest.deletingRatesTest.executor": "Run",
     "JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest.executor": "Run",
     "JUnit.ExchangeRatesRepositoryTest.findAllRatesOfCurrencyTest.executor": "Run",
@@ -163,7 +163,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerServiceTest.findCustomerByIdTest">
+  <component name="RunManager" selected="JUnit.CustomerServiceTest.findCustomerByUserIdTest">
     <configuration name="AuthServiceTest.findindActiveUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -196,7 +196,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.activateUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CustomerServiceTest.findCustomerByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -205,8 +205,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
-      <option name="METHOD_NAME" value="activateUserTest" />
+      <option name="MAIN_CLASS_NAME" value="service.CustomerServiceTest" />
+      <option name="METHOD_NAME" value="findCustomerByUserIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -257,11 +257,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CustomerServiceTest.findCustomerByUserIdTest" />
         <item itemvalue="JUnit.CustomerServiceTest.findCustomerByIdTest" />
         <item itemvalue="JUnit.AuthServiceTest.findindActiveUsersTest" />
         <item itemvalue="JUnit.UserServiceTest.resetPasswordTest" />
         <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
-        <item itemvalue="JUnit.UserServiceTest.activateUserTest" />
       </list>
     </recent_temporary>
   </component>

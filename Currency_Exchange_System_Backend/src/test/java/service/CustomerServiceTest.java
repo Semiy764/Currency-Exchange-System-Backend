@@ -31,4 +31,16 @@ public class CustomerServiceTest {
         assertThat(customer.getNationalId()).isEqualTo("0313464200");
         assertThat(customer.getPhoneNumber()).isEqualTo("09107855814");
     }
+
+    @Test
+    public void findCustomerByUserIdTest() {
+
+        Customer customer = customerService.findByUserId(1);
+
+        assertThat(customer.getId()).isEqualTo(1);
+        assertThat(customer.getUserId()).isEqualTo(1);
+        assertThat(customer.getFullname()).isEqualTo("Erfan Simiyari");
+        assertThat(customer.getNationalId()).isEqualTo("0313464200");
+        assertThat(customer.getPhoneNumber()).isEqualTo("09107855814");
+    }
 }
