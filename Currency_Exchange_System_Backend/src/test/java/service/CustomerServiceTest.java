@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = App.class)
@@ -42,5 +44,20 @@ public class CustomerServiceTest {
         assertThat(customer.getFullname()).isEqualTo("Erfan Simiyari");
         assertThat(customer.getNationalId()).isEqualTo("0313464200");
         assertThat(customer.getPhoneNumber()).isEqualTo("09107855814");
+    }
+
+    @Test
+    public void findAllCustomersTest() {
+
+        List<Customer> allCustomers = customerService.findAll();
+        for(Customer customer : allCustomers) {
+            System.out.println(
+                    customer.getId() + " - " +
+                    customer.getUserId() + " - " +
+                    customer.getPhoneNumber() + " - " +
+                    customer.getFullname() + " - " +
+                    customer.getNationalId()
+                    );
+        }
     }
 }
