@@ -98,13 +98,19 @@ public class UserServiceTest {
 
     @Test
     public void deactivateUserTest() {
-
         userService.deactivateUser(1);
     }
 
     @Test
     public void activateUserTest() {
         userService.activateUser(1);
+    }
+
+    @Test
+    public void resetPasswordTest() {
+        userService.resetPassword(1, "Mohammad1028@");
+        User user = userRepsitory.findById(1);
+        assertThat(passwordEncoder.matches("Mohammad1028@", user.getPasswordHash())).isEqualTo(true);
     }
 
 
