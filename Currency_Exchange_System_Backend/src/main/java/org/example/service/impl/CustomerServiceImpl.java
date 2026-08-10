@@ -4,7 +4,9 @@ import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
 import org.example.service.interfaces.CustomerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -47,5 +49,19 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean existsByNationalId(String nationalId) {
         return customerRepository.existsByNationalId(nationalId);
+    }
+
+    @Override
+    public List<Customer> searchByName(String name) {
+
+        if(name == null || name.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "pleas enter a valid name for search"
+            );
+        }
+
+        List<Customer> foundCusomers = customerRepository.searchByName(name);
+        return foundCusomers;
     }
 }

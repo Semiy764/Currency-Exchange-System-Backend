@@ -65,4 +65,19 @@ public class CustomerServiceTest {
     public void existingByNationalIdTest() {
         System.out.println(customerService.existsByNationalId("0313464200"));
     }
+
+    @Test
+    public void searchCustomerByNameTest() {
+
+        List<Customer> foundCustomers = customerService.searchByName("Erf");
+        for(Customer customer : foundCustomers) {
+            System.out.println(
+                    customer.getId() + " - " +
+                            customer.getUserId() + " - " +
+                            customer.getPhoneNumber() + " - " +
+                            customer.getFullname() + " - " +
+                            customer.getNationalId()
+            );
+        }
+    }
 }
