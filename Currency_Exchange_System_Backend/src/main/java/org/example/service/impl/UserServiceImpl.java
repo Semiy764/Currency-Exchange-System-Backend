@@ -136,4 +136,19 @@ public class UserServiceImpl implements UserService {
         user.setPasswordHash(passwordEncoder.encode(newPassword));
         userRepsitory.update(user);
     }
+
+    @Override
+    public boolean isActive(int userId) {
+
+        if(userId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Enter a valid amount for userID"
+            );
+        }
+        if(!userRepsitory.existsById(userId)) {
+            throw new ResourceNotFoundException("user not found with id: " + userId);
+        }
+        return userRepsitory.isActive(userId);
+    }
 }
