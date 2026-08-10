@@ -3,7 +3,9 @@ package org.example.service.impl;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
+import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.CustomerService;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,9 +16,11 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final UserRepsitory userRepsitory;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, UserRepsitory userRepsitory) {
         this.customerRepository = customerRepository;
+        this.userRepsitory = userRepsitory;
     }
 
     @Override
@@ -95,5 +99,23 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResourceNotFoundException("customer not found with id: " + customerId);
         }
         return customerRepository.update(customer);
+    }
+
+    @Override
+    public boolean isActive(int customerId) {
+
+        if(customerId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "enter a valid number for customer id"
+            );
+        }
+
+        Customer customer = customerRepository.findById(customerId);
+        if(customer == null) {
+            throw new ResourceNotFoundException("customer not found with id: " + customerId);
+        }
+
+        return userRepsitory.isActive(customer.getUserId().intValue());
     }
 }

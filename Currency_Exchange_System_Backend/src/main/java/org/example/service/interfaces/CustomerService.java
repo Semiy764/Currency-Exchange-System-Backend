@@ -13,6 +13,6 @@ public interface CustomerService {
     boolean existsByNationalId(String nationalId);
     List<Customer> searchByName(String name);
     Customer updateCustomer(int customerId, Customer customer);
-//    boolean isActive(int customerId);
+    boolean isActive(int customerId);
 
 }
