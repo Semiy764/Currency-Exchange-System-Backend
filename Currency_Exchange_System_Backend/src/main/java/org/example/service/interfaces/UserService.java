@@ -16,6 +16,7 @@ public interface UserService {
     User updateUser(int userId, User user);
     void deactivateUser(int userId);
     void activateUser(int userId);
+    void resetPassword(int userId, String newPassword);  // admin only access this!!!
     // we dont have method for deactive and activate user because we are doinng this in update user;
 
 }

@@ -11,6 +11,7 @@ import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,13 +22,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepsitory userRepsitory;
-    private final CustomerRepository customerRepository;
-    private final TellerRepository tellerRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepsitory userRepsitory, CustomerRepository customerRepository, TellerRepository tellerRepository) {
+    public UserServiceImpl(UserRepsitory userRepsitory, CustomerRepository customerRepository, TellerRepository tellerRepository, PasswordEncoder passwordEncoder) {
         this.userRepsitory = userRepsitory;
-        this.customerRepository = customerRepository;
-        this.tellerRepository = tellerRepository;
+
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -115,6 +115,25 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setActive(true);
+        userRepsitory.update(user);
+    }
+
+    @Override
+    public void resetPassword(int userId, String newPassword) { // this method is just usable by admin!!!
+
+        if(newPassword == null || newPassword.length() < 8) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "new password must be at least 8 characters"
+            );
+        }
+
+        User user = userRepsitory.findById(userId);
+        if(user == null) {
+            throw new ResourceNotFoundException("User not found with userId: " + userId);
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
         userRepsitory.update(user);
     }
 }
