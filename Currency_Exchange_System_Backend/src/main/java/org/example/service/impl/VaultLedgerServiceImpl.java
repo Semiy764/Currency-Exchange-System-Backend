@@ -1,17 +1,23 @@
 package org.example.service.impl;
 
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.VaultLedger;
+import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.VaultLedgerRepository;
 import org.example.service.interfaces.VaultLedgerService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VaultLedgerServiceImpl implements VaultLedgerService {
 
     private final VaultLedgerRepository vaultLedgerRepository;
+    private final CurrencyRepository currencyRepository;
 
-    public VaultLedgerServiceImpl(VaultLedgerRepository vaultLedgerRepository) {
+    public VaultLedgerServiceImpl(VaultLedgerRepository vaultLedgerRepository, CurrencyRepository currencyRepository) {
         this.vaultLedgerRepository = vaultLedgerRepository;
+        this.currencyRepository = currencyRepository;
     }
 
     @Override
@@ -22,5 +28,19 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
         }
 
         return vaultLedgerRepository.save(vaultLedger);
+    }
+
+    @Override
+    public List<VaultLedger> getHistory(int currencyId) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please Entre a valid number for currency id");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        return vaultLedgerRepository.findByCurrencyIdOrderByCreatedAtDesc(currencyId);
     }
 }
