@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
+import org.example.exception.EntityNotFoundException;
 import org.example.model.Currency;
 import org.example.repository.interfaces.CurrencyRepository;
 import org.springframework.stereotype.Repository;
@@ -309,6 +310,31 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all active currencies: " + e, e);
+        }
+    }
+
+    @Override
+    public void deactivateCurrency(int id) {
+
+        String sql = """
+                UPDATE currencies SET
+                is_active = 0 WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, id);
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new EntityNotFoundException("Currency not found or already inactive with ID: " + id);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in deactivate currency: " + e, e);
         }
     }
 

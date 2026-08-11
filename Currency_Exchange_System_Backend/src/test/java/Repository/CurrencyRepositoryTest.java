@@ -134,4 +134,12 @@ public class CurrencyRepositoryTest {
         }
     }
 
+    @Test
+    public void deactivateCurrencyTest() {
+
+        currencyRepository.deactivateCurrency(1);
+        Currency currency = currencyRepository.findById(1);
+        assertThat(currency.isActive()).isEqualTo(false);
+    }
+
 }
