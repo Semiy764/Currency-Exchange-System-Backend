@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest(classes = App.class)
 public class VaultBalanceServiceTest {
 
@@ -23,5 +25,20 @@ public class VaultBalanceServiceTest {
                 vaultBalance.getCurrencyId().toString() + " - " +
                 vaultBalance.getLastUpdated()
         );
+
+    }
+
+    @Test
+    public void findAllVaultBalancesTest() {
+
+        List<VaultBalance> allBalances = vaultBalanceService.getAllBalances();
+        for(VaultBalance vaultBalance : allBalances) {
+            System.out.println(
+                    vaultBalance.getId() + " - " +
+                            vaultBalance.getBalance().intValue() + " - " +
+                            vaultBalance.getCurrencyId().toString() + " - " +
+                            vaultBalance.getLastUpdated()
+            );
+        }
     }
 }

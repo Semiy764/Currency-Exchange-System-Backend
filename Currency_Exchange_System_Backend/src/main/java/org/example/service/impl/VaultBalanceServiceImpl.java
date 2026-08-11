@@ -8,6 +8,8 @@ import org.example.service.interfaces.VaultBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VaultBalanceServiceImpl implements VaultBalanceService {
 
@@ -39,5 +41,10 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         }
 
         return balance;
+    }
+
+    @Override
+    public List<VaultBalance> getAllBalances() {
+        return vaultBalanceRepository.findAll();
     }
 }
