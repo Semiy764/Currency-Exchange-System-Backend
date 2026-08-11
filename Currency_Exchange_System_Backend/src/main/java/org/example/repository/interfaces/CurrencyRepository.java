@@ -17,5 +17,6 @@ public interface CurrencyRepository {
     boolean existsByCode(String code);
     Currency update(Currency currency);
     List<Currency> findAllActiveCurrencies();
+    void deactivateCurrency(int id);
 
 }

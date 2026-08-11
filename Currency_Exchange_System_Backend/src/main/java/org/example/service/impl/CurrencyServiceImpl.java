@@ -69,4 +69,9 @@ public class CurrencyServiceImpl implements CurrencyService {
         }
         return currencyRepository.existsByCode(code);
     }
+
+//    @Override
+//    public void deactivateCurrency(int id) {
+//
+//    }
 }
