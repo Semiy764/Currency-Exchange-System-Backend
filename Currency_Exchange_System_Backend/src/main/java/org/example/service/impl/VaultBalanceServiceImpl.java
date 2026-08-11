@@ -8,6 +8,7 @@ import org.example.service.interfaces.VaultBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -46,5 +47,15 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     @Override
     public List<VaultBalance> getAllBalances() {
         return vaultBalanceRepository.findAll();
+    }
+
+    @Override
+    public List<VaultBalance> getLowBalances(BigDecimal threshold) {
+
+        if(threshold == null || threshold.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for threshold");
+        }
+
+        return vaultBalanceRepository.findByBalanceLessThan(threshold);
     }
 }
