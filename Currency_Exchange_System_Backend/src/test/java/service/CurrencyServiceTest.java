@@ -1,5 +1,6 @@
 package service;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.example.App;
 import org.example.model.Currency;
 import org.example.model.VaultBalance;
@@ -104,17 +105,28 @@ public class CurrencyServiceTest {
     public void updatingCurrencyTest() {
 
         Currency currency = currencyRepository.findById(1);
-        currency.setName("AnderFat");
-        currency.setSymbol("%%");
-        currency.setCode("AFT");
+        currency.setName("AnderFater");
+        currency.setSymbol("%%%");
+        currency.setCode("AFTT");
 
-        currencyRepository.update(currency);
+        currencyService.updateCurrency(1, currency);
 
         Currency foundCurrency = currencyRepository.findById(1);
-        assertThat(foundCurrency.getName()).isEqualTo("AnderFat");
-        assertThat(foundCurrency.getSymbol()).isEqualTo("%%");
-        assertThat(foundCurrency.getCode()).isEqualTo("AFT");
+        assertThat(foundCurrency.getName()).isEqualTo("AnderFater");
+        assertThat(foundCurrency.getSymbol()).isEqualTo("%%%");
+        assertThat(foundCurrency.getCode()).isEqualTo("AFTT");
         assertThat(foundCurrency.getId()).isEqualTo(1);
+
+    }
+
+    @Test
+    public void findCurrencyByCodeTest() {
+
+        Currency foundCurrency = currencyService.findByCode("AFTT");
+        AssertionsForClassTypes.assertThat(foundCurrency.getName()).isEqualTo("AnderFater");
+        AssertionsForClassTypes.assertThat(foundCurrency.getSymbol()).isEqualTo("%%%");
+        AssertionsForClassTypes.assertThat(foundCurrency.getCode()).isEqualTo("AFTT");
+        AssertionsForClassTypes.assertThat(foundCurrency.getId()).isEqualTo(1);
 
     }
 

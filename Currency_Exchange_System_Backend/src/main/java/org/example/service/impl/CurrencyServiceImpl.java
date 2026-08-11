@@ -118,4 +118,18 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         return currencyRepository.update(currency);
     }
+
+    @Override
+    public Currency findByCode(String code) {
+
+        if(code == null || code.isBlank()) {
+            throw new IllegalArgumentException("Enter a valid code");
+        }
+
+        Currency currency = currencyRepository.findByCode(code);
+        if(currency == null) {
+            throw new ResourceNotFoundException("Currency not found with code: " + code);
+        }
+        return currency;
+    }
 }
