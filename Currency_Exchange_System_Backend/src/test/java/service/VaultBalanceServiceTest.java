@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootTest(classes = App.class)
@@ -33,6 +34,20 @@ public class VaultBalanceServiceTest {
 
         List<VaultBalance> allBalances = vaultBalanceService.getAllBalances();
         for(VaultBalance vaultBalance : allBalances) {
+            System.out.println(
+                    vaultBalance.getId() + " - " +
+                            vaultBalance.getBalance().intValue() + " - " +
+                            vaultBalance.getCurrencyId().toString() + " - " +
+                            vaultBalance.getLastUpdated()
+            );
+        }
+    }
+
+    @Test
+    public void getLowBalancesTest() {
+
+        List<VaultBalance> balances = vaultBalanceService.getLowBalances(new BigDecimal(100));
+        for(VaultBalance vaultBalance : balances) {
             System.out.println(
                     vaultBalance.getId() + " - " +
                             vaultBalance.getBalance().intValue() + " - " +
