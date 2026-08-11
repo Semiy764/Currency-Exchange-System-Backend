@@ -130,4 +130,15 @@ public class CurrencyServiceTest {
 
     }
 
+    @Test
+    public void findCurrencyByIdTest() {
+
+        Currency foundCurrency = currencyService.findById(1);
+        AssertionsForClassTypes.assertThat(foundCurrency.getName()).isEqualTo("AnderFater");
+        AssertionsForClassTypes.assertThat(foundCurrency.getSymbol()).isEqualTo("%%%");
+        AssertionsForClassTypes.assertThat(foundCurrency.getCode()).isEqualTo("AFTT");
+        AssertionsForClassTypes.assertThat(foundCurrency.getId()).isEqualTo(1);
+
+    }
+
 }
