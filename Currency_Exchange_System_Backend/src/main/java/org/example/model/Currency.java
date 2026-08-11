@@ -6,6 +6,7 @@ public class Currency {
     private String code;
     private String name;
     private String symbol;
+    private boolean isActive;
 
     public Currency() {}
 
@@ -14,6 +15,7 @@ public class Currency {
         this.id = id;
         this.name = name;
         this.symbol = symbol;
+        this.isActive = true;
     }
 
     public Currency(String code, String name, String symbol) {
@@ -21,6 +23,7 @@ public class Currency {
         this.id = id;
         this.name = name;
         this.symbol = symbol;
+        this.isActive = true;
     }
 
     public String getCode() {
@@ -53,5 +56,9 @@ public class Currency {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
     }
 }
