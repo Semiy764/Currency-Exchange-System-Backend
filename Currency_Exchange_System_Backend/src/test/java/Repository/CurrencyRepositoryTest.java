@@ -120,5 +120,18 @@ public class CurrencyRepositoryTest {
 
     }
 
+    @Test
+    public void findActiveCurreciesTest() {
+
+        List<Currency> foundCurrencies = currencyRepository.findAllActiveCurrencies();
+        for(Currency currency : foundCurrencies) {
+            System.out.println(
+                    currency.getId() + " - " +
+                    currency.getCode() + " - " +
+                    currency.getName() + " - " +
+                    currency.getSymbol()
+            );
+        }
+    }
 
 }
