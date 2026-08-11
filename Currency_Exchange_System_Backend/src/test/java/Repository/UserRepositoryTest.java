@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     public void userSavingTest() {
         String passHash = passwordEncoder.encode("Mohammad1022@");
         System.out.println(passHash);
-        User user = new User("erfan.simiyari102", passHash, UserRole.CUSTOMER, true);
+        User user = new User("erfan.simiyari", passHash, UserRole.TELLER, true);
         User savedUser = userRepsitory.save(user);
 //        System.out.println(user.getId());
         System.out.println(savedUser.getId());
