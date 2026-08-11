@@ -62,6 +62,7 @@
     "JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllCurrenciesTest.executor": "Run",
     "JUnit.CurrencyServiceTest.savingCurrencyTest.executor": "Run",
+    "JUnit.CurrencyServiceTest.updatingCurrencyTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.deleteCustomerTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.existingByUserIdTest.executor": "Run",
@@ -189,7 +190,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyServiceTest.currencyActivationTest">
+  <component name="RunManager" selected="JUnit.CurrencyServiceTest.updatingCurrencyTest">
     <configuration name="CurrencyRepositoryTest.activateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -201,22 +202,6 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="activateCurrencyTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CurrencyRepositoryTest.deactivateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
-      <option name="METHOD_NAME" value="deactivateCurrencyTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -270,6 +255,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CurrencyServiceTest.updatingCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
+      <option name="METHOD_NAME" value="updatingCurrencyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -283,11 +284,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyServiceTest.updatingCurrencyTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.currencyActivationTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.currencyDeactivationTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.deactivateCurrencyTest" />
       </list>
     </recent_temporary>
   </component>

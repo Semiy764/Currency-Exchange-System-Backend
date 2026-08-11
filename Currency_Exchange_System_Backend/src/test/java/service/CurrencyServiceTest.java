@@ -100,4 +100,22 @@ public class CurrencyServiceTest {
         assertThat(currency.isActive()).isEqualTo(true);
     }
 
+    @Test
+    public void updatingCurrencyTest() {
+
+        Currency currency = currencyRepository.findById(1);
+        currency.setName("AnderFat");
+        currency.setSymbol("%%");
+        currency.setCode("AFT");
+
+        currencyRepository.update(currency);
+
+        Currency foundCurrency = currencyRepository.findById(1);
+        assertThat(foundCurrency.getName()).isEqualTo("AnderFat");
+        assertThat(foundCurrency.getSymbol()).isEqualTo("%%");
+        assertThat(foundCurrency.getCode()).isEqualTo("AFT");
+        assertThat(foundCurrency.getId()).isEqualTo(1);
+
+    }
+
 }
