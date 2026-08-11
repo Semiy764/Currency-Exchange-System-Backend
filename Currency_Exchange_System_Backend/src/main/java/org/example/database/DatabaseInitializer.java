@@ -61,6 +61,7 @@ public class DatabaseInitializer {
                 	"code"	TEXT NOT NULL UNIQUE,
                 	"name"	TEXT NOT NULL,
                 	"symbol"	TEXT,
+                	"is_active"    INTEGER NOT NULL DEFAULT 1,
                 	PRIMARY KEY("id" AUTOINCREMENT)
                 );
                 """);
@@ -86,7 +87,7 @@ public class DatabaseInitializer {
                 	"id"	INTEGER,
                 	"type"	TEXT NOT NULL,
                 	"currency_id"	INTEGER NOT NULL,
-                	"customer_id"	INTEGER NOT NULL,
+                	"customer_id"   INTEGER NOT NULL,
                 	"amount_currency"	TEXT NOT NULL,
                 	"amount_toman"	TEXT NOT NULL,
                 	"requested_rate"	TEXT,
