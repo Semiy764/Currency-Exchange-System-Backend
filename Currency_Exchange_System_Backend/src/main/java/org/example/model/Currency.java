@@ -61,4 +61,8 @@ public class Currency {
     public boolean isActive() {
         return this.isActive;
     }
+
+    public  void setActive(boolean active) {
+        this.isActive = active;
+    }
 }

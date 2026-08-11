@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/exception/EntityNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Currency.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CurrencyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CurrencyServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CurrencyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" afterDir="false" />
     </list>
@@ -45,6 +44,7 @@
     "JUnit.AuthServiceTest.findindActiveUsersTest.executor": "Run",
     "JUnit.AuthServiceTest.registerUserTest.executor": "Run",
     "JUnit.AuthServiceTest.testLogin.executor": "Run",
+    "JUnit.CurrencyRepositoryTest.activateCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.deactivateCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.deleteCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.existingCurrencyByCodeTest.executor": "Run",
@@ -58,6 +58,7 @@
     "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor": "Run",
     "JUnit.CurrencyRepositoryTest.updatingCurrencyTest.executor": "Run",
+    "JUnit.CurrencyServiceTest.currencyDeactivationTest.executor": "Run",
     "JUnit.CurrencyServiceTest.existingCurrencyByCodeTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllCurrenciesTest.executor": "Run",
@@ -189,7 +190,23 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyServiceTest.currencyDeactivationTest">
+  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest">
+    <configuration name="CurrencyRepositoryTest.activateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="activateCurrencyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CurrencyRepositoryTest.deactivateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -201,6 +218,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="deactivateCurrencyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CurrencyRepositoryTest.findAllCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllCurrenciesTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -238,38 +271,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CurrencyServiceTest.findingAllActiveCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
-      <option name="METHOD_NAME" value="findingAllActiveCurrenciesTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CurrencyServiceTest.findingAllCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
-      <option name="METHOD_NAME" value="findingAllCurrenciesTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -283,11 +284,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CurrencyServiceTest.currencyDeactivationTest" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.deactivateCurrencyTest" />
+        <item itemvalue="JUnit.CurrencyServiceTest.currencyDeactivationTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.existingCurrencyByCodeTest" />
-        <item itemvalue="JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest" />
-        <item itemvalue="JUnit.CurrencyServiceTest.findingAllCurrenciesTest" />
       </list>
     </recent_temporary>
   </component>
