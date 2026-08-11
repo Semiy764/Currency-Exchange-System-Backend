@@ -38,7 +38,8 @@ public class CurrencyRepositoryTest {
             System.out.println(currency.getId() + " - " +
                     currency.getCode() + " - " +
                     currency.getName() + " - " +
-                    currency.getSymbol());
+                    currency.getSymbol() + " - " +
+                    currency.isActive());
         }
 
     }
@@ -137,9 +138,16 @@ public class CurrencyRepositoryTest {
     @Test
     public void deactivateCurrencyTest() {
 
-        currencyRepository.deactivateCurrency(1);
-        Currency currency = currencyRepository.findById(1);
+        currencyRepository.deactivateCurrency(2);
+        Currency currency = currencyRepository.findById(2);
         assertThat(currency.isActive()).isEqualTo(false);
+    }
+
+    @Test
+    public void activateCurrencyTest() {
+        currencyRepository.activateCurrency(1);
+        Currency currency = currencyRepository.findById(1);
+        assertThat(currency.isActive()).isEqualTo(true);
     }
 
 }

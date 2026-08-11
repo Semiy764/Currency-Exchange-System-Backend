@@ -338,13 +338,39 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         }
     }
 
+    @Override
+    public void activateCurrency(int id) {
+
+        String sql = """
+                UPDATE currencies SET 
+                is_active = 1
+                WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, id);
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new EntityNotFoundException("Currency not found or already active with ID: " + id);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in activate currency: " + e, e);
+        }
+    }
+
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();
         currency.setId(resultSet.getLong("id"));
         currency.setCode(resultSet.getString("code"));
         currency.setName(resultSet.getString("name"));
         currency.setSymbol(resultSet.getString("symbol"));
-
+        currency.setActive(resultSet.getInt("is_active") == 1);
         return currency;
 
     }
