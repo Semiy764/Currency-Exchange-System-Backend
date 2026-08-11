@@ -184,7 +184,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest">
+  <component name="RunManager" selected="JUnit.CurrencyServiceTest.existingCurrencyByCodeTest">
     <configuration name="CurrencyRepositoryTest.findActiveCurreciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -196,6 +196,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="findActiveCurreciesTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CurrencyServiceTest.existingCurrencyByCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
+      <option name="METHOD_NAME" value="existingCurrencyByCodeTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -260,27 +276,13 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
-    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
-      <module name="backend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.App" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyServiceTest.existingCurrencyByCodeTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.findingAllCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.savingCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findActiveCurreciesTest" />
-        <item itemvalue="Spring Boot.App" />
       </list>
     </recent_temporary>
   </component>

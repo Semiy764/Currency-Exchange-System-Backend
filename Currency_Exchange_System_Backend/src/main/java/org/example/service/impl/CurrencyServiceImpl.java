@@ -7,7 +7,9 @@ import org.example.model.VaultBalance;
 import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.VaultBalanceRepository;
 import org.example.service.interfaces.CurrencyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -57,5 +59,14 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public List<Currency> findAllActiveCurrencies() {
         return currencyRepository.findAllActiveCurrencies();
+    }
+
+    @Override
+    public boolean existsByCode(String code) {
+
+        if(code == null || code.isBlank()) {
+            throw new IllegalArgumentException("Please enter a valid code");
+        }
+        return currencyRepository.existsByCode(code);
     }
 }

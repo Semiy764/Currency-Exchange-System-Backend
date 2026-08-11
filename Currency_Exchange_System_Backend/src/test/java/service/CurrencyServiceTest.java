@@ -78,4 +78,9 @@ public class CurrencyServiceTest {
         }
     }
 
+    @Test
+    public void existingCurrencyByCodeTest() {
+        System.out.println(currencyService.existsByCode("EUD"));
+    }
+
 }
