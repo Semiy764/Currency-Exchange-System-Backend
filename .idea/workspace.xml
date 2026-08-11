@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/model/Currency.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CurrencyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/CurrencyServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/CurrencyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CurrencyServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/CurrencyServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +56,7 @@
     "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor": "Run",
     "JUnit.CurrencyRepositoryTest.updatingCurrencyTest.executor": "Run",
+    "JUnit.CurrencyServiceTest.currencyActivationTest.executor": "Run",
     "JUnit.CurrencyServiceTest.currencyDeactivationTest.executor": "Run",
     "JUnit.CurrencyServiceTest.existingCurrencyByCodeTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest.executor": "Run",
@@ -190,7 +189,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest">
+  <component name="RunManager" selected="JUnit.CurrencyServiceTest.currencyActivationTest">
     <configuration name="CurrencyRepositoryTest.activateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -239,6 +238,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CurrencyServiceTest.currencyActivationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
+      <option name="METHOD_NAME" value="currencyActivationTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CurrencyServiceTest.currencyDeactivationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -250,22 +265,6 @@
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
       <option name="METHOD_NAME" value="currencyDeactivationTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CurrencyServiceTest.existingCurrencyByCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
-      <option name="METHOD_NAME" value="existingCurrencyByCodeTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -284,11 +283,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyServiceTest.currencyActivationTest" />
+        <item itemvalue="JUnit.CurrencyServiceTest.currencyDeactivationTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.deactivateCurrencyTest" />
-        <item itemvalue="JUnit.CurrencyServiceTest.currencyDeactivationTest" />
-        <item itemvalue="JUnit.CurrencyServiceTest.existingCurrencyByCodeTest" />
       </list>
     </recent_temporary>
   </component>

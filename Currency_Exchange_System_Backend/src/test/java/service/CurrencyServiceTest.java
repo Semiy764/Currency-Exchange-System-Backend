@@ -88,9 +88,16 @@ public class CurrencyServiceTest {
 
     @Test
     public void currencyDeactivationTest() {
-        currencyService.deactivateCurrency(2);
-        Currency currency = currencyRepository.findById(2);
+        currencyService.deactivateCurrency(1);
+        Currency currency = currencyRepository.findById(1);
         assertThat(currency.isActive()).isEqualTo(false);
+    }
+
+    @Test
+    public void currencyActivationTest() {
+        currencyService.activateCurrency(1);
+        Currency currency = currencyRepository.findById(1);
+        assertThat(currency.isActive()).isEqualTo(true);
     }
 
 }
