@@ -70,8 +70,15 @@ public class CurrencyServiceImpl implements CurrencyService {
         return currencyRepository.existsByCode(code);
     }
 
-//    @Override
-//    public void deactivateCurrency(int id) {
-//
-//    }
+    @Override
+    public void deactivateCurrency(int id) {
+
+        if(id <= 0) {
+            throw new IllegalArgumentException("Enter a valid number fo id");
+        }
+        if(!currencyRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + id);
+        }
+        currencyRepository.deactivateCurrency(id);
+    }
 }

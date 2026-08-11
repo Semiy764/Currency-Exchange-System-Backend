@@ -23,6 +23,9 @@ public class CurrencyServiceTest {
     private CurrencyService currencyService;
 
     @Autowired
+    private CurrencyRepository currencyRepository;
+
+    @Autowired
     private VaultBalanceRepository vaultBalanceRepository;
 
     @Test
@@ -81,6 +84,13 @@ public class CurrencyServiceTest {
     @Test
     public void existingCurrencyByCodeTest() {
         System.out.println(currencyService.existsByCode("EUD"));
+    }
+
+    @Test
+    public void currencyDeactivationTest() {
+        currencyService.deactivateCurrency(2);
+        Currency currency = currencyRepository.findById(2);
+        assertThat(currency.isActive()).isEqualTo(false);
     }
 
 }
