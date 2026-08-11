@@ -10,6 +10,6 @@ public interface CurrencyService {
     List<Currency> findAll();
     List<Currency> findAllActiveCurrencies();
     boolean existsByCode(String code);
-//    void deactivateCurrency(int id);
+    void deactivateCurrency(int id);
 
 }
