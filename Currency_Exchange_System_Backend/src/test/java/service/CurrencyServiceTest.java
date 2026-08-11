@@ -64,4 +64,18 @@ public class CurrencyServiceTest {
         }
     }
 
+    @Test
+    public void findingAllActiveCurrenciesTest() {
+
+        List<Currency> activeCurrencies = currencyService.findAllActiveCurrencies();
+        for(Currency currency : activeCurrencies) {
+            System.out.println(
+                    currency.getId() + " - " +
+                            currency.getCode() + " - " +
+                            currency.getName() + " - " +
+                            currency.getSymbol()
+            );
+        }
+    }
+
 }

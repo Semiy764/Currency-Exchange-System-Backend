@@ -54,6 +54,7 @@
     "JUnit.CurrencyRepositoryTest.savingCurrencyTest.executor": "Run",
     "JUnit.CurrencyRepositoryTest.testFindCurrencyById.executor": "Run",
     "JUnit.CurrencyRepositoryTest.updatingCurrencyTest.executor": "Run",
+    "JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllCurrenciesTest.executor": "Run",
     "JUnit.CurrencyServiceTest.savingCurrencyTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.deleteCustomerTest.executor": "Run",
@@ -183,7 +184,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyServiceTest.findingAllCurrenciesTest">
+  <component name="RunManager" selected="JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest">
     <configuration name="CurrencyRepositoryTest.findActiveCurreciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -195,6 +196,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="findActiveCurreciesTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CurrencyServiceTest.findingAllActiveCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
+      <option name="METHOD_NAME" value="findingAllActiveCurrenciesTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -232,22 +249,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TellerServiceTest.findingTellerByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.TellerServiceTest" />
-      <option name="METHOD_NAME" value="findingTellerByUserIdTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -275,11 +276,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.findingAllCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.savingCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findActiveCurreciesTest" />
         <item itemvalue="Spring Boot.App" />
-        <item itemvalue="JUnit.TellerServiceTest.findingTellerByUserIdTest" />
       </list>
     </recent_temporary>
   </component>

@@ -8,5 +8,6 @@ public interface CurrencyService {
 
     Currency addCurrency(Currency currency);
     List<Currency> findAll();
+    List<Currency> findAllActiveCurrencies();
 
 }
