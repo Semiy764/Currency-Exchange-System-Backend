@@ -95,4 +95,27 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         currencyRepository.activateCurrency(id);
     }
+
+    @Override
+    public Currency updateCurrency(int currencyId, Currency currency) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for currencyId");
+        }
+
+        if(currency == null) {
+            throw new ResourceNotFoundException("Currency cannot be null");
+        }
+        if(currencyId != currency.getId()) {
+            throw new IllegalArgumentException(
+                    "currencyId in path does not matches currencyId in request body"
+            );
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        return currencyRepository.update(currency);
+    }
 }

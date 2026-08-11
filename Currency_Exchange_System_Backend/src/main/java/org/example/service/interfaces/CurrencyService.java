@@ -12,5 +12,6 @@ public interface CurrencyService {
     boolean existsByCode(String code);
     void deactivateCurrency(int id);
     void activateCurrency(int id);
+    Currency updateCurrency(int currencyId, Currency currency);
 
 }
