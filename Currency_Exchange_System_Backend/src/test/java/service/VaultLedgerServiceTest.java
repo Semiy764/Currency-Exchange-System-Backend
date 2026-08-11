@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -37,5 +38,20 @@ public class VaultLedgerServiceTest {
         assertThat(found.getCreatedAt()).isNotNull();
         assertThat(found.getCurrencyId()).isEqualTo(1);
         assertThat(found.getChangeAmount()).isEqualTo(new BigDecimal(100));
+    }
+
+    @Test
+    public void getHistoryTest() {
+
+        List<VaultLedger> ledgers = vaultLedgerService.getHistory(2);
+        for(VaultLedger vaultLedger : ledgers) {
+            System.out.println(
+                    vaultLedger.getId() + " - " +
+                    vaultLedger.getPreformedByUserId() + " - " +
+                    vaultLedger.getChangeAmount().toString() + " - " +
+                    vaultLedger.getCurrencyId().toString() + " - " +
+                    vaultLedger.getReason() + " - " +
+                    vaultLedger.getChangeAmount().toString());
+        }
     }
 }
