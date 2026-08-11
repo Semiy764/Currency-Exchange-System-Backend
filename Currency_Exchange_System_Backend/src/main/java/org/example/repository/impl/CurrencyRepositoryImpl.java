@@ -286,7 +286,31 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     }
 
 
+    @Override
+    public List<Currency> findAllActiveCurrencies() {
 
+        List<Currency> foundCurrencies = new ArrayList<>();
+        String sql = """
+                SELECT * FROM currencies WHERE is_active = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ) {
+
+            statement.setInt(1, 1);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                foundCurrencies.add(mapCurrency(resultSet));
+            }
+
+            return foundCurrencies;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find all active currencies: " + e, e);
+        }
+    }
 
     private Currency mapCurrency(ResultSet resultSet) throws SQLException {
         Currency currency = new Currency();

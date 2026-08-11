@@ -16,5 +16,6 @@ public interface CurrencyRepository {
     boolean existsByName(String name);
     boolean existsByCode(String code);
     Currency update(Currency currency);
+    List<Currency> findAllActiveCurrencies();
 
 }
