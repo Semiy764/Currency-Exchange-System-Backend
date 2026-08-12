@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -52,6 +53,24 @@ public class VaultLedgerServiceTest {
                     vaultLedger.getCurrencyId().toString() + " - " +
                     vaultLedger.getReason() + " - " +
                     vaultLedger.getChangeAmount().toString());
+        }
+    }
+
+    @Test
+    public void getHistoryBetweenTest() {
+
+        LocalDateTime start = LocalDateTime.of(2024, 1, 15, 10, 30, 0);
+        LocalDateTime end = LocalDateTime.of(2026, 1, 20, 18, 45, 30);
+
+        List<VaultLedger> vaultLedger = vaultLedgerService.getHistoryBetween(1, start, end);
+        for(VaultLedger ledger : vaultLedger) {
+            System.out.println(
+                    ledger.getId() + " - " +
+                            ledger.getPreformedByUserId() + " - " +
+                            ledger.getChangeAmount().toString() + " - " +
+                            ledger.getCurrencyId().toString() + " - " +
+                            ledger.getReason() + " - " +
+                            ledger.getChangeAmount().toString());
         }
     }
 }
