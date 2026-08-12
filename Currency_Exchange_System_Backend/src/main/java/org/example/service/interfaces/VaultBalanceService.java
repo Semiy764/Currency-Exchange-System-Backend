@@ -12,5 +12,6 @@ public interface VaultBalanceService {
     List<VaultBalance> getLowBalances(BigDecimal threshold);
     void deposit(int currencyId, BigDecimal amount, int performedByUserId);
     void withdraw(int currencyId, BigDecimal amount, int performedByUserId);
+    public void increaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId);
 
 }

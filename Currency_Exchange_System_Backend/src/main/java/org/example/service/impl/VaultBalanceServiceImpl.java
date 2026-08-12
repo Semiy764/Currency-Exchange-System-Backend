@@ -5,11 +5,9 @@ import org.example.enums.UserRole;
 import org.example.exception.AccessDeniedException;
 import org.example.exception.InsufficientBalanceException;
 import org.example.exception.ResourceNotFoundException;
-import org.example.model.Currency;
-import org.example.model.User;
-import org.example.model.VaultBalance;
-import org.example.model.VaultLedger;
+import org.example.model.*;
 import org.example.repository.interfaces.CurrencyRepository;
+import org.example.repository.interfaces.TransactionRepository;
 import org.example.repository.interfaces.UserRepsitory;
 import org.example.repository.interfaces.VaultBalanceRepository;
 import org.example.service.interfaces.VaultBalanceService;
@@ -31,12 +29,14 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     private final CurrencyRepository currencyRepository;
     private final UserRepsitory userRepsitory;
     private final VaultLedgerService vaultLedgerService;
+    private final TransactionRepository transactionRepository;
 
-    public VaultBalanceServiceImpl(VaultBalanceRepository vaultBalanceRepository, CurrencyRepository currencyRepository, UserRepsitory userRepsitory, VaultLedgerService vaultLedgerService) {
+    public VaultBalanceServiceImpl(VaultBalanceRepository vaultBalanceRepository, CurrencyRepository currencyRepository, UserRepsitory userRepsitory, VaultLedgerService vaultLedgerService, TransactionRepository transactionRepository) {
         this.vaultBalanceRepository = vaultBalanceRepository;
         this.currencyRepository = currencyRepository;
         this.userRepsitory = userRepsitory;
         this.vaultLedgerService = vaultLedgerService;
+        this.transactionRepository = transactionRepository;
     }
 
 
@@ -158,6 +158,42 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
 
         vaultBalanceRepository.adjustBalance(currencyId, amount);
         VaultLedger vaultLedger = new VaultLedger(amount, LocalDateTime.now(), currencyId, performedByUserId, LedgerReason.WITHDRAW);
+        vaultLedgerService.recordEntry(vaultLedger);
+
+    }
+
+    @Override
+    public void increaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId) {
+
+        if(transactionId <= 0) {
+            throw new IllegalArgumentException("transaction id must be positive");
+        }
+
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Please enter a valid positive amount");
+        }
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Currency id cannot be negative");
+        }
+
+        Currency currency = currencyRepository.findById(currencyId);
+        if(currency == null) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        if(!currency.isActive()) {
+            throw new AccessDeniedException("Currency is not active");
+        }
+
+        Transaction transaction = transactionRepository.findById(transactionId);
+
+        if(transaction == null) {
+            throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+        }
+
+        vaultBalanceRepository.adjustBalance(currencyId, amount);
+        VaultLedger vaultLedger = new VaultLedger(amount, LocalDateTime.now(), currencyId, transaction.getPerformedByUserId(), LedgerReason.TX_BUY);
         vaultLedgerService.recordEntry(vaultLedger);
 
     }

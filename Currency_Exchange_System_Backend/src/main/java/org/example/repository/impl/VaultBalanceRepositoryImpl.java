@@ -4,9 +4,12 @@ import org.example.database.DatabaseManager;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.VaultBalance;
 import org.example.repository.interfaces.VaultBalanceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.ldap.PagedResultsControl;
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -15,6 +18,9 @@ import java.util.List;
 
 @Repository
 public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
+
+    @Autowired
+    private DataSource dataSource;
     // vault balance mojidiye har currency ro moshakhas mikone!!!!
     @Override
     public VaultBalance save(VaultBalance vaultBalance) {
@@ -135,7 +141,7 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 """;
 
         try(
-                Connection connection = DatabaseManager.getConnection();
+                Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
