@@ -197,4 +197,45 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         vaultLedgerService.recordEntry(vaultLedger);
 
     }
+
+    @Override
+    public void decreaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId) {
+
+        if(transactionId <= 0) {
+            throw new IllegalArgumentException("transaction id must be positive");
+        }
+
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) >= 0) {
+            throw new IllegalArgumentException("Please enter a valid negative amount");
+        }
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Currency id cannot be negative");
+        }
+
+        Currency currency = currencyRepository.findById(currencyId);
+        if(currency == null) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        if(!currency.isActive()) {
+            throw new AccessDeniedException("Currency is not active");
+        }
+
+        BigDecimal decreaseAmount = amount.negate();
+        VaultBalance balance = vaultBalanceRepository.findByCurrencyId(currencyId);
+        if(balance.getBalance().compareTo(decreaseAmount) < 0) {
+            throw new InsufficientBalanceException("amount is bigger than vault balance");
+        }
+
+        Transaction transaction = transactionRepository.findById(transactionId);
+
+        if(transaction == null) {
+            throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+        }
+
+        vaultBalanceRepository.adjustBalance(currencyId, amount);
+        VaultLedger vaultLedger = new VaultLedger(amount, LocalDateTime.now(), currencyId, transaction.getPerformedByUserId(), LedgerReason.TX_SELL);
+        vaultLedgerService.recordEntry(vaultLedger);
+    }
 }
