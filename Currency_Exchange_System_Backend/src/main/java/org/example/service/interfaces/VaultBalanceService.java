@@ -10,4 +10,5 @@ public interface VaultBalanceService {
     VaultBalance getBalance(int currencyId);
     List<VaultBalance> getAllBalances();
     List<VaultBalance> getLowBalances(BigDecimal threshold);
+    void deposit(int currencyId, BigDecimal amount, int performedByUserId);
 }
