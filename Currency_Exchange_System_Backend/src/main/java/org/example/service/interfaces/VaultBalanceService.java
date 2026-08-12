@@ -17,5 +17,8 @@ public interface VaultBalanceService {
 
     // in 2 method dar approveTransaction estefade mishavand!!!!
     // avali baraya buy va dovomi baraye sell ast az didgahe sarafi !!!!
+    // in 2 method bayad bad az piyadesaziye approveTransaction test shavand dar hamoonja!!!
+
+    boolean hasSufficientBalance(int currencyId, BigDecimal requireAmount);
 
 }

@@ -76,4 +76,9 @@ public class VaultBalanceServiceTest {
         VaultBalance vaultBalance = vaultBalanceRepository.findById(1);
         System.out.println(vaultBalance.getBalance());
     }
+
+    @Test
+    public void hasSufficientBalanceTest() {
+        System.out.println(vaultBalanceService.hasSufficientBalance(1, new BigDecimal(301)));
+    }
 }

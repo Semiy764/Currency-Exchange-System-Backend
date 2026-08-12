@@ -238,4 +238,20 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         VaultLedger vaultLedger = new VaultLedger(amount, LocalDateTime.now(), currencyId, transaction.getPerformedByUserId(), LedgerReason.TX_SELL);
         vaultLedgerService.recordEntry(vaultLedger);
     }
+
+    @Override
+    public boolean hasSufficientBalance(int currencyId, BigDecimal requireAmount) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for currency id");
+        }
+        if(requireAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for require amount");
+        }
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+        VaultBalance vaultBalance = vaultBalanceRepository.findByCurrencyId(currencyId);
+        return vaultBalance.getBalance().compareTo(requireAmount) >= 0;
+    }
 }
