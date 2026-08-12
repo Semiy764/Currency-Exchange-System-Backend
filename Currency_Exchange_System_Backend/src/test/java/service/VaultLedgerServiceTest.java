@@ -72,5 +72,21 @@ public class VaultLedgerServiceTest {
                             ledger.getReason() + " - " +
                             ledger.getChangeAmount().toString());
         }
+
+    }
+
+    @Test
+    public void getPerformedByUserIdTest() {
+
+        List<VaultLedger> ledgers = vaultLedgerService.getByPerformedByUser(1);
+        for(VaultLedger ledger : ledgers) {
+            System.out.println(
+                    ledger.getId() + " - " +
+                            ledger.getPreformedByUserId() + " - " +
+                            ledger.getChangeAmount().toString() + " - " +
+                            ledger.getCurrencyId().toString() + " - " +
+                            ledger.getReason() + " - " +
+                            ledger.getChangeAmount().toString());
+        }
     }
 }
