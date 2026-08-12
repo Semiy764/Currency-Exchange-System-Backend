@@ -12,6 +12,10 @@ public interface VaultBalanceService {
     List<VaultBalance> getLowBalances(BigDecimal threshold);
     void deposit(int currencyId, BigDecimal amount, int performedByUserId);
     void withdraw(int currencyId, BigDecimal amount, int performedByUserId);
-    public void increaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId);
+    void increaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId);
+    void decreaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId);
+
+    // in 2 method dar approveTransaction estefade mishavand!!!!
+    // avali baraya buy va dovomi baraye sell ast az didgahe sarafi !!!!
 
 }
