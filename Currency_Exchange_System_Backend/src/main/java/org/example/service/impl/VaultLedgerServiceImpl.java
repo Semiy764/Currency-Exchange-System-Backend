@@ -1,8 +1,12 @@
 package org.example.service.impl;
 
+import org.example.enums.UserRole;
+import org.example.exception.AccessDeniedException;
 import org.example.exception.ResourceNotFoundException;
+import org.example.model.User;
 import org.example.model.VaultLedger;
 import org.example.repository.interfaces.CurrencyRepository;
+import org.example.repository.interfaces.UserRepsitory;
 import org.example.repository.interfaces.VaultLedgerRepository;
 import org.example.service.interfaces.VaultLedgerService;
 import org.springframework.stereotype.Service;
@@ -15,10 +19,12 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
 
     private final VaultLedgerRepository vaultLedgerRepository;
     private final CurrencyRepository currencyRepository;
+    private final UserRepsitory userRepsitory;
 
-    public VaultLedgerServiceImpl(VaultLedgerRepository vaultLedgerRepository, CurrencyRepository currencyRepository) {
+    public VaultLedgerServiceImpl(VaultLedgerRepository vaultLedgerRepository, CurrencyRepository currencyRepository, UserRepsitory userRepsitory) {
         this.vaultLedgerRepository = vaultLedgerRepository;
         this.currencyRepository = currencyRepository;
+        this.userRepsitory = userRepsitory;
     }
 
     @Override
@@ -76,5 +82,28 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
 
         return vaultLedgerRepository.findByCurrencyIdAndCreatedAtBetween(currencyId, start, end);
 
+    }
+
+    @Override
+    public List<VaultLedger> getByPerformedByUser(int userId) {
+
+        if(userId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for user id");
+        }
+
+        User user = userRepsitory.findById(userId);
+
+        if(user == null) {
+            throw new ResourceNotFoundException("User not found with ID: " + userId);
+        }
+
+        UserRole role = user.getRole();
+
+
+        if(role == UserRole.CUSTOMER) {
+            throw new AccessDeniedException("Access denied");
+        }
+
+        return vaultLedgerRepository.findByPerformedByUserId(userId);
     }
 }

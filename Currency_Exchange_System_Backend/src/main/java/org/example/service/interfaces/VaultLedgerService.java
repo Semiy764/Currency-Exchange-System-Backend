@@ -10,4 +10,5 @@ public interface VaultLedgerService {
     VaultLedger recordEntry(VaultLedger vaultLedger);
     List<VaultLedger> getHistory(int currencyId);
     List<VaultLedger> getHistoryBetween(int currencyId, LocalDateTime start, LocalDateTime end);
+    List<VaultLedger> getByPerformedByUser(int userId);
 }
