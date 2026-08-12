@@ -68,4 +68,12 @@ public class VaultBalanceServiceTest {
         VaultBalance vaultBalance = vaultBalanceRepository.findByCurrencyId(1);
         System.out.println(vaultBalance.getBalance());
     }
+
+    @Test
+    public void withdrawTest() {
+
+        vaultBalanceService.withdraw(1, new BigDecimal(-100), 1);
+        VaultBalance vaultBalance = vaultBalanceRepository.findById(1);
+        System.out.println(vaultBalance.getBalance());
+    }
 }

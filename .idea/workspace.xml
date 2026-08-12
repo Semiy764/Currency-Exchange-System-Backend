@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/exception/InsufficientBalanceException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/CurrencyRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/CurrencyRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/VaultBalanceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/VaultBalanceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/VaultBalanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/VaultBalanceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/CurrencyRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultBalanceServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultBalanceServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +65,7 @@
     "JUnit.CurrencyServiceTest.findCurrencyByIdTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllActiveCurrenciesTest.executor": "Run",
     "JUnit.CurrencyServiceTest.findingAllCurrenciesTest.executor": "Run",
+    "JUnit.CurrencyServiceTest.isActiveCurrencyTest.executor": "Run",
     "JUnit.CurrencyServiceTest.savingCurrencyTest.executor": "Run",
     "JUnit.CurrencyServiceTest.updatingCurrencyTest.executor": "Run",
     "JUnit.CustomerRepositoryTest.deleteCustomerTest.executor": "Run",
@@ -171,6 +170,7 @@
     "JUnit.VaultBalanceServiceTest.findAllVaultBalancesTest.executor": "Run",
     "JUnit.VaultBalanceServiceTest.findVaultBalanceByCurrencyIdTest.executor": "Run",
     "JUnit.VaultBalanceServiceTest.getLowBalancesTest.executor": "Run",
+    "JUnit.VaultBalanceServiceTest.withdrawTest.executor": "Run",
     "JUnit.VaultLedgerRepositoryTest.findAllLedgersTest.executor": "Run",
     "JUnit.VaultLedgerRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.VaultLedgerRepositoryTest.findByCurrencyIdOrderByCreatedAtDescTest.executor": "Run",
@@ -206,7 +206,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyServiceTest.isActiveCurrencyTest">
+  <component name="RunManager" selected="JUnit.VaultBalanceServiceTest.withdrawTest">
     <configuration name="CurrencyRepositoryTest.activateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -218,22 +218,6 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="activateCurrencyTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CurrencyRepositoryTest.deactivateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
-      <option name="METHOD_NAME" value="deactivateCurrencyTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -287,6 +271,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="VaultBalanceServiceTest.withdrawTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.VaultBalanceServiceTest" />
+      <option name="METHOD_NAME" value="withdrawTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -300,11 +300,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VaultBalanceServiceTest.withdrawTest" />
         <item itemvalue="JUnit.CurrencyServiceTest.isActiveCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.isActiveTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.deactivateCurrencyTest" />
       </list>
     </recent_temporary>
   </component>

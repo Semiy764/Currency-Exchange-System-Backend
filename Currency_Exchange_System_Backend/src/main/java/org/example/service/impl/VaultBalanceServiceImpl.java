@@ -3,7 +3,9 @@ package org.example.service.impl;
 import org.example.enums.LedgerReason;
 import org.example.enums.UserRole;
 import org.example.exception.AccessDeniedException;
+import org.example.exception.InsufficientBalanceException;
 import org.example.exception.ResourceNotFoundException;
+import org.example.model.Currency;
 import org.example.model.User;
 import org.example.model.VaultBalance;
 import org.example.model.VaultLedger;
@@ -86,8 +88,14 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
             throw new IllegalArgumentException("Please enter a valid number for performed by user id");
         }
 
-        if(!currencyRepository.existsById(currencyId)) {
+        Currency currency = currencyRepository.findById(currencyId);
+
+        if(currency == null) {
             throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        if(!currency.isActive()) {
+            throw new AccessDeniedException("Currency is not active");
         }
 
         User user = userRepsitory.findById(performedByUserId);
@@ -112,18 +120,29 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     public void withdraw(int currencyId, BigDecimal amount, int performedByUserId) {
 
         if(amount == null || amount.compareTo(BigDecimal.ZERO) >= 0) {
-            throw new IllegalArgumentException("deposit amount must be positive");
+            throw new IllegalArgumentException("amount amount must be negative");
         }
 
         if(performedByUserId <= 0) {
             throw new IllegalArgumentException("Please enter a valid number for performed by user id");
         }
 
-        if(!currencyRepository.existsById(currencyId)) {
+        Currency currency = currencyRepository.findById(currencyId);
+
+        if(currency == null) {
             throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
         }
 
+        if(!currency.isActive()) {
+            throw new AccessDeniedException("Currency is not active");
+        }
 
+        VaultBalance balance = vaultBalanceRepository.findByCurrencyId(currencyId);
+
+        BigDecimal withdrawalAmount = amount.negate();
+        if(balance.getBalance().compareTo(withdrawalAmount) < 0) {
+            throw new InsufficientBalanceException("amount is bigger than vault balance");
+        }
 
         User user = userRepsitory.findById(performedByUserId);
 
