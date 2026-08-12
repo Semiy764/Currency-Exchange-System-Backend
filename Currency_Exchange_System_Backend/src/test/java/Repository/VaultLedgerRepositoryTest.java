@@ -129,6 +129,6 @@ public class VaultLedgerRepositoryTest {
 
         LocalDateTime start = LocalDateTime.of(2025, 8, 1, 0, 0, 0);
         LocalDateTime end = LocalDateTime.of(2028, 8, 7, 23, 59, 59);
-        System.out.println(vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(2, start, end));
+        System.out.println(vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(1, start, end));
     }
 }

@@ -11,6 +11,7 @@ import org.example.repository.interfaces.VaultLedgerRepository;
 import org.example.service.interfaces.VaultLedgerService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -105,5 +106,32 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
         }
 
         return vaultLedgerRepository.findByPerformedByUserId(userId);
+    }
+
+    @Override
+    public BigDecimal sumChangesBetween(int currencyId, LocalDateTime start, LocalDateTime end) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for currency id");
+        }
+
+        if(start == null) {
+            throw new IllegalArgumentException("Start date cannot be null");
+        }
+
+        if(end == null) {
+            throw new IllegalArgumentException("End date cannot be null");
+        }
+
+        if(start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date is after the end");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        if(start.isAfter(now)) {
+            throw new IllegalArgumentException("Start date cannot be in future");
+        }
+
+        return vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(currencyId, start, end);
     }
 }

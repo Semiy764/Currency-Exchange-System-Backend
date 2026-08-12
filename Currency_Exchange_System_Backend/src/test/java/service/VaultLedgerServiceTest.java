@@ -89,4 +89,14 @@ public class VaultLedgerServiceTest {
                             ledger.getChangeAmount().toString());
         }
     }
+
+    @Test
+    public void sumChangesBetweenTest() {
+
+        LocalDateTime start = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
+        LocalDateTime end = LocalDateTime.of(2028, 1, 20, 18, 45, 30);
+
+        BigDecimal sum = vaultLedgerService.sumChangesBetween(1, start, end);
+        System.out.println(sum);
+    }
 }
