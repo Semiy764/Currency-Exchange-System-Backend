@@ -206,7 +206,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.isActiveTest">
+  <component name="RunManager" selected="JUnit.CurrencyServiceTest.isActiveCurrencyTest">
     <configuration name="CurrencyRepositoryTest.activateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -271,7 +271,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VaultBalanceServiceTest.depositTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CurrencyServiceTest.isActiveCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -280,8 +280,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.VaultBalanceServiceTest" />
-      <option name="METHOD_NAME" value="depositTest" />
+      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
+      <option name="METHOD_NAME" value="isActiveCurrencyTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -300,11 +300,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CurrencyServiceTest.isActiveCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.isActiveTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
         <item itemvalue="JUnit.CurrencyRepositoryTest.deactivateCurrencyTest" />
-        <item itemvalue="JUnit.VaultBalanceServiceTest.depositTest" />
       </list>
     </recent_temporary>
   </component>

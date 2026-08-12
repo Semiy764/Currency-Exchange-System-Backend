@@ -15,6 +15,7 @@ public interface CurrencyService {
     Currency updateCurrency(int currencyId, Currency currency);
     Currency findByCode(String code);
     Currency findById(int currencyId);
+    boolean isActive(int currencyId);
 
 
     // we have not method for delete currency, we deactivate the currency!!
