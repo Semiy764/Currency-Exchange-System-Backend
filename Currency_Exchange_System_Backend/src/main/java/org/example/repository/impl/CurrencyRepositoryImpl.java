@@ -2,8 +2,10 @@ package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
 import org.example.exception.EntityNotFoundException;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.Currency;
 import org.example.repository.interfaces.CurrencyRepository;
+import org.hibernate.ConnectionReleaseMode;
 import org.springframework.stereotype.Repository;
 import org.yaml.snakeyaml.tokens.ScalarToken;
 
@@ -361,6 +363,31 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in activate currency: " + e, e);
+        }
+    }
+
+    @Override
+    public boolean isActive(int currencyId) {
+
+        String sql = """
+                SELECT is_active FROM currencies WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setInt(1, currencyId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                 return resultSet.getBoolean("is_active");
+            } else {
+                throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in currency is Active");
         }
     }
 
