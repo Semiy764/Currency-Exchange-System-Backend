@@ -76,7 +76,7 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     }
 
     // deposit : variz kardan
-    @Transactional
+//    @Transactional
     @Override
     public void deposit(int currencyId, BigDecimal amount, int performedByUserId) {
 
@@ -115,7 +115,7 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         vaultLedgerService.recordEntry(vaultLedger);
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public void withdraw(int currencyId, BigDecimal amount, int performedByUserId) {
 
@@ -253,5 +253,18 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         }
         VaultBalance vaultBalance = vaultBalanceRepository.findByCurrencyId(currencyId);
         return vaultBalance.getBalance().compareTo(requireAmount) >= 0;
+    }
+
+    @Override
+    public boolean reconcile(int currencyId) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Enter a valid number for currency id");
+        }
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new IllegalArgumentException("Currency not found with ID: " + currencyId);
+        }
+        VaultBalance vaultBalance = getBalance(currencyId);
+        return vaultLedgerService.reconcile(currencyId, vaultBalance.getBalance());
     }
 }

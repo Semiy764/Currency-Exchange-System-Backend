@@ -52,7 +52,8 @@ public class VaultLedgerRepositoryTest {
     public void findAllLedgersTest() {
         List<VaultLedger> allLedgers = vaultLedgerRepository.findAll();
         for(VaultLedger ledger : allLedgers) {
-            System.out.println(ledger.getId() + " - " +
+            System.out.println(
+                    ledger.getId() + " - " +
                     ledger.getCurrencyId() + " - " +
                     ledger.getPreformedByUserId() + " - " +
                     ledger.getReason().name() + " - " +

@@ -20,5 +20,6 @@ public interface VaultBalanceService {
     // in 2 method bayad bad az piyadesaziye approveTransaction test shavand dar hamoonja!!!
 
     boolean hasSufficientBalance(int currencyId, BigDecimal requireAmount);
+    boolean reconcile(int currencyId);
 
 }
