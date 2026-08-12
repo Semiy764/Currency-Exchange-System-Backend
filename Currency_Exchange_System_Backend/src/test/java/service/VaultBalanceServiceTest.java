@@ -64,7 +64,7 @@ public class VaultBalanceServiceTest {
     @Test
     public void depositTest() {
 
-        vaultBalanceService.deposit(1, new BigDecimal(1000), 1);
+        vaultBalanceService.deposit(1, new BigDecimal(2000), 1);
         VaultBalance vaultBalance = vaultBalanceRepository.findByCurrencyId(1);
         System.out.println(vaultBalance.getBalance());
     }
@@ -72,7 +72,7 @@ public class VaultBalanceServiceTest {
     @Test
     public void withdrawTest() {
 
-        vaultBalanceService.withdraw(1, new BigDecimal(-100), 1);
+        vaultBalanceService.withdraw(1, new BigDecimal(-500), 1);
         VaultBalance vaultBalance = vaultBalanceRepository.findById(1);
         System.out.println(vaultBalance.getBalance());
     }
@@ -80,5 +80,10 @@ public class VaultBalanceServiceTest {
     @Test
     public void hasSufficientBalanceTest() {
         System.out.println(vaultBalanceService.hasSufficientBalance(1, new BigDecimal(301)));
+    }
+
+    @Test
+    public void reconcileTest() {
+        System.out.println(vaultBalanceService.reconcile(1));
     }
 }

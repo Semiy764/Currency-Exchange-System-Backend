@@ -8,7 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/VaultBalanceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/VaultBalanceServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/VaultBalanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/VaultBalanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultBalanceServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultBalanceServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultLedgerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultLedgerServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,6 +172,7 @@
     "JUnit.VaultBalanceServiceTest.findVaultBalanceByCurrencyIdTest.executor": "Run",
     "JUnit.VaultBalanceServiceTest.getLowBalancesTest.executor": "Run",
     "JUnit.VaultBalanceServiceTest.hasSufficientBalanceTest.executor": "Run",
+    "JUnit.VaultBalanceServiceTest.reconcileTest.executor": "Run",
     "JUnit.VaultBalanceServiceTest.withdrawTest.executor": "Run",
     "JUnit.VaultLedgerRepositoryTest.findAllLedgersTest.executor": "Run",
     "JUnit.VaultLedgerRepositoryTest.findByCurrencyIdAndCreatedAtBetweenTest.executor": "Run",
@@ -206,40 +209,8 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaultBalanceServiceTest.hasSufficientBalanceTest">
-    <configuration name="CurrencyRepositoryTest.isActiveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
-      <option name="METHOD_NAME" value="isActiveTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CurrencyServiceTest.isActiveCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.CurrencyServiceTest" />
-      <option name="METHOD_NAME" value="isActiveCurrencyTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VaultBalanceServiceTest.findVaultBalanceByCurrencyIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.VaultBalanceServiceTest.reconcileTest">
+    <configuration name="VaultBalanceServiceTest.depositTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -249,13 +220,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.VaultBalanceServiceTest" />
-      <option name="METHOD_NAME" value="findVaultBalanceByCurrencyIdTest" />
+      <option name="METHOD_NAME" value="depositTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VaultBalanceServiceTest.hasSufficientBalanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="VaultBalanceServiceTest.reconcileTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -265,7 +236,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.VaultBalanceServiceTest" />
-      <option name="METHOD_NAME" value="hasSufficientBalanceTest" />
+      <option name="METHOD_NAME" value="reconcileTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -287,6 +258,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="VaultLedgerRepositoryTest.findAllLedgersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.VaultLedgerRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllLedgersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VaultLedgerServiceTest.getHistoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.VaultLedgerServiceTest" />
+      <option name="METHOD_NAME" value="getHistoryTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -300,11 +303,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.VaultBalanceServiceTest.hasSufficientBalanceTest" />
-        <item itemvalue="JUnit.VaultBalanceServiceTest.findVaultBalanceByCurrencyIdTest" />
+        <item itemvalue="JUnit.VaultBalanceServiceTest.reconcileTest" />
+        <item itemvalue="JUnit.VaultLedgerRepositoryTest.findAllLedgersTest" />
         <item itemvalue="JUnit.VaultBalanceServiceTest.withdrawTest" />
-        <item itemvalue="JUnit.CurrencyServiceTest.isActiveCurrencyTest" />
-        <item itemvalue="JUnit.CurrencyRepositoryTest.isActiveTest" />
+        <item itemvalue="JUnit.VaultBalanceServiceTest.depositTest" />
+        <item itemvalue="JUnit.VaultLedgerServiceTest.getHistoryTest" />
       </list>
     </recent_temporary>
   </component>

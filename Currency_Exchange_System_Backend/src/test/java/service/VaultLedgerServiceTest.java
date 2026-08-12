@@ -44,7 +44,7 @@ public class VaultLedgerServiceTest {
     @Test
     public void getHistoryTest() {
 
-        List<VaultLedger> ledgers = vaultLedgerService.getHistory(2);
+        List<VaultLedger> ledgers = vaultLedgerService.getHistory(1);
         for(VaultLedger vaultLedger : ledgers) {
             System.out.println(
                     vaultLedger.getId() + " - " +
