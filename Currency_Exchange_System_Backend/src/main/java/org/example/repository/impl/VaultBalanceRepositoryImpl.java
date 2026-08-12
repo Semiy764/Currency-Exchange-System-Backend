@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.VaultBalance;
 import org.example.repository.interfaces.VaultBalanceRepository;
 import org.springframework.stereotype.Repository;
@@ -127,7 +128,9 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
     public void adjustBalance(int currencyId, BigDecimal amount) {
 
         String sql = """
-                UPDATE vault_balances SET balance = ?
+                UPDATE vault_balances SET 
+                balance = balance + ?,
+                lastUpdated = ?
                 WHERE currency_id = ?
                 """;
 
@@ -136,9 +139,14 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
-            statement.setString(1, amount.toString());
-            statement.setInt(2, currencyId);
-            statement.executeUpdate();
+            statement.setBigDecimal(1, amount);
+            statement.setString(2, LocalDateTime.now().toString());
+            statement.setInt(3, currencyId);
+
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Currency not found in vault ledger");
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in adjust balance: " + e, e);
