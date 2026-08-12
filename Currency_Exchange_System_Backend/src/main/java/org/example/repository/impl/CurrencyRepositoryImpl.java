@@ -1,16 +1,11 @@
 package org.example.repository.impl;
-
 import org.example.database.DatabaseManager;
 import org.example.exception.EntityNotFoundException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Currency;
 import org.example.repository.interfaces.CurrencyRepository;
-import org.hibernate.ConnectionReleaseMode;
 import org.springframework.stereotype.Repository;
-import org.yaml.snakeyaml.tokens.ScalarToken;
-
 import java.sql.*;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
