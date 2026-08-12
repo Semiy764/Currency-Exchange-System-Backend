@@ -141,4 +141,9 @@ public class CurrencyServiceTest {
 
     }
 
+    @Test
+    public void isActiveCurrencyTest() {
+        System.out.println(currencyService.isActive(1));
+    }
+
 }

@@ -147,4 +147,18 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         return currency;
     }
+
+    @Override
+    public boolean isActive(int currencyId) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for currency id");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        return currencyRepository.isActive(currencyId);
+    }
 }
