@@ -2,6 +2,7 @@ package service;
 
 import org.example.App;
 import org.example.model.VaultBalance;
+import org.example.repository.interfaces.VaultBalanceRepository;
 import org.example.service.interfaces.VaultBalanceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class VaultBalanceServiceTest {
 
     @Autowired
     private VaultBalanceService vaultBalanceService;
+
+    @Autowired
+    private VaultBalanceRepository vaultBalanceRepository;
 
     @Test
     public void findVaultBalanceByCurrencyIdTest() {
@@ -55,5 +59,13 @@ public class VaultBalanceServiceTest {
                             vaultBalance.getLastUpdated()
             );
         }
+    }
+
+    @Test
+    public void depositTest() {
+
+        vaultBalanceService.deposit(1, new BigDecimal(1000), 1);
+        VaultBalance vaultBalance = vaultBalanceRepository.findByCurrencyId(1);
+        System.out.println(vaultBalance.getBalance());
     }
 }

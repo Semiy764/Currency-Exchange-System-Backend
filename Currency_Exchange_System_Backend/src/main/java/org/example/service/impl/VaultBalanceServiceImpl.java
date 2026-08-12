@@ -83,12 +83,14 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
             throw new IllegalArgumentException("Please enter a valid number for performed by user id");
         }
 
-
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
 
         User user = userRepsitory.findById(performedByUserId);
 
         if(user == null) {
-            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+            throw new ResourceNotFoundException("user not found with ID: " + performedByUserId);
         }
 
         UserRole role = user.getRole();
