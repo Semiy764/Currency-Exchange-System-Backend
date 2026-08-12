@@ -13,4 +13,5 @@ public interface VaultLedgerService {
     List<VaultLedger> getHistoryBetween(int currencyId, LocalDateTime start, LocalDateTime end);
     List<VaultLedger> getByPerformedByUser(int userId);
     BigDecimal sumChangesBetween(int currencyId, LocalDateTime start, LocalDateTime end);
+    boolean reconcile(int currencyId, BigDecimal currenctBalance);
 }

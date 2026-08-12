@@ -99,4 +99,9 @@ public class VaultLedgerServiceTest {
         BigDecimal sum = vaultLedgerService.sumChangesBetween(1, start, end);
         System.out.println(sum);
     }
+
+    @Test
+    public void reconcileTest() {
+        System.out.println(vaultLedgerService.reconcile(1, new BigDecimal(200)));
+    }
 }

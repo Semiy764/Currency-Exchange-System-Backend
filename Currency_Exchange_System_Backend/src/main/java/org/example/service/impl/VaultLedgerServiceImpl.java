@@ -134,4 +134,24 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
 
         return vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(currencyId, start, end);
     }
+
+    @Override
+    public boolean reconcile(int currencyId, BigDecimal currenctBalance) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for currency id");
+        }
+
+        if(currenctBalance == null) {
+            throw new IllegalArgumentException("Balance cannot be null");
+        }
+
+        BigDecimal sumFromLedger = vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(
+                currencyId,
+                LocalDateTime.MIN,
+                LocalDateTime.now()
+        );
+
+        return sumFromLedger.compareTo(currenctBalance) == 0;
+    }
 }

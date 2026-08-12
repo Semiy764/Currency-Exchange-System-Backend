@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/VaultLedgerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/VaultLedgerServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/VaultLedgerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/VaultLedgerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/VaultLedgerRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultLedgerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/VaultLedgerServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -178,6 +176,7 @@
     "JUnit.VaultLedgerServiceTest.getHistoryBetweenTest.executor": "Run",
     "JUnit.VaultLedgerServiceTest.getHistoryTest.executor": "Run",
     "JUnit.VaultLedgerServiceTest.getPerformedByUserIdTest.executor": "Run",
+    "JUnit.VaultLedgerServiceTest.reconcileTest.executor": "Run",
     "JUnit.VaultLedgerServiceTest.savingVaultLedgerTest.executor": "Run",
     "JUnit.VaultLedgerServiceTest.sumChangesBetweenTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -201,7 +200,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaultLedgerServiceTest.sumChangesBetweenTest">
+  <component name="RunManager" selected="JUnit.VaultLedgerServiceTest.reconcileTest">
     <configuration name="VaultLedgerRepositoryTest.findAllLedgersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -234,22 +233,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VaultLedgerServiceTest.getHistoryBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.VaultLedgerServiceTest" />
-      <option name="METHOD_NAME" value="getHistoryBetweenTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="VaultLedgerServiceTest.getPerformedByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -261,6 +244,22 @@
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.VaultLedgerServiceTest" />
       <option name="METHOD_NAME" value="getPerformedByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VaultLedgerServiceTest.reconcileTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.VaultLedgerServiceTest" />
+      <option name="METHOD_NAME" value="reconcileTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -295,11 +294,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VaultLedgerServiceTest.reconcileTest" />
         <item itemvalue="JUnit.VaultLedgerServiceTest.sumChangesBetweenTest" />
         <item itemvalue="JUnit.VaultLedgerRepositoryTest.sumChangeAmountBycurrencyIdAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.VaultLedgerRepositoryTest.findAllLedgersTest" />
         <item itemvalue="JUnit.VaultLedgerServiceTest.getPerformedByUserIdTest" />
-        <item itemvalue="JUnit.VaultLedgerServiceTest.getHistoryBetweenTest" />
       </list>
     </recent_temporary>
   </component>
