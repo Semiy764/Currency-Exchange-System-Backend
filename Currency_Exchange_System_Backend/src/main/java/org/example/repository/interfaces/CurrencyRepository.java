@@ -19,5 +19,7 @@ public interface CurrencyRepository {
     List<Currency> findAllActiveCurrencies();
     void deactivateCurrency(int id);
     void activateCurrency(int id);
+    boolean isActive(int currencyId);
+
 
 }

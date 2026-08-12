@@ -12,8 +12,10 @@ import org.example.repository.interfaces.UserRepsitory;
 import org.example.repository.interfaces.VaultBalanceRepository;
 import org.example.service.interfaces.VaultBalanceService;
 import org.example.service.interfaces.VaultLedgerService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -72,6 +74,7 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     }
 
     // deposit : variz kardan
+    @Transactional
     @Override
     public void deposit(int currencyId, BigDecimal amount, int performedByUserId) {
 
@@ -102,5 +105,41 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         vaultBalanceRepository.adjustBalance(currencyId, amount);
         VaultLedger vaultLedger = new VaultLedger(amount, LocalDateTime.now(), currencyId, performedByUserId, LedgerReason.DEPOSIT);
         vaultLedgerService.recordEntry(vaultLedger);
+    }
+
+    @Transactional
+    @Override
+    public void withdraw(int currencyId, BigDecimal amount, int performedByUserId) {
+
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) >= 0) {
+            throw new IllegalArgumentException("deposit amount must be positive");
+        }
+
+        if(performedByUserId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for performed by user id");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+
+
+        User user = userRepsitory.findById(performedByUserId);
+
+        if(user == null) {
+            throw new ResourceNotFoundException("user not found with ID: " + performedByUserId);
+        }
+
+        UserRole role = user.getRole();
+
+        if(role == UserRole.CUSTOMER) {
+            throw new AccessDeniedException("Access Denied");
+        }
+
+        vaultBalanceRepository.adjustBalance(currencyId, amount);
+        VaultLedger vaultLedger = new VaultLedger(amount, LocalDateTime.now(), currencyId, performedByUserId, LedgerReason.WITHDRAW);
+        vaultLedgerService.recordEntry(vaultLedger);
+
     }
 }
