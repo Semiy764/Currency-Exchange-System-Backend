@@ -263,4 +263,9 @@ public class TransactionServiceTest {
         System.out.println(sum.toString());
     }
 
+    @Test
+    public void existsByCustomerIdAndCurrencyIdAndStatusTest() {
+        System.out.println(transactionService.existsByCustomerIdAndCurrencyIdAndStatus(1, 1, TxStatus.COMPLETED));
+    }
+
 }

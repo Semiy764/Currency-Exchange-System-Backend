@@ -31,5 +31,10 @@ public interface TransactionService {
             LocalDateTime start,
             LocalDateTime end);
 
+    boolean existsByCustomerIdAndCurrencyIdAndStatus(
+            int customerId,
+            int currencyId,
+            TxStatus status);
+
 
 }
