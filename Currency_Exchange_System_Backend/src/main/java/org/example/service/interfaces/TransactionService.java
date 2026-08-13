@@ -36,5 +36,4 @@ public interface TransactionService {
             int currencyId,
             TxStatus status);
 
-
 }
