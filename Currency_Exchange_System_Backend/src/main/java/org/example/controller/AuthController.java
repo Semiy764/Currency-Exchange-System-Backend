@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.request.CustomerRegisterRequest;
 import org.example.dto.request.TellerRegisterRequest;
 import org.example.dto.response.AuthResponse;
 import org.example.model.User;
@@ -26,6 +27,12 @@ public class AuthController {
 
     @PostMapping("/register/register-teller")
     public AuthResponse registerTeller(@RequestBody TellerRegisterRequest request) {
+        User saved = authService.register(request);
+        return buildAuthResponse(saved);
+    }
+
+    @PostMapping("/register/register-customer")
+    public AuthResponse registerCustomer(@RequestBody CustomerRegisterRequest request) {
         User saved = authService.register(request);
         return buildAuthResponse(saved);
     }
