@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/controller/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +123,7 @@
     &quot;JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TransactionRepositoryTest.transactionSaveTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TransactionServiceTest.existsByCustomerIdAndCurrencyIdAndStatusTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TransactionServiceTest.findAllTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TransactionServiceTest.findByApprovedByUserIdTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest.executor&quot;: &quot;Run&quot;,
@@ -213,10 +214,27 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Currency_Exchange_System_Project" />
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionServiceTest.existsByCustomerIdAndCurrencyIdAndStatusTest">
+  <component name="RunManager" selected="JUnit.AuthServiceTest.testLogin">
+    <configuration name="AuthServiceTest.testLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="METHOD_NAME" value="testLogin" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TransactionServiceTest.existsByCustomerIdAndCurrencyIdAndStatusTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -249,38 +267,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
-      <option name="METHOD_NAME" value="findByCurrencyIdAndCreatedAtBetweenTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TransactionServiceTest.findByStatusAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
-      <option name="METHOD_NAME" value="findByStatusAndCreatedAtBetweenTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TransactionServiceTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -308,13 +294,35 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.App" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/Currency_Exchange_System_Backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.AuthServiceTest.testLogin" />
+      <item itemvalue="JUnit.TransactionServiceTest.existsByCustomerIdAndCurrencyIdAndStatusTest" />
+      <item itemvalue="JUnit.TransactionServiceTest.findAllTest" />
+      <item itemvalue="JUnit.TransactionServiceTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" />
+      <item itemvalue="Spring Boot.App" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AuthServiceTest.testLogin" />
+        <item itemvalue="Spring Boot.App" />
         <item itemvalue="JUnit.TransactionServiceTest.existsByCustomerIdAndCurrencyIdAndStatusTest" />
         <item itemvalue="JUnit.TransactionServiceTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findAllTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.findByStatusAndCreatedAtBetweenTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest" />
       </list>
     </recent_temporary>
   </component>
