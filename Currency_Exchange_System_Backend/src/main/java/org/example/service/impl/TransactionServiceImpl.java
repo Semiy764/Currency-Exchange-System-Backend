@@ -1,6 +1,7 @@
 package org.example.service.impl;
 
 import org.example.enums.TxStatus;
+import org.example.enums.TxType;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.model.Transaction;
@@ -12,6 +13,7 @@ import org.example.service.interfaces.TransactionService;
 import org.springframework.beans.propertyeditors.CustomMapEditor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -129,5 +131,62 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return transactionRepository.findByCurrencyIdAndCreatedAtBetween(currencyId, start, end);
+    }
+
+    @Override
+    public List<Transaction> findByStatusAndCreatedAtBetween(TxStatus status, LocalDateTime start, LocalDateTime end) {
+
+        if(status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+
+        if(start == null) {
+            throw new IllegalArgumentException("start cannot be null");
+        }
+
+        if(end == null) {
+            throw new IllegalArgumentException("end cannot be null");
+        }
+
+        if(start.isAfter(end)) {
+            throw new IllegalArgumentException("start cannot be after the end");
+        }
+
+        if(start.isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Start cannot be in future");
+        }
+
+        return transactionRepository.findByStatusAndCreatedAtBetween(status, start, end);
+    }
+
+    @Override
+    public BigDecimal sumAmountTomanByTypeAndStatusAndCreatedAtBetween(TxType type, TxStatus status, LocalDateTime start, LocalDateTime end) {
+
+        if(type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        }
+
+        if(status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+
+        if(start == null) {
+            throw new IllegalArgumentException("start cannot be null");
+        }
+
+        if(end == null) {
+            throw new IllegalArgumentException("end cannot be null");
+        }
+
+        if(start.isAfter(end)) {
+            throw new IllegalArgumentException("start cannot be after the end");
+        }
+
+        if(start.isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Start cannot be in future");
+        }
+
+        return transactionRepository.sumAmountTomanByTypeAndStatusAndCreatedAtBetween(type, status, start, end);
+
     }
 }
