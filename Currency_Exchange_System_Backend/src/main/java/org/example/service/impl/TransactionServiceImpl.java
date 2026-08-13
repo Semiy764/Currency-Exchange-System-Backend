@@ -5,6 +5,8 @@ import org.example.repository.interfaces.TransactionRepository;
 import org.example.service.interfaces.TransactionService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
@@ -21,5 +23,19 @@ public class TransactionServiceImpl implements TransactionService {
             throw new IllegalArgumentException("Transaction cannot be null");
         }
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public List<Transaction> findAll() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
+    public Transaction findById(int id) {
+
+        if(id <= 0) {
+            throw  new IllegalArgumentException("Please enter a valid number for id");
+        }
+        return transactionRepository.findById(id);
     }
 }
