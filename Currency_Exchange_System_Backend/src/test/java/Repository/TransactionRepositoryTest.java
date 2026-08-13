@@ -55,20 +55,20 @@ public class TransactionRepositoryTest {
         );
 
         Transaction saved = transactionRepository.save(transaction);
-//        assertThat(transaction).isNotNull();
-//        assertThat(transaction.getAmountCurrency()).isEqualTo(amoutncurrency);
-//        assertThat(transaction.getAmountToman()).isEqualTo(amountToman);
-//        assertThat(transaction.getApprovedAt()).isNull();
-//        assertThat(transaction.getApprovedByUserId()).isNull();
-//        assertThat(transaction.getCreatedAt()).isNotNull();
-//        assertThat(transaction.getCurrencyId()).isEqualTo(1);
-//        assertThat(transaction.getCustomerId()).isEqualTo(1);
-//        assertThat(transaction.getPerformedByUserId()).isNull();
-//        assertThat(transaction.isRequestedByCustomer()).isEqualTo(true);
-//        assertThat(transaction.getRateUsed()).isEqualTo(rateUsed);
-//        assertThat(transaction.getRequestedRate()).isEqualTo(rateRequest);
-//        assertThat(transaction.getStatus()).isEqualTo(TxStatus.PENDING);
-//        assertThat(transaction.getTxType()).isEqualTo(TxType.BUY);
+        assertThat(transaction).isNotNull();
+        assertThat(transaction.getAmountCurrency()).isEqualTo(amoutncurrency);
+        assertThat(transaction.getAmountToman()).isEqualTo(amountToman);
+        assertThat(transaction.getApprovedAt()).isNull();
+        assertThat(transaction.getApprovedByUserId()).isNull();
+        assertThat(transaction.getCreatedAt()).isNotNull();
+        assertThat(transaction.getCurrencyId()).isEqualTo(1);
+        assertThat(transaction.getCustomerId()).isEqualTo(1);
+        assertThat(transaction.getPerformedByUserId()).isNull();
+        assertThat(transaction.isRequestedByCustomer()).isEqualTo(true);
+        assertThat(transaction.getRateUsed()).isEqualTo(rateUsed);
+        assertThat(transaction.getRequestedRate()).isEqualTo(rateRequest);
+        assertThat(transaction.getStatus()).isEqualTo(TxStatus.PENDING);
+        assertThat(transaction.getTxType()).isEqualTo(TxType.BUY);
         System.out.println(saved.getId());
     }
 

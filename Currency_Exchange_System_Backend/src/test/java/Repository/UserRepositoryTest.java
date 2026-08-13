@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     public void userSavingTest() {
         String passHash = passwordEncoder.encode("Mohammad1022@");
         System.out.println(passHash);
-        User user = new User("erfan.simiyari", passHash, UserRole.TELLER, true);
+        User user = new User("erfan.simiyari3", passHash, UserRole.CUSTOMER, true);
         User savedUser = userRepsitory.save(user);
 //        System.out.println(user.getId());
         System.out.println(savedUser.getId());
@@ -46,7 +46,8 @@ public class UserRepositoryTest {
     public void findAllUsersTest() {
         List<User> allUsers = userRepsitory.findAll();
         for(User user : allUsers) {
-            System.out.println(user.getId() + " - " + user.getUsername() + " - " + user.getPasswordHash());
+            System.out.println(
+                    user.getId() + " - " + user.getUsername() + " - " + user.getPasswordHash() + " - " + user.getRole().name());
         }
     }
 

@@ -43,25 +43,7 @@ public class AuthServiceTest {
     @Test
     public void registerUserTest() {
 
-//        CustomerRegisterRequest request = new CustomerRegisterRequest("Erfan Simiyari", "0313464200", "Mohammad1022@", "09107855814", UserRole.CUSTOMER, "erfan.simiyari");
-//        User user = authService.register(request);
-//        System.out.println(
-//                user.getId() + " - " +
-//                user.getUsername() + " - " +
-//                user.getPasswordHash() + " - " +
-//                user.getRole().name() + " - " +
-//                user.isActive()
-//                );
-//
-//        Customer customer = customerRepository.findByUserId(1);
-//        System.out.println(
-//                customer.getId() + " - " +
-//                customer.getUserId() + " - " +
-//                customer.getFullname() + " - " +
-//                customer.getNationalId() + " - " +
-//                customer.getPhoneNumber()
-//        );
-        TellerRegisterRequest request = new TellerRegisterRequest("Mohammad Simiyari", "0314628665", "Mohammad1022@", "09107241801", UserRole.TELLER, "mohammad.simiyari");
+        CustomerRegisterRequest request = new CustomerRegisterRequest("Erfan Simiyari", "0313464200", "Mohammad1022@", "09107855814", UserRole.CUSTOMER, "erfan.simiyari2");
         User user = authService.register(request);
         System.out.println(
                 user.getId() + " - " +
@@ -71,14 +53,32 @@ public class AuthServiceTest {
                 user.isActive()
                 );
 
-        Teller teller = tellerRepository.findByUserId(2);
+//        Customer customer = customerRepository.findByUserId(1);
+//        System.out.println(
+//                customer.getId() + " - " +
+//                customer.getUserId() + " - " +
+//                customer.getFullname() + " - " +
+//                customer.getNationalId() + " - " +
+//                customer.getPhoneNumber()
+//        );
+//        TellerRegisterRequest request = new TellerRegisterRequest("Mohammad Simiyari", "0314628665", "Mohammad1022@", "09107241801", UserRole.TELLER, "erfan.simiyari1");
+//        User user = authService.register(request);
+//        System.out.println(
+//                user.getId() + " - " +
+//                user.getUsername() + " - " +
+//                user.getPasswordHash() + " - " +
+//                user.getRole().name() + " - " +
+//                user.isActive()
+//                );
 
-                System.out.println(
-                teller.getId() + " - " +
-                teller.getUserId() + " - " +
-                teller.getFullname() + " - " +
-                teller.getNationalId() + " - " +
-                teller.getPhoneNumber());
+//        Teller teller = tellerRepository.findByUserId(2);
+//
+//                System.out.println(
+//                teller.getId() + " - " +
+//                teller.getUserId() + " - " +
+//                teller.getFullname() + " - " +
+//                teller.getNationalId() + " - " +
+//                teller.getPhoneNumber());
     }
 
 
