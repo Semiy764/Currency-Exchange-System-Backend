@@ -7,6 +7,6 @@ import java.util.List;
 public interface TransactionService {
 
     Transaction save(Transaction transaction);
-    List<Transaction> findAll();
+    List<Transaction> findAllOrderByCreatedAtDesc();
     Transaction findById(int id);
 }

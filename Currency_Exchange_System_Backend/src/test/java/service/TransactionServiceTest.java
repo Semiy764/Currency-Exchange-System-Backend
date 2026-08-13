@@ -67,7 +67,7 @@ public class TransactionServiceTest {
 
     @Test
     public void findAllTest() {
-        List<Transaction> allTrans = transactionService.findAll();
+        List<Transaction> allTrans = transactionService.findAllOrderByCreatedAtDesc();
 
         for(Transaction transaction : allTrans) {
             System.out.println(transaction.getId() + " - " +
@@ -108,4 +108,5 @@ public class TransactionServiceTest {
                 transaction.getTxType().name());
 
     }
+
 }
