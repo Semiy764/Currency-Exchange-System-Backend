@@ -139,6 +139,8 @@ public class DatabaseInitializer {
                 );
                 """);
 
+            seedDefaultAdmin(connection);
+
 
 
         } catch (Exception e) {
@@ -159,9 +161,10 @@ public class DatabaseInitializer {
             ResultSet resultSet = check.executeQuery();
             resultSet.next();
 
-            if(resultSet.getInt(1) > 0) {
+            if (resultSet.getInt(1) > 0) {
                 return;
             }
+        }
 
             String hashedPassword = new BCryptPasswordEncoder().encode(ADMIN_DEFAULT_PASSWORD);
             String insertSql = """
@@ -176,19 +179,16 @@ public class DatabaseInitializer {
             try(PreparedStatement insert = connection.prepareStatement(insertSql)) {
 
                 insert.setString(1, ADMIN_DEFAULT_USERNAME);
-                insert.setString(2, ADMIN_DEFAULT_PASSWORD);
+                insert.setString(2, hashedPassword);
                 insert.setString(3, "ADMIN");
-                insert.setInt(1, 1);
+                insert.setInt(4, 1);
 
                 insert.executeUpdate();
 
             }
 
             System.out.println("Default admin created");
-
         }
-
-    }
 
 
 }
