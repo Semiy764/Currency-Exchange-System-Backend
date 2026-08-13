@@ -45,7 +45,7 @@ public class TellerServiceTest {
 
     @Test
     public void existingByTellerIdTest() {
-        System.out.println(tellerService.existsById(3));
+        System.out.println(tellerService.existsById(1));
     }
 
     @Test
