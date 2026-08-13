@@ -4,6 +4,7 @@ import org.example.enums.TxStatus;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.model.Transaction;
+import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.CustomerRepository;
 import org.example.repository.interfaces.TransactionRepository;
 import org.example.repository.interfaces.UserRepsitory;
@@ -11,6 +12,7 @@ import org.example.service.interfaces.TransactionService;
 import org.springframework.beans.propertyeditors.CustomMapEditor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,11 +22,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRepsitory userRepsitory;
     private final CustomerRepository customerRepository;
+    private final CurrencyRepository currencyRepository;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, UserRepsitory userRepsitory, CustomerRepository customerRepository) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, UserRepsitory userRepsitory, CustomerRepository customerRepository, CurrencyRepository currencyRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepsitory = userRepsitory;
         this.customerRepository = customerRepository;
+        this.currencyRepository = currencyRepository;
     }
 
     @Override
@@ -99,5 +103,31 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return transactionRepository.findByApprovedByUserId(userId);
+    }
+
+    @Override
+    public List<Transaction> findByCurrencyIdAndCreatedAtBetween(int currencyId, LocalDateTime start, LocalDateTime end) {
+
+        if(start == null) {
+            throw new IllegalArgumentException("start cannot be null");
+        }
+
+        if(end == null) {
+            throw new IllegalArgumentException("end cannot be null");
+        }
+
+        if(start.isAfter(end)) {
+            throw new IllegalArgumentException("start cannot be after the end");
+        }
+
+        if(start.isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Start cannot be in future");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        return transactionRepository.findByCurrencyIdAndCreatedAtBetween(currencyId, start, end);
     }
 }
