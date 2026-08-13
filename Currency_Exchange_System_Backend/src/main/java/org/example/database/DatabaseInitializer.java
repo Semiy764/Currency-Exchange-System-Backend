@@ -1,8 +1,13 @@
 package org.example.database;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.swing.plaf.nimbus.State;
 import javax.xml.crypto.Data;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseInitializer {
@@ -138,6 +143,49 @@ public class DatabaseInitializer {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private static  void seedDefaultAdmin(Connection connection) throws Exception {
+
+        String checkSql = """
+                SELECT COUNT(*) FROM users WHERE username = ?
+                """;
+
+        try(PreparedStatement check = connection.prepareStatement(checkSql)) {
+
+            check.setString(1, ADMIN_DEFAULT_USERNAME);
+            ResultSet resultSet = check.executeQuery();
+            resultSet.next();
+
+            if(resultSet.getInt(1) > 0) {
+                return;
+            }
+
+            String hashedPassword = new BCryptPasswordEncoder().encode(ADMIN_DEFAULT_PASSWORD);
+            String insertSql = """
+                    INSERT INTO users (
+                    username,
+                    password_hash,
+                    role,
+                    is_active)
+                    VALUES(?, ?, ?, ?)
+                    """;
+
+            try(PreparedStatement insert = connection.prepareStatement(insertSql)) {
+
+                insert.setString(1, ADMIN_DEFAULT_USERNAME);
+                insert.setString(2, ADMIN_DEFAULT_PASSWORD);
+                insert.setString(3, "ADMIN");
+                insert.setInt(1, 1);
+
+                insert.executeUpdate();
+
+            }
+
+            System.out.println("Default admin created");
+
         }
 
     }
