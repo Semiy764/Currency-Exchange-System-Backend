@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import org.example.enums.TxStatus;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.model.Transaction;
@@ -61,5 +62,14 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return transactionRepository.findByCustomerIdOrderByCreatedAtDesc(customerId);
+    }
+
+    @Override
+    public List<Transaction> findByStatusOrderByCreatedAtDesc(TxStatus txStatus) {
+
+        if(txStatus == null) {
+            throw new IllegalArgumentException("txStatus cannot be null");
+        }
+        return transactionRepository.findByStatusOrderByCreatedAtDesc(txStatus);
     }
 }
