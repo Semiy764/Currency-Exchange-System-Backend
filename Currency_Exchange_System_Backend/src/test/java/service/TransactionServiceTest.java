@@ -42,7 +42,7 @@ public class TransactionServiceTest {
                 false,
                 rateUsed,
                 rateRequest,
-                TxStatus.PENDING,
+                TxStatus.DELETED,
                 TxType.BUY
         );
 
@@ -113,6 +113,28 @@ public class TransactionServiceTest {
     public void findByCustomerIdOrderByCreatedAtDescTest() {
 
         List<Transaction> transactions = transactionService.findByCustomerIdOrderByCreatedAtDesc(1);
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+    }
+
+    @Test
+    public void findByStatusOrderByCreatedAtDescTest() {
+
+        List<Transaction> transactions = transactionService.findByStatusOrderByCreatedAtDesc(TxStatus.PENDING);
         for(Transaction transaction : transactions) {
             System.out.println(transaction.getId() + " - " +
                     transaction.getAmountCurrency().toString() + " - " +
