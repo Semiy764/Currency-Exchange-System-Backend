@@ -1,8 +1,10 @@
 package org.example.service.interfaces;
 
 import org.example.enums.TxStatus;
+import org.example.enums.TxType;
 import org.example.model.Transaction;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,4 +20,16 @@ public interface TransactionService {
     List<Transaction> findByCurrencyIdAndCreatedAtBetween(int currencyId,
                                                           LocalDateTime start,
                                                           LocalDateTime end);
+
+    List<Transaction> findByStatusAndCreatedAtBetween(TxStatus status,
+                                                      LocalDateTime start,
+                                                      LocalDateTime end);
+
+    BigDecimal sumAmountTomanByTypeAndStatusAndCreatedAtBetween(
+            TxType type,
+            TxStatus status,
+            LocalDateTime start,
+            LocalDateTime end);
+
+
 }
