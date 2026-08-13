@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/TransactionServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/TransactionServiceTest.java" afterDir="false" />
@@ -125,6 +124,8 @@
     "JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc.executor": "Run",
     "JUnit.TransactionRepositoryTest.transactionSaveTest.executor": "Run",
     "JUnit.TransactionServiceTest.findAllTest.executor": "Run",
+    "JUnit.TransactionServiceTest.findByApprovedByUserIdTest.executor": "Run",
+    "JUnit.TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionServiceTest.findByCustomerIdOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionServiceTest.findByIdTest.executor": "Run",
     "JUnit.TransactionServiceTest.findByPerformedByUserIdTest.executor": "Run",
@@ -213,23 +214,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionServiceTest.findByApprovedByUserIdTest">
-    <configuration name="TransactionServiceTest.findAllTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
-      <option name="METHOD_NAME" value="findAllTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest">
     <configuration name="TransactionServiceTest.findByApprovedByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -241,6 +226,22 @@
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
       <option name="METHOD_NAME" value="findByApprovedByUserIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
+      <option name="METHOD_NAME" value="findByCurrencyIdAndCreatedAtBetweenTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -307,11 +308,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TransactionServiceTest.findByCurrencyIdAndCreatedAtBetweenTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findByApprovedByUserIdTest" />
         <item itemvalue="JUnit.TransactionServiceTest.saveTransactionTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findByPerformedByUserIdTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findByStatusOrderByCreatedAtDescTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.findAllTest" />
       </list>
     </recent_temporary>
   </component>

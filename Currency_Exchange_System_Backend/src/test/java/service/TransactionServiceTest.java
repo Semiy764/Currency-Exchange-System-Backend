@@ -197,6 +197,32 @@ public class TransactionServiceTest {
                     transaction.getStatus().name() + " - " +
                     transaction.getTxType().name());
         }
+
+
+    }
+
+    @Test
+    public void findByCurrencyIdAndCreatedAtBetweenTest() {
+
+        LocalDateTime start = LocalDateTime.of(2025, 8, 1, 0, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2028, 8, 7, 23, 59, 59);
+        List<Transaction> transactions = transactionService.findByCurrencyIdAndCreatedAtBetween(1, start, end);
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
     }
 
 }
