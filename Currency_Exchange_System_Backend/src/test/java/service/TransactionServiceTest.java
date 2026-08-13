@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,5 +63,49 @@ public class TransactionServiceTest {
 //        assertThat(saved.getStatus()).isEqualTo(TxStatus.PENDING);
 //        assertThat(saved.getTxType()).isEqualTo(TxType.BUY);
 //        System.out.println(saved.getId());
+    }
+
+    @Test
+    public void findAllTest() {
+        List<Transaction> allTrans = transactionService.findAll();
+
+        for(Transaction transaction : allTrans) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+
+    }
+
+    @Test
+    public void findByIdTest() {
+
+        Transaction transaction = transactionService.findById(1);
+        System.out.println(transaction.getId() + " - " +
+                transaction.getAmountCurrency().toString() + " - " +
+                transaction.getAmountToman().toString() + " - " +
+                transaction.getApprovedAt() + " - " +
+                transaction.getApprovedByUserId() + " - " +
+                transaction.getCreatedAt() + " - " +
+                transaction.getCurrencyId() + " - " +
+                transaction.getCustomerId() + " - " +
+                transaction.getPerformedByUserId() + " - " +
+                transaction.isRequestedByCustomer() + " - " +
+                transaction.getRateUsed() + " - " +
+                transaction.getRequestedRate() + " - " +
+                transaction.getStatus().name() + " - " +
+                transaction.getTxType().name());
+
     }
 }
