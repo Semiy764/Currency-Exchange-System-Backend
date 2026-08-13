@@ -85,6 +85,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         List<Transaction> allTransactions = new ArrayList<>();
         String sql = """
                 SELECT * FROM transactions
+                ORDER BY created_at DESC
                 """;
 
         try(

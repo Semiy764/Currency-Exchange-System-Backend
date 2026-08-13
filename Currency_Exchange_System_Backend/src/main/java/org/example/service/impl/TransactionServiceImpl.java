@@ -26,7 +26,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> findAll() {
+    public List<Transaction> findAllOrderByCreatedAtDesc() {
         return transactionRepository.findAll();
     }
 
@@ -37,5 +37,8 @@ public class TransactionServiceImpl implements TransactionService {
             throw  new IllegalArgumentException("Please enter a valid number for id");
         }
         return transactionRepository.findById(id);
+
+
     }
+
 }
