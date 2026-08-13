@@ -38,7 +38,7 @@ public class TransactionServiceTest {
                 LocalDateTime.now(),
                 1,
                 1,
-                null,
+                1L,
                 false,
                 rateUsed,
                 rateRequest,
@@ -135,6 +135,31 @@ public class TransactionServiceTest {
     public void findByStatusOrderByCreatedAtDescTest() {
 
         List<Transaction> transactions = transactionService.findByStatusOrderByCreatedAtDesc(TxStatus.PENDING);
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+
+
+
+    }
+
+    @Test
+    public void findByPerformedByUserIdTest() {
+
+        List<Transaction> transactions = transactionService.findByPerformedByUserId(1);
         for(Transaction transaction : transactions) {
             System.out.println(transaction.getId() + " - " +
                     transaction.getAmountCurrency().toString() + " - " +
