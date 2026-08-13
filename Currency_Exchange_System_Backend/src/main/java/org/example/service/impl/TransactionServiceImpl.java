@@ -189,4 +189,24 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.sumAmountTomanByTypeAndStatusAndCreatedAtBetween(type, status, start, end);
 
     }
+
+    @Override
+    public boolean existsByCustomerIdAndCurrencyIdAndStatus(int customerId, int currencyId, TxStatus status) {
+
+        if(customerId <= 0) {
+            throw new IllegalArgumentException("Customer id cannot be negative");
+
+        }
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Currency id cannot be negative");
+        }
+
+        if(status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+
+        return transactionRepository.existsByCustomerIdAndCurrencyIdAndStatus(customerId, currencyId, status);
+    }
 }
+
