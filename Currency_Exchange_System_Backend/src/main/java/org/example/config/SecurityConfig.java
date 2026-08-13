@@ -46,7 +46,10 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                                 // register / login must be reachable without a token
-                                .requestMatchers("/api/auth/register/register-teller", "/api/auth/login").permitAll()
+                                .requestMatchers("/api/auth/register/register-teller",
+                                        "/api/auth/register/register-customer",
+                                        "/api/auth","/api/auth/login")
+                                .permitAll()
                                 // دسته‌بندی‌ها و شهرها فقط داده مرجع هستن، نیازی به لاگین ندارن
 //                        .requestMatchers(HttpMethod.GET, "/api/categories", "/api/cities").permitAll()
                                 // everything else requires a valid JWT
