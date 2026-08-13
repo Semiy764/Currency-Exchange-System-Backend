@@ -12,4 +12,5 @@ public interface TransactionService {
     Transaction findById(int id);
     List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
     List<Transaction> findByStatusOrderByCreatedAtDesc(TxStatus txStatus);
+    List<Transaction> findByPerformedByUserId(int userId);
 }

@@ -127,6 +127,7 @@
     "JUnit.TransactionServiceTest.findAllTest.executor": "Run",
     "JUnit.TransactionServiceTest.findByCustomerIdOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionServiceTest.findByIdTest.executor": "Run",
+    "JUnit.TransactionServiceTest.findByPerformedByUserIdTest.executor": "Run",
     "JUnit.TransactionServiceTest.findByStatusOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionServiceTest.saveTransactionTest.executor": "Run",
     "JUnit.UserRepositoryImplTest$Delete.executor": "Run",
@@ -212,7 +213,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionServiceTest.findByStatusOrderByCreatedAtDescTest">
+  <component name="RunManager" selected="JUnit.TransactionServiceTest.findByPerformedByUserIdTest">
     <configuration name="TransactionServiceTest.findAllTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -245,7 +246,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionServiceTest.findByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TransactionServiceTest.findByPerformedByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -255,7 +256,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
-      <option name="METHOD_NAME" value="findByIdTest" />
+      <option name="METHOD_NAME" value="findByPerformedByUserIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -306,11 +307,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TransactionServiceTest.findByPerformedByUserIdTest" />
+        <item itemvalue="JUnit.TransactionServiceTest.saveTransactionTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findByStatusOrderByCreatedAtDescTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findAllTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.saveTransactionTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findByCustomerIdOrderByCreatedAtDescTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.findByIdTest" />
       </list>
     </recent_temporary>
   </component>

@@ -72,4 +72,14 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return transactionRepository.findByStatusOrderByCreatedAtDesc(txStatus);
     }
+
+    @Override
+    public List<Transaction> findByPerformedByUserId(int userId) {
+
+        if(userId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for user id");
+        }
+
+        return transactionRepository.findByPreformedByUserId(userId);
+    }
 }
