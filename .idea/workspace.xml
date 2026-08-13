@@ -213,7 +213,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionServiceTest.findByPerformedByUserIdTest">
+  <component name="RunManager" selected="JUnit.TransactionServiceTest.findByApprovedByUserIdTest">
     <configuration name="TransactionServiceTest.findAllTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -230,7 +230,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionServiceTest.findByCustomerIdOrderByCreatedAtDescTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TransactionServiceTest.findByApprovedByUserIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -240,7 +240,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
-      <option name="METHOD_NAME" value="findByCustomerIdOrderByCreatedAtDescTest" />
+      <option name="METHOD_NAME" value="findByApprovedByUserIdTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -307,11 +307,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TransactionServiceTest.findByPerformedByUserIdTest" />
+        <item itemvalue="JUnit.TransactionServiceTest.findByApprovedByUserIdTest" />
         <item itemvalue="JUnit.TransactionServiceTest.saveTransactionTest" />
+        <item itemvalue="JUnit.TransactionServiceTest.findByPerformedByUserIdTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findByStatusOrderByCreatedAtDescTest" />
         <item itemvalue="JUnit.TransactionServiceTest.findAllTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.findByCustomerIdOrderByCreatedAtDescTest" />
       </list>
     </recent_temporary>
   </component>

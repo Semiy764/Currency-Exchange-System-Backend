@@ -80,6 +80,24 @@ public class TransactionServiceImpl implements TransactionService {
             throw new IllegalArgumentException("Please enter a valid number for user id");
         }
 
+        if(!userRepsitory.existsById(userId)) {
+            throw new ResourceNotFoundException("user not found with ID: " + userId);
+        }
+
         return transactionRepository.findByPreformedByUserId(userId);
+    }
+
+    @Override
+    public List<Transaction> findByApprovedByUserId(int userId) {
+
+        if(userId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for user id");
+        }
+
+        if(!userRepsitory.existsById(userId)) {
+            throw new ResourceNotFoundException("user not found with ID: " + userId);
+        }
+
+        return transactionRepository.findByApprovedByUserId(userId);
     }
 }
