@@ -109,4 +109,26 @@ public class TransactionServiceTest {
 
     }
 
+    @Test
+    public void findByCustomerIdOrderByCreatedAtDescTest() {
+
+        List<Transaction> transactions = transactionService.findByCustomerIdOrderByCreatedAtDesc(1);
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction.getId() + " - " +
+                    transaction.getAmountCurrency().toString() + " - " +
+                    transaction.getAmountToman().toString() + " - " +
+                    transaction.getApprovedAt() + " - " +
+                    transaction.getApprovedByUserId() + " - " +
+                    transaction.getCreatedAt() + " - " +
+                    transaction.getCurrencyId() + " - " +
+                    transaction.getCustomerId() + " - " +
+                    transaction.getPerformedByUserId() + " - " +
+                    transaction.isRequestedByCustomer() + " - " +
+                    transaction.getRateUsed() + " - " +
+                    transaction.getRequestedRate() + " - " +
+                    transaction.getStatus().name() + " - " +
+                    transaction.getTxType().name());
+        }
+    }
+
 }

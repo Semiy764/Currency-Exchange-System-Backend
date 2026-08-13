@@ -9,4 +9,5 @@ public interface TransactionService {
     Transaction save(Transaction transaction);
     List<Transaction> findAllOrderByCreatedAtDesc();
     Transaction findById(int id);
+    List<Transaction> findByCustomerIdOrderByCreatedAtDesc(int customerId);
 }
