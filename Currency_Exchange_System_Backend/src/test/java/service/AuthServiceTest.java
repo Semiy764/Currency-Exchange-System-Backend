@@ -86,7 +86,7 @@ public class AuthServiceTest {
     @Test
     public void testLogin() {
 
-        User user = authService.login("erfan.simiyari", "Mohammad1022@");
+        User user = authService.login("admin", "admin123");
         System.out.println(
                 user.isActive() + " - " +
                 user.getRole() + " - " +
