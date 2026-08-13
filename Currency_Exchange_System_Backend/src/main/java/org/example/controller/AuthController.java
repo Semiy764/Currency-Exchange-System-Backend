@@ -5,12 +5,13 @@ import org.example.dto.request.LoginRequest;
 import org.example.dto.request.TellerRegisterRequest;
 import org.example.dto.response.AuthResponse;
 import org.example.model.User;
+import org.example.security.AuthenticatedUser;
 import org.example.security.JwtUtil;
 import org.example.service.interfaces.AuthService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -42,6 +43,13 @@ public class AuthController {
     public AuthResponse login(@RequestBody LoginRequest request) {
         User user = authService.login(request.getUsername(), request.getPassword());
         return buildAuthResponse(user);
+    }
+
+    @PostMapping("/change-password")
+    public void changePassword(@RequestBody Map<String, String> request,
+                               @AuthenticationPrincipal AuthenticatedUser principal) {
+
+        authService.changePassword(principal.id(), request.get("oldPassword"), request.get("newPassword"));
     }
 
     private AuthResponse buildAuthResponse(User user) {
