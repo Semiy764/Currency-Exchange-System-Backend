@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import org.example.enums.UserRole;
 import org.example.exception.AccessDeniedException;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.ExchangeRate;
 import org.example.model.User;
 import org.example.repository.interfaces.CurrencyRepository;
@@ -69,5 +70,16 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         ExchangeRate exchangeRate = new ExchangeRate(buyRate, sellRate, createdByUserId, LocalDateTime.now(),currencyId);
         return exchangeRatesRepository.save(exchangeRate);
 
+    }
+
+
+    @Override
+    public ExchangeRate getCurrentRate(int currencyId) {
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        return exchangeRatesRepository.findLastRateToday(currencyId);
     }
 }

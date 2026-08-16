@@ -19,7 +19,7 @@ public class ExchangeRateServiceTest {
     @Test
     public void saveRateTest() {
 
-        ExchangeRate rate = exchangeRateService.setRate(1, new BigDecimal(100), new BigDecimal(110), 1);
+        ExchangeRate rate = exchangeRateService.setRate(1, new BigDecimal(150), new BigDecimal(160), 1);
         System.out.println(
                 rate.getId() + " - " +
                 rate.getCurrencyId() + " - " +
@@ -27,5 +27,19 @@ public class ExchangeRateServiceTest {
                 rate.getsellRate() + " - " +
                 rate.getEffectiveDate() + " - " +
                 rate.getCreatedBy());
+    }
+
+    @Test
+    public void findLateseRateTest() {
+
+        ExchangeRate rate = exchangeRateService.getCurrentRate(1);
+
+        System.out.println(
+                rate.getId() + " - " +
+                        rate.getCurrencyId() + " - " +
+                        rate.getBuyRate().toString() + " - " +
+                        rate.getsellRate() + " - " +
+                        rate.getEffectiveDate() + " - " +
+                        rate.getCreatedBy());
     }
 }
