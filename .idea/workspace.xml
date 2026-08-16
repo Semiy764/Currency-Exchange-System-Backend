@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/controller/ExchangeRatesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/ExchangeRateServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/ExchangeRateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/ExchangeRateServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/controller/CurrencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/controller/CurrencyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/ExchangeRateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/ExchangeRateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/ExchangeRateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/ExchangeRateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/ExchangeRateServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/ExchangeRateServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +87,7 @@
     "JUnit.CustomerServiceTest.isCustomerActiveTest.executor": "Run",
     "JUnit.CustomerServiceTest.searchCustomerByNameTest.executor": "Run",
     "JUnit.CustomerServiceTest.updateCustomerTest.executor": "Run",
+    "JUnit.ExchangeRateServiceTest.findLateseRateTest.executor": "Run",
     "JUnit.ExchangeRateServiceTest.saveRateTest.executor": "Run",
     "JUnit.ExchangeRatesRepositoryTest.deletingRatesTest.executor": "Run",
     "JUnit.ExchangeRatesRepositoryTest.findAllCurrencyRatesTodayTest.executor": "Run",
@@ -222,23 +220,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExchangeRateServiceTest.saveRateTest">
-    <configuration name="AuthServiceTest.testLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="METHOD_NAME" value="testLogin" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ExchangeRateServiceTest.findLateseRateTest">
     <configuration name="CustomerServiceTest.findAllCustomersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -250,6 +232,22 @@
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.CustomerServiceTest" />
       <option name="METHOD_NAME" value="findAllCustomersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExchangeRateServiceTest.findLateseRateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.ExchangeRateServiceTest" />
+      <option name="METHOD_NAME" value="findLateseRateTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -315,19 +313,19 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="JUnit.ExchangeRateServiceTest.findLateseRateTest" />
       <item itemvalue="JUnit.ExchangeRateServiceTest.saveRateTest" />
       <item itemvalue="JUnit.CustomerServiceTest.findAllCustomersTest" />
       <item itemvalue="JUnit.TellerServiceTest.findingAllTellersTest" />
       <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
-      <item itemvalue="JUnit.AuthServiceTest.testLogin" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ExchangeRateServiceTest.findLateseRateTest" />
         <item itemvalue="JUnit.ExchangeRateServiceTest.saveRateTest" />
         <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
         <item itemvalue="JUnit.TellerServiceTest.findingAllTellersTest" />
         <item itemvalue="JUnit.CustomerServiceTest.findAllCustomersTest" />
-        <item itemvalue="JUnit.AuthServiceTest.testLogin" />
       </list>
     </recent_temporary>
   </component>
