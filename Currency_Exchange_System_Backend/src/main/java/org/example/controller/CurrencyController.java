@@ -42,6 +42,29 @@ public class CurrencyController {
 
     }
 
+    @PutMapping("/{id}")
+    public Currency updateCurrency(@AuthenticationPrincipal AuthenticatedUser principal,
+                               @RequestBody CurrencyRequest request,
+                               @PathVariable int id) {
+
+        Currency currency = currencyService.findById(id);
+        currency.setActive(true);
+        currency.setName(request.getName());
+        currency.setCode(request.getCode());
+        currency.setSymbol(request.getSymbol());
+
+        return currencyService.updateCurrency(id, currency);
+
+    }
+
+    @PostMapping("/{id}/deactivate")
+    public Currency deactivateCurrency(@AuthenticationPrincipal AuthenticatedUser principal,
+                                       @PathVariable int id) {
+        requireAdmin(principal);
+        currencyService.deactivateCurrency(id);
+        return currencyService.findById(id);
+    }
+
 
     private void requireAdmin(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role())) {
