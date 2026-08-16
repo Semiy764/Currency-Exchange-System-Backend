@@ -6,13 +6,11 @@ import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,6 +38,16 @@ public class UserController {
                                     @PathVariable int id) {
         requireAdminOrTeller(principal);
         return map(userService.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse userinfoChange(@RequestBody Map<Object, Object> infos,
+                                       @PathVariable int id) {
+        User user = userService.findById(id);
+        user.setUsername(infos.get("username").toString());
+        user.setActive(infos.get("isActive").toString().equals("true"));
+        userService.updateUser(id, user);
+        return map(user);
     }
 
     private void requireAdmin(AuthenticatedUser principal) {
