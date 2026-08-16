@@ -58,6 +58,15 @@ public class UserController {
         return map(userService.findById(id));
     }
 
+    @PostMapping("/{id}/activate")
+    public UserResponse activateUser(@PathVariable int id,
+                                     @AuthenticationPrincipal AuthenticatedUser principal) {
+
+        requireAdmin(principal);
+        userService.activateUser(id);
+        return map(userService.findById(id));
+    }
+
     private void requireAdmin(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admins only");
