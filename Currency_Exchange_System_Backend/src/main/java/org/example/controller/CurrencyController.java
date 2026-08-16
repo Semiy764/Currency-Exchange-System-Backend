@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/currencies")
+@RequestMapping("/api/currencies")
 public class CurrencyController {
 
     private final CurrencyService currencyService;
