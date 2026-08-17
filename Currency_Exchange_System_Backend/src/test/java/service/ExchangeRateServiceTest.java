@@ -1,6 +1,7 @@
 package service;
 
 import org.example.App;
+import org.example.enums.TxType;
 import org.example.model.ExchangeRate;
 import org.example.service.interfaces.ExchangeRateService;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class ExchangeRateServiceTest {
     @Test
     public void saveRateTest() {
 
-        ExchangeRate rate = exchangeRateService.setRate(2, new BigDecimal(250), new BigDecimal(260), 1);
+        ExchangeRate rate = exchangeRateService.setRate(1, new BigDecimal(150), new BigDecimal(160), 1);
         System.out.println(
                 rate.getId() + " - " +
                 rate.getCurrencyId() + " - " +
@@ -93,6 +94,12 @@ public class ExchangeRateServiceTest {
                             rate.getEffectiveDate() + " - " +
                             rate.getCreatedBy());
         }
+    }
+
+    @Test
+    public void getRateForTransactionTest() {
+
+        System.out.println(exchangeRateService.getRateForTransaction(2, TxType.SELL));
     }
 
 

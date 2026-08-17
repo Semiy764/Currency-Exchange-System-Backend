@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import org.example.enums.TxType;
 import org.example.enums.UserRole;
 import org.example.exception.AccessDeniedException;
 import org.example.exception.ResourceNotFoundException;
@@ -128,5 +129,24 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         }
 
         return exchangeRatesRepository.findByCurrencyIdAndEffectiveDateBetween(currencyId, start, end);
+    }
+
+    @Override
+    public BigDecimal getRateForTransaction(int currencyId, TxType type) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for currency id");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        if(type == null) {
+            throw new IllegalArgumentException("type cannot be null");
+        }
+
+        ExchangeRate rate = exchangeRatesRepository.findLastRateToday(currencyId);
+        return type == TxType.BUY ? rate.getBuyRate() : rate.getsellRate();
     }
 }

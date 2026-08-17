@@ -1,6 +1,8 @@
 package org.example.service.interfaces;
 
+import org.example.enums.TxType;
 import org.example.model.ExchangeRate;
+import org.example.model.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,4 +15,6 @@ public interface ExchangeRateService {
     List<ExchangeRate> getAllCurrentRates();
     List<ExchangeRate> getRateHistory(int currencyId);
     List<ExchangeRate> getRateHistoryBetween(int currencyId, LocalDateTime start, LocalDateTime end);
+    BigDecimal getRateForTransaction(int currencyId, TxType type);
+
 }
