@@ -9,6 +9,7 @@ import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.ExchangeRatesRepository;
 import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.ExchangeRateService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.lang.module.ResolutionException;
@@ -87,5 +88,19 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     @Override
     public List<ExchangeRate> getAllCurrentRates() {
         return exchangeRatesRepository.findLatestRateForAllCurrencies();
+    }
+
+    @Override
+    public List<ExchangeRate> getRateHistory(int currencyId) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Enter a valid number for currency id");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        return exchangeRatesRepository.findAllRatesOfCurrency(currencyId);
     }
 }

@@ -61,5 +61,20 @@ public class ExchangeRateServiceTest {
         }
     }
 
+    @Test
+    public void getRateHistoryTest() {
+
+        List<ExchangeRate> rates = exchangeRateService.getRateHistory(2);
+        for(ExchangeRate rate : rates) {
+            System.out.println(
+                    rate.getId() + " - " +
+                            rate.getCurrencyId() + " - " +
+                            rate.getBuyRate().toString() + " - " +
+                            rate.getsellRate() + " - " +
+                            rate.getEffectiveDate() + " - " +
+                            rate.getCreatedBy());
+        }
+    }
+
 
 }
