@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.lang.module.ResolutionException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class ExchangeRateServiceImpl implements ExchangeRateService {
@@ -81,5 +82,10 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         }
 
         return exchangeRatesRepository.findLastRateToday(currencyId);
+    }
+
+    @Override
+    public List<ExchangeRate> getAllCurrentRates() {
+        return exchangeRatesRepository.findLatestRateForAllCurrencies();
     }
 }

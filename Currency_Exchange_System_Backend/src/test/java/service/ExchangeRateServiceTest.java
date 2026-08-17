@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @SpringBootTest(classes = App.class)
 public class ExchangeRateServiceTest {
@@ -19,7 +20,7 @@ public class ExchangeRateServiceTest {
     @Test
     public void saveRateTest() {
 
-        ExchangeRate rate = exchangeRateService.setRate(1, new BigDecimal(150), new BigDecimal(160), 1);
+        ExchangeRate rate = exchangeRateService.setRate(2, new BigDecimal(250), new BigDecimal(260), 1);
         System.out.println(
                 rate.getId() + " - " +
                 rate.getCurrencyId() + " - " +
@@ -42,4 +43,23 @@ public class ExchangeRateServiceTest {
                         rate.getEffectiveDate() + " - " +
                         rate.getCreatedBy());
     }
+
+    //150 - 250 260
+
+    @Test
+    public void findAllCurrenciesCurrencyRatesTest() {
+
+        List<ExchangeRate> allRates = exchangeRateService.getAllCurrentRates();
+        for(ExchangeRate rate : allRates) {
+            System.out.println(
+                    rate.getId() + " - " +
+                            rate.getCurrencyId() + " - " +
+                            rate.getBuyRate().toString() + " - " +
+                            rate.getsellRate() + " - " +
+                            rate.getEffectiveDate() + " - " +
+                            rate.getCreatedBy());
+        }
+    }
+
+
 }

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/ExchangeRateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/ExchangeRateServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/ExchangeRateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/ExchangeRateService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/ExchangeRateServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/ExchangeRateServiceTest.java" afterDir="false" />
@@ -87,6 +88,7 @@
     "JUnit.CustomerServiceTest.isCustomerActiveTest.executor": "Run",
     "JUnit.CustomerServiceTest.searchCustomerByNameTest.executor": "Run",
     "JUnit.CustomerServiceTest.updateCustomerTest.executor": "Run",
+    "JUnit.ExchangeRateServiceTest.findAllCurrenciesCurrencyRatesTest.executor": "Run",
     "JUnit.ExchangeRateServiceTest.findLateseRateTest.executor": "Run",
     "JUnit.ExchangeRateServiceTest.saveRateTest.executor": "Run",
     "JUnit.ExchangeRatesRepositoryTest.deletingRatesTest.executor": "Run",
@@ -220,24 +222,40 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExchangeRateServiceTest.findLateseRateTest">
-    <configuration name="CustomerServiceTest.findAllCustomersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ExchangeRateServiceTest.findAllCurrenciesCurrencyRatesTest">
+    <configuration name="CurrencyRepositoryTest.activateCurrencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="Repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.CustomerServiceTest" />
-      <option name="METHOD_NAME" value="findAllCustomersTest" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="activateCurrencyTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRateServiceTest.findLateseRateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CurrencyRepositoryTest.findAllCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
+      <option name="METHOD_NAME" value="findAllCurrenciesTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExchangeRateServiceTest.findAllCurrenciesCurrencyRatesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
@@ -247,7 +265,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ExchangeRateServiceTest" />
-      <option name="METHOD_NAME" value="findLateseRateTest" />
+      <option name="METHOD_NAME" value="findAllCurrenciesCurrencyRatesTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -269,33 +287,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TellerServiceTest.findingAllTellersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ExchangeRatesRepositoryTest.testfindAllRates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="Repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.TellerServiceTest" />
-      <option name="METHOD_NAME" value="findingAllTellersTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserServiceTest.findAllUsersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
-      <option name="METHOD_NAME" value="findAllUsersTest" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.ExchangeRatesRepositoryTest" />
+      <option name="METHOD_NAME" value="testfindAllRates" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -313,19 +315,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JUnit.ExchangeRateServiceTest.findLateseRateTest" />
+      <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
+      <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
+      <item itemvalue="JUnit.ExchangeRateServiceTest.findAllCurrenciesCurrencyRatesTest" />
+      <item itemvalue="JUnit.ExchangeRatesRepositoryTest.testfindAllRates" />
       <item itemvalue="JUnit.ExchangeRateServiceTest.saveRateTest" />
-      <item itemvalue="JUnit.CustomerServiceTest.findAllCustomersTest" />
-      <item itemvalue="JUnit.TellerServiceTest.findingAllTellersTest" />
-      <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ExchangeRateServiceTest.findLateseRateTest" />
+        <item itemvalue="JUnit.ExchangeRateServiceTest.findAllCurrenciesCurrencyRatesTest" />
         <item itemvalue="JUnit.ExchangeRateServiceTest.saveRateTest" />
-        <item itemvalue="JUnit.UserServiceTest.findAllUsersTest" />
-        <item itemvalue="JUnit.TellerServiceTest.findingAllTellersTest" />
-        <item itemvalue="JUnit.CustomerServiceTest.findAllCustomersTest" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.activateCurrencyTest" />
+        <item itemvalue="JUnit.ExchangeRatesRepositoryTest.testfindAllRates" />
       </list>
     </recent_temporary>
   </component>
