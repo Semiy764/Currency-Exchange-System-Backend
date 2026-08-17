@@ -10,4 +10,5 @@ public interface ExchangeRateService {
     ExchangeRate setRate(int currencyId, BigDecimal buyRate, BigDecimal sellRate, int createdByUserId);
     ExchangeRate getCurrentRate(int currencyId);
     List<ExchangeRate> getAllCurrentRates();
+    List<ExchangeRate> getRateHistory(int currencyId);
 }
