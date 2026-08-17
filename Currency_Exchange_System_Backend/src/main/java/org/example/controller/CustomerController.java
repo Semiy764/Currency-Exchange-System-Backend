@@ -5,10 +5,7 @@ import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -34,6 +31,14 @@ public class CustomerController {
                             @AuthenticationPrincipal AuthenticatedUser principal) {
         isAdminOrTeller(principal);
         return customerService.findById(id);
+    }
+
+    @GetMapping("/search")
+    public Customer searchByNationalCode(@RequestParam(required = true) String nationalCode,
+                                         @AuthenticationPrincipal AuthenticatedUser principal) {
+
+        isAdminOrTeller(principal);
+        return customerService.findByNationalId(nationalCode);
     }
 
 
