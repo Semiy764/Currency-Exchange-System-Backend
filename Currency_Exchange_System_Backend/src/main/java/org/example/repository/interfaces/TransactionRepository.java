@@ -25,4 +25,6 @@ public interface TransactionRepository {
                                                                 TxStatus status,
                                                                 LocalDateTime start,
                                                                 LocalDateTime end);
+
+    void changeTransactionStatus(int transactionId, TxStatus status);
 }

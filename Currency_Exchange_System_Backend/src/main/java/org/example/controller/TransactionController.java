@@ -5,6 +5,7 @@ import org.example.dto.request.CustomerTransactionRequest;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Transaction;
+import org.example.repository.interfaces.TransactionRepository;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.TransactionService;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,12 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private final TransactionRepository transactionRepository;
 
 
-    public TransactionController(TransactionService transactionService) {
+    public TransactionController(TransactionService transactionService, TransactionRepository transactionRepository) {
         this.transactionService = transactionService;
+        this.transactionRepository = transactionRepository;
     }
 
     @PostMapping("/buy")
@@ -105,6 +108,17 @@ public class TransactionController {
         isAdminOrTeller(principal);
         return transactionService.findByStatusOrderByCreatedAtDesc(TxStatus.PENDING);
     }
+
+//    @PostMapping("/{id}/approve")
+//    public Transaction approveTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
+//                                                         @PathVariable int id) {
+////        isAdminOrTeller(principal);
+////        Transaction transaction = transactionService.findById(id);
+////        transaction.setStatus(TxStatus.COMPLETED);
+////        return transaction;
+//
+//
+//    }
 
 
 
