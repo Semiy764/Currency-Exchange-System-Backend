@@ -28,12 +28,12 @@ public class ExchangeRateController {
         return exchangeRateService.getAllCurrentRates();
     }
 
-//    @PostMapping
-//    public ExchangeRate addRate(@AuthenticationPrincipal AuthenticatedUser principal,
-//                                @RequestBody ExchangeRateRequest request) {
-//        isAdminOrTeller(principal);
-//        return exchangeRateService.setRate(request.getCurrencyId().intValue(), request.getBuyRate(), request.getSellRate(), principal.id());
-//    }
+    @PostMapping
+    public ExchangeRate addRate(@AuthenticationPrincipal AuthenticatedUser principal,
+                                @RequestBody ExchangeRateRequest request) {
+        isAdminOrTeller(principal);
+        return exchangeRateService.setRate(request.getCurrencyId().intValue(), request.getBuyRate(), request.getSellRate(), principal.id());
+    }
 
 
 
