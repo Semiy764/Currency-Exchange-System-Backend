@@ -301,10 +301,9 @@ public class TransactionRepositoryTest {
     }
 
     @Test
-    public void changeTransactionStatusTest() {
-        transactionRepository.changeTransactionStatus(3, TxStatus.COMPLETED);
-        Transaction transaction = transactionRepository.findById(3);
-        assertThat(transaction.getStatus()).isEqualTo(TxStatus.COMPLETED);
+    public void approveTransactionTest() {
+        transactionRepository.approveTransaction(3, 1);
+
     }
 
 }

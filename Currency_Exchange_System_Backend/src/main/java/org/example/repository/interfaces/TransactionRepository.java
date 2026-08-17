@@ -26,5 +26,6 @@ public interface TransactionRepository {
                                                                 LocalDateTime start,
                                                                 LocalDateTime end);
 
-    void changeTransactionStatus(int transactionId, TxStatus status);
+    void approveTransaction(int transactionId, int approvedByUserId);
+
 }

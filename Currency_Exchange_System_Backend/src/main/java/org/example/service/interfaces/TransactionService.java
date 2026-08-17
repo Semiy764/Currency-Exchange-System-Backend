@@ -36,6 +36,5 @@ public interface TransactionService {
             int currencyId,
             TxStatus status);
 
-    void changeTranactionStatus(int transactionId, TxStatus status);
 
 }

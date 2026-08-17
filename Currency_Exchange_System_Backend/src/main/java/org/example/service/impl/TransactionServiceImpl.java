@@ -209,18 +209,6 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.existsByCustomerIdAndCurrencyIdAndStatus(customerId, currencyId, status);
     }
 
-    @Override
-    public void changeTranactionStatus(int transactionId, TxStatus status) {
 
-        Transaction transaction = transactionRepository.findById(transactionId);
-        if(transaction == null) {
-            throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
-        }
-
-        if(status == null) {
-            throw new IllegalArgumentException("Status cannot be null");
-        }
-        transactionRepository.changeTransactionStatus(transactionId, status);
-    }
 }
 
