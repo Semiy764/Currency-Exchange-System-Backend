@@ -27,5 +27,6 @@ public interface TransactionRepository {
                                                                 LocalDateTime end);
 
     void approveTransaction(int transactionId, int approvedByUserId);
+    void rejectTransaction(int transactionId);
 
 }
