@@ -451,6 +451,28 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             throw new RuntimeException("Error in approve transaction");
         }
 
+    }
 
+    @Override
+    public void rejectTransaction(int transactionId) {
+
+        String sql = """
+                UPDATE transactions SET 
+                status = ? WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, TxStatus.REJECTED.name());
+            statement.setInt(2, transactionId);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in reject transaction: " + e, e);
+        }
     }
 }
