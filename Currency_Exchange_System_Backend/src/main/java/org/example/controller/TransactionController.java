@@ -100,6 +100,12 @@ public class TransactionController {
 
     }
 
+    @GetMapping("/pending")
+    public List<Transaction> getAllPendingTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
+        isAdminOrTeller(principal);
+        return transactionService.findByStatusOrderByCreatedAtDesc(TxStatus.PENDING);
+    }
+
 
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
