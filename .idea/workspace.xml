@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TransactionRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TransactionRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/interfaces/TransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TransactionRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TransactionRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +127,7 @@
     "JUnit.TransactionRepositoryTest.findByStatusAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findByStatusOrderByCreatedAtDescTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findingTransactionByIdTest.executor": "Run",
+    "JUnit.TransactionRepositoryTest.rejectTransactionTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.sumAmountTomanByTypeAndStatusAndCreatedAtBetweenTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc.executor": "Run",
     "JUnit.TransactionRepositoryTest.transactionSaveTest.executor": "Run",
@@ -229,23 +228,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.rejectTransactionTest">
-    <configuration name="TransactionRepositoryTest.approveTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Repository" />
-      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
-      <option name="METHOD_NAME" value="approveTransactionTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.TransactionServiceTest.rejectTransactionTest">
     <configuration name="TransactionRepositoryTest.rejectTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -310,6 +293,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TransactionServiceTest.rejectTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
+      <option name="METHOD_NAME" value="rejectTransactionTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -322,19 +321,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JUnit.TransactionRepositoryTest.approveTransactionTest" />
       <item itemvalue="JUnit.TransactionRepositoryTest.rejectTransactionTest" />
       <item itemvalue="JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc" />
       <item itemvalue="JUnit.TransactionRepositoryTest.transactionSaveTest" />
       <item itemvalue="JUnit.TransactionServiceTest.approveTransactionTest" />
+      <item itemvalue="JUnit.TransactionServiceTest.rejectTransactionTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TransactionRepositoryTest.rejectTransactionTest" />
+        <item itemvalue="JUnit.TransactionServiceTest.rejectTransactionTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.transactionSaveTest" />
+        <item itemvalue="JUnit.TransactionRepositoryTest.rejectTransactionTest" />
         <item itemvalue="JUnit.TransactionServiceTest.approveTransactionTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc" />
-        <item itemvalue="JUnit.TransactionRepositoryTest.approveTransactionTest" />
       </list>
     </recent_temporary>
   </component>

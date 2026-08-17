@@ -274,5 +274,12 @@ public class TransactionServiceTest {
     }
 
 
+    @Test
+    public void rejectTransactionTest() {
+        transactionService.rejectTransaction(6);
+        Transaction transaction = transactionService.findById(6);
+        assertThat(transaction.getStatus()).isEqualTo(TxStatus.REJECTED);
+    }
+
 
 }
