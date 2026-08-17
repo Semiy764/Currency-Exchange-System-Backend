@@ -112,12 +112,8 @@ public class TransactionController {
 //    @PostMapping("/{id}/approve")
 //    public Transaction approveTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
 //                                                         @PathVariable int id) {
-////        isAdminOrTeller(principal);
-////        Transaction transaction = transactionService.findById(id);
-////        transaction.setStatus(TxStatus.COMPLETED);
-////        return transaction;
-//
-//
+//        isAdminOrTeller(principal);
+//        transactionService.changeTranactionStatus(id, TxStatus.COMPLETED);
 //    }
 
 

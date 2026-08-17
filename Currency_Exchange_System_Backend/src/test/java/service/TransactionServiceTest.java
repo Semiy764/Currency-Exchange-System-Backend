@@ -268,11 +268,6 @@ public class TransactionServiceTest {
         System.out.println(transactionService.existsByCustomerIdAndCurrencyIdAndStatus(1, 1, TxStatus.COMPLETED));
     }
 
-    @Test
-    public void changeTranactionStatusTest() {
-        transactionService.changeTranactionStatus(3, TxStatus.DELETED);
-        Transaction transaction = transactionService.findById(3);
-        assertThat(transaction.getStatus()).isEqualTo(TxStatus.DELETED);
-    }
+
 
 }

@@ -424,11 +424,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     }
     // @Transactional check kon koja ha dar code bayad begzari??????
+
     @Override
-    public void changeTransactionStatus(int transactionId, TxStatus status) {
+    public void approveTransaction(int transactionId, int approvedByUserId) {
 
         String sql = """
-                UPDATE transactions SET status = ?
+                UPDATE transactions SET
+                status = ?,
+                approved_by_userId = ?,
+                approved_at = ?
                 WHERE id = ?
                 """;
 
@@ -437,15 +441,16 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
-            statement.setString(1, status.name());
-            statement.setInt(2, transactionId);
-            int rows = statement.executeUpdate();
-            if(rows == 0) {
-                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
-            }
+            statement.setString(1, TxStatus.COMPLETED.name());
+            statement.setInt(2, approvedByUserId);
+            statement.setString(3, LocalDateTime.now().toString());
+            statement.setInt(4, transactionId);
+            statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in change transaction status: " + e, e);
+            throw new RuntimeException("Error in approve transaction");
         }
+
+
     }
 }

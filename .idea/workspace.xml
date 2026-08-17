@@ -12,7 +12,6 @@
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/impl/TransactionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/service/interfaces/TransactionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TransactionRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/Repository/TransactionRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/TransactionServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/test/java/service/TransactionServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +121,7 @@
     "JUnit.TellerServiceTest.findingAllTellersTest.executor": "Run",
     "JUnit.TellerServiceTest.findingTellerByUserIdTest.executor": "Run",
     "JUnit.TellerServiceTest.updatingTellerTest.executor": "Run",
+    "JUnit.TransactionRepositoryTest.approveTransactionTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.changeTransactionStatusTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.existsByCustomerIdAndCurrencyIdAndStatusTest.executor": "Run",
     "JUnit.TransactionRepositoryTest.findAllTransactionsTest.executor": "Run",
@@ -231,23 +231,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionServiceTest.changeTranactionStatusTest">
-    <configuration name="ExchangeRateServiceTest.findLateseRateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.ExchangeRateServiceTest" />
-      <option name="METHOD_NAME" value="findLateseRateTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc">
     <configuration name="ExchangeRateServiceTest.getRateForTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -264,17 +248,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeRateServiceTest.saveRateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TransactionRepositoryTest.approveTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="Repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.ExchangeRateServiceTest" />
-      <option name="METHOD_NAME" value="saveRateTest" />
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
+      <option name="METHOD_NAME" value="approveTransactionTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -291,6 +275,22 @@
       <option name="PACKAGE_NAME" value="Repository" />
       <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
       <option name="METHOD_NAME" value="changeTransactionStatusTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TransactionRepositoryTest.testFindAllTranactionsOrderByDesc" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Repository" />
+      <option name="MAIN_CLASS_NAME" value="Repository.TransactionRepositoryTest" />
+      <option name="METHOD_NAME" value="testFindAllTranactionsOrderByDesc" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -324,19 +324,19 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="JUnit.TransactionRepositoryTest.approveTransactionTest" />
       <item itemvalue="JUnit.TransactionRepositoryTest.changeTransactionStatusTest" />
+      <item itemvalue="JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc" />
       <item itemvalue="JUnit.TransactionServiceTest.changeTranactionStatusTest" />
       <item itemvalue="JUnit.ExchangeRateServiceTest.getRateForTransactionTest" />
-      <item itemvalue="JUnit.ExchangeRateServiceTest.findLateseRateTest" />
-      <item itemvalue="JUnit.ExchangeRateServiceTest.saveRateTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TransactionServiceTest.changeTranactionStatusTest" />
+        <item itemvalue="JUnit.TransactionRepositoryTest.testFindAllTranactionsOrderByDesc" />
+        <item itemvalue="JUnit.TransactionRepositoryTest.approveTransactionTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.changeTransactionStatusTest" />
+        <item itemvalue="JUnit.TransactionServiceTest.changeTranactionStatusTest" />
         <item itemvalue="JUnit.ExchangeRateServiceTest.getRateForTransactionTest" />
-        <item itemvalue="JUnit.ExchangeRateServiceTest.findLateseRateTest" />
-        <item itemvalue="JUnit.ExchangeRateServiceTest.saveRateTest" />
       </list>
     </recent_temporary>
   </component>
