@@ -3,6 +3,7 @@ package org.example.service.interfaces;
 import org.example.model.ExchangeRate;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ExchangeRateService {
@@ -11,4 +12,5 @@ public interface ExchangeRateService {
     ExchangeRate getCurrentRate(int currencyId);
     List<ExchangeRate> getAllCurrentRates();
     List<ExchangeRate> getRateHistory(int currencyId);
+    List<ExchangeRate> getRateHistoryBetween(int currencyId, LocalDateTime start, LocalDateTime end);
 }
