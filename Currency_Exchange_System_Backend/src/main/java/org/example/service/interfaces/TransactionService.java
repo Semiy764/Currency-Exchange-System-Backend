@@ -36,5 +36,7 @@ public interface TransactionService {
             int currencyId,
             TxStatus status);
 
+    void approveTransaction(int transactionId, int approvedByUserId);
+
 
 }
