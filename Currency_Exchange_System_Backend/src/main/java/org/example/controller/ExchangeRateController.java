@@ -35,6 +35,11 @@ public class ExchangeRateController {
         return exchangeRateService.setRate(request.getCurrencyId().intValue(), request.getBuyRate(), request.getSellRate(), principal.id());
     }
 
+    @GetMapping("/history/{currencyId}")
+    public List<ExchangeRate> getHistoryOfCurrencyRates(@PathVariable int currencyId) {
+        return exchangeRateService.getRateHistory(currencyId);
+    }
+
 
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
