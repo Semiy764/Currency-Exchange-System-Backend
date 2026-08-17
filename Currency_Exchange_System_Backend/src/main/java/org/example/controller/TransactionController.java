@@ -73,6 +73,11 @@ public class TransactionController {
         return transactionService.findAllOrderByCreatedAtDesc();
     }
 
+    @GetMapping("/{id}")
+    public Transaction getTransaction(@PathVariable int id) {
+        return transactionService.findById(id);
+    }
+
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
