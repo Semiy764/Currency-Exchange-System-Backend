@@ -4,8 +4,11 @@ import jdk.jfr.Registered;
 import org.example.database.DatabaseManager;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.Transaction;
 import org.example.repository.interfaces.TransactionRepository;
+import org.hibernate.ConnectionReleaseMode;
+import org.springframework.boot.sql.init.DatabaseInitializationSettings;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.HTMLDocument;
@@ -419,5 +422,30 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         return transaction;
 
+    }
+    // @Transactional check kon koja ha dar code bayad begzari??????
+    @Override
+    public void changeTransactionStatus(int transactionId, TxStatus status) {
+
+        String sql = """
+                UPDATE transactions SET status = ?
+                WHERE id = ?
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ) {
+
+            statement.setString(1, status.name());
+            statement.setInt(2, transactionId);
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in change transaction status: " + e, e);
+        }
     }
 }
