@@ -103,4 +103,30 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
         return exchangeRatesRepository.findAllRatesOfCurrency(currencyId);
     }
+
+    @Override
+    public List<ExchangeRate> getRateHistoryBetween(int currencyId, LocalDateTime start, LocalDateTime end) {
+
+        if(currencyId <= 0) {
+            throw new IllegalArgumentException("Enter a valid number for currency id");
+        }
+
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+        if(start == null) {
+            throw new IllegalArgumentException("Start cannot be null");
+        }
+
+        if(end == null) {
+            throw new IllegalArgumentException("End cannot be null");
+        }
+
+        if(start.isAfter(end)) {
+            throw new IllegalArgumentException("Start cannot be after end");
+        }
+
+        return exchangeRatesRepository.findByCurrencyIdAndEffectiveDateBetween(currencyId, start, end);
+    }
 }
