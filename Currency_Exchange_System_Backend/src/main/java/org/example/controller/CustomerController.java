@@ -6,6 +6,7 @@ import org.example.service.interfaces.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +27,13 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getAllCustomers(@AuthenticationPrincipal AuthenticatedUser principal) {
         return customerService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Customer getCustomer(@PathVariable int id,
+                            @AuthenticationPrincipal AuthenticatedUser principal) {
+        isAdminOrTeller(principal);
+        return customerService.findById(id);
     }
 
 
