@@ -241,5 +241,20 @@ public class TransactionServiceImpl implements TransactionService {
 
 
     }
+
+    @Override
+    public void rejectTransaction(int transactionId) {
+
+        if(transactionId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for transaction id");
+        }
+
+        Transaction transaction = transactionRepository.findById(transactionId);
+        if(transaction == null) {
+            throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+        }
+
+        transactionRepository.rejectTransaction(transactionId);
+    }
 }
 
