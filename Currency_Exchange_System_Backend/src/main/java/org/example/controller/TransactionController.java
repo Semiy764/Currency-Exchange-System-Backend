@@ -48,6 +48,27 @@ public class TransactionController {
 
     }
 
+    @PostMapping("/sell")
+    public Transaction saveSellTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
+                                                         @RequestBody AdminOrTellerTransactionRequest request){
+        isAdminOrTeller(principal);
+        Transaction transaction = new Transaction();
+        transaction.setTxType(TxType.SELL);
+        transaction.setCurrencyId(request.getCurrencyId());
+        transaction.setCustomerId(request.getCustomerId());
+        transaction.setAmountCurrency(request.getAmountCurrency());
+        transaction.setAmountToman(request.getAmountToman());
+        transaction.setRequestedRate(request.getRequestedRate());
+        transaction.setRateUsed(request.getRateUsed());
+        transaction.setRequestedByCustomer(false);
+        transaction.setPerformedByUserId((long) principal.id());
+        transaction.setCreatedAt(LocalDateTime.now());
+        transaction.setStatus(TxStatus.COMPLETED);
+
+        return transactionService.save(transaction);
+
+    }
+
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
