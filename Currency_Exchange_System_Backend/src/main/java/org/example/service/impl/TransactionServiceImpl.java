@@ -2,9 +2,12 @@ package org.example.service.impl;
 
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
+import org.example.enums.UserRole;
+import org.example.exception.AccessDeniedException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.model.Transaction;
+import org.example.model.User;
 import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.CustomerRepository;
 import org.example.repository.interfaces.TransactionRepository;
@@ -209,6 +212,34 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.existsByCustomerIdAndCurrencyIdAndStatus(customerId, currencyId, status);
     }
 
+    @Override
+    public void approveTransaction(int transactionId, int approvedByUserId) {
 
+        if(transactionId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for transaction id");
+        }
+
+        if(approvedByUserId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid number for approved by user id");
+        }
+
+        Transaction transaction = transactionRepository.findById(transactionId);
+        if(transaction == null) {
+            throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+        }
+
+        User user = userRepsitory.findById(approvedByUserId);
+        if(user == null) {
+            throw new ResourceNotFoundException("User not found with ID: " + approvedByUserId);
+        }
+
+        if(user.getRole() == UserRole.CUSTOMER) {
+            throw new AccessDeniedException("Access denied");
+        }
+
+        transactionRepository.approveTransaction(transactionId, approvedByUserId);
+
+
+    }
 }
 
