@@ -118,6 +118,15 @@ public class TransactionController {
         return transactionService.findById(id);
     }
 
+    @PostMapping("{id}/reject")
+    public Transaction rejectTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
+                                                        @PathVariable int id) {
+
+        isAdminOrTeller(principal);
+        transactionService.rejectTransaction(id);
+        return transactionService.findById(id);
+    }
+
 
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
