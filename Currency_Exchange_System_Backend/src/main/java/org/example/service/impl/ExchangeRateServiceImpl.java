@@ -149,4 +149,16 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         ExchangeRate rate = exchangeRatesRepository.findLastRateToday(currencyId);
         return type == TxType.BUY ? rate.getBuyRate() : rate.getsellRate();
     }
+
+    @Override
+    public boolean isRateSignificantlyDifferent(BigDecimal requestedRate, BigDecimal currentRate, BigDecimal tolerancePercent) {
+
+        if(requestedRate == null || currentRate == null) {
+            return false;
+        }
+        BigDecimal diff = requestedRate.subtract(currentRate).abs();
+        BigDecimal maxAllowedDiff = currentRate.multiply(tolerancePercent);
+
+        return diff.compareTo(maxAllowedDiff) > 0;
+    }
 }

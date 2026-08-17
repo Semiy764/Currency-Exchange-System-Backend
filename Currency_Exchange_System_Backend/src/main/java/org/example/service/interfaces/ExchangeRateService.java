@@ -16,5 +16,6 @@ public interface ExchangeRateService {
     List<ExchangeRate> getRateHistory(int currencyId);
     List<ExchangeRate> getRateHistoryBetween(int currencyId, LocalDateTime start, LocalDateTime end);
     BigDecimal getRateForTransaction(int currencyId, TxType type);
+    boolean isRateSignificantlyDifferent(BigDecimal requestedRate, BigDecimal currentRate, BigDecimal tolerancePercent);
 
 }
