@@ -1,12 +1,8 @@
 package org.example.dto.request;
 
-import org.example.enums.TxStatus;
-import org.example.enums.TxType;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-public class AdminOrTellerTransactionRequest {
+public class AdminAndTellerTransactionRequest {
     private Long currencyId;
     private Long customerId;
     private BigDecimal amountCurrency;

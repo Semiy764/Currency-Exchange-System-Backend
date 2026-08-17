@@ -1,6 +1,7 @@
 package org.example.controller;
 
-import org.example.dto.request.AdminOrTellerTransactionRequest;
+import org.example.dto.request.AdminAndTellerTransactionRequest;
+import org.example.dto.request.CustomerTransactionRequest;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Transaction;
@@ -27,7 +28,7 @@ public class TransactionController {
 
     @PostMapping("/buy")
     public Transaction saveBuyTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
-                                                  @RequestBody AdminOrTellerTransactionRequest request){
+                                                  @RequestBody AdminAndTellerTransactionRequest request){
         isAdminOrTeller(principal);
         Transaction transaction = new Transaction();
         transaction.setTxType(TxType.BUY);
@@ -48,7 +49,7 @@ public class TransactionController {
 
     @PostMapping("/sell")
     public Transaction saveSellTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
-                                                         @RequestBody AdminOrTellerTransactionRequest request){
+                                                         @RequestBody AdminAndTellerTransactionRequest request){
         isAdminOrTeller(principal);
         Transaction transaction = new Transaction();
         transaction.setTxType(TxType.SELL);
@@ -78,6 +79,29 @@ public class TransactionController {
         return transactionService.findById(id);
     }
 
+    @PostMapping("/request")
+    public Transaction saveTransactionByCustomer(@AuthenticationPrincipal AuthenticatedUser principal,
+                                          @RequestBody CustomerTransactionRequest request) {
+        isCustomer(principal);
+        Transaction transaction = new Transaction();
+        transaction.setTxType(TxType.valueOf(request.getType()));
+        transaction.setCurrencyId(request.getCurrencyId());
+        transaction.setCustomerId(request.getCustomerId());
+        transaction.setAmountCurrency(request.getAmountCurrency());
+        transaction.setAmountToman(request.getAmountToman());
+        transaction.setRequestedRate(request.getRequestedRate());
+        transaction.setRateUsed(request.getRateUsed());
+        transaction.setRequestedByCustomer(true);
+        transaction.setCreatedAt(LocalDateTime.now());
+        transaction.setStatus(TxStatus.PENDING);
+
+        return transactionService.save(transaction);
+
+
+    }
+
+
+
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
@@ -87,6 +111,12 @@ public class TransactionController {
     private void isAdmin(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
+        }
+    }
+
+    private void isCustomer(AuthenticatedUser principal) {
+        if(!"CUSTOMER".equals(principal.role())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Customer only");
         }
     }
 }
