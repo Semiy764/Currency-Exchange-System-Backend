@@ -503,4 +503,29 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             throw new RuntimeException("Error in cancel transaction: " + e, e);
         }
     }
+
+    @Override
+    public List<Transaction> findTodayTransactions() {
+        List<Transaction> transactions = new ArrayList<>();
+        String sql = """
+                SELECT * FROM transactions WHERE
+                DATE(created_at) = DATE('now')
+                """;
+
+        try(
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+                ) {
+
+            while(resultSet.next()) {
+                transactions.add(mapTranasction(resultSet));
+            }
+
+            return transactions;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find today transactions" + e, e);
+        }
+    }
 }
