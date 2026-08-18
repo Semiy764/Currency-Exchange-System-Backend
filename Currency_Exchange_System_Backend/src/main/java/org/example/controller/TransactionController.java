@@ -6,8 +6,10 @@ import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Customer;
 import org.example.model.Transaction;
+import org.example.model.User;
 import org.example.repository.interfaces.CustomerRepository;
 import org.example.repository.interfaces.TransactionRepository;
+import org.example.repository.interfaces.UserRepsitory;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.TransactionService;
 import org.springframework.data.repository.config.ResourceReaderRepositoryPopulatorBeanDefinitionParser;
@@ -19,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -26,13 +29,15 @@ public class TransactionController {
 
     private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
+    private final UserRepsitory userRepsitory;
     private final CustomerRepository customerRepository;
 
 
-    public TransactionController(TransactionService transactionService, TransactionRepository transactionRepository, CustomerRepository customerRepository) {
+    public TransactionController(TransactionService transactionService, TransactionRepository transactionRepository, CustomerRepository customerRepository, UserRepsitory userRepsitory, CustomerRepository customerRepository1) {
         this.transactionService = transactionService;
         this.transactionRepository = transactionRepository;
-        this.customerRepository = customerRepository;
+        this.userRepsitory = userRepsitory;
+        this.customerRepository = customerRepository1;
     }
 
     @PostMapping("/buy")
@@ -137,7 +142,7 @@ public class TransactionController {
     public Transaction cancelTransaction(@AuthenticationPrincipal AuthenticatedUser principal,
                                          @PathVariable int id) {
         isCustomer(principal);
-        isTransactionForThisCustomer(id, principal.id());
+        isTransactionForThisUser(id, principal.id());
         transactionService.cancelTransaction(id);
         return transactionService.findById(id);
     }
@@ -162,10 +167,10 @@ public class TransactionController {
         }
     }
 
-    private void isTransactionForThisCustomer(int transactionId, int customerId) {
+    private void isTransactionForThisUser(int transactionId, int userId) {
 
-        if(customerId <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "customer id must be positive");
+        if(userId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user id must be positive");
         }
 
         if(transactionId <= 0) {
@@ -178,13 +183,13 @@ public class TransactionController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "transaction not found with ID: " + transactionId);
         }
 
-        Customer customer = customerRepository.findById(customerId);
+        Customer customer = customerRepository.findByUserId(userId);
         if(customer == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with ID: " + customerId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found with ID: " + userId);
         }
 
-        if(!(transaction.getCustomerId() == customerId)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "customer id in transaction doesn't match with customer id in path");
+        if(!Objects.equals(transaction.getCustomerId(), customer.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "user id in transaction doesn't match with user id in path");
         }
     }
 }
