@@ -29,5 +29,6 @@ public interface TransactionRepository {
     void approveTransaction(int transactionId, int approvedByUserId);
     void rejectTransaction(int transactionId, int approvedByUserId);
     void cancelTransaction(int transactionId);
+    List<Transaction> findTodayTransactions();
 
 }
