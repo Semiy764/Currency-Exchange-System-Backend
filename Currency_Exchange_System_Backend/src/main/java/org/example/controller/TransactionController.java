@@ -123,7 +123,7 @@ public class TransactionController {
                                                         @PathVariable int id) {
 
         isAdminOrTeller(principal);
-        transactionService.rejectTransaction(id);
+        transactionService.rejectTransaction(id, principal.id());
         return transactionService.findById(id);
     }
 
