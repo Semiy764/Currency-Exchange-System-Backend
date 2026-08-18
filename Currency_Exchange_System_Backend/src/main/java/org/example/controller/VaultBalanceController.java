@@ -1,14 +1,12 @@
 package org.example.controller;
 
+import org.example.dto.request.DepositAndWithdrawRequest;
 import org.example.model.VaultBalance;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.VaultBalanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -44,10 +42,29 @@ public class VaultBalanceController {
         return vaultBalanceService.getLowBalances(threshold);
     }
 
+    @PostMapping("/deposit")
+    public VaultBalance deposit(@AuthenticationPrincipal AuthenticatedUser principal,
+                                @RequestBody DepositAndWithdrawRequest request) {
+        isAdmin(principal);
+        vaultBalanceService.deposit(
+                request.getCurrencyId(),
+                request.getAmount(),
+                request.getPerformedByUserId()
+        );
+
+        return vaultBalanceService.getBalance(request.getCurrencyId());
+    }
+
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
+        }
+    }
+
+    private void isAdmin(AuthenticatedUser principal) {
+        if(!"ADMIN".equals(principal.role())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
         }
     }
 }
