@@ -272,5 +272,10 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionRepository.cancelTransaction(transactionId);
     }
+
+    @Override
+    public List<Transaction> findTodayTransactions() {
+        return transactionRepository.findTodayTransactions();
+    }
 }
 
