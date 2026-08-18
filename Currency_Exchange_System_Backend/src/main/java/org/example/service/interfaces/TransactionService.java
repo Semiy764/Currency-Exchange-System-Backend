@@ -40,4 +40,6 @@ public interface TransactionService {
     void rejectTransaction(int transactionId, int approvedByUserId);
     void cancelTransaction(int transactionId);
     List<Transaction> findTodayTransactions();
+
+
 }
