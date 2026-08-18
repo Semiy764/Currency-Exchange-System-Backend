@@ -38,4 +38,5 @@ public interface TransactionService {
 
     void approveTransaction(int transactionId, int approvedByUserId);
     void rejectTransaction(int transactionId, int approvedByUserId);
+    void cancelTransaction(int transactionId);
 }
