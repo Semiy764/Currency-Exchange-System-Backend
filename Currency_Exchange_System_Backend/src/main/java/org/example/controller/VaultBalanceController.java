@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,13 @@ public class VaultBalanceController {
                                                 @PathVariable int id) {
         isAdminOrTeller(principal);
         return vaultBalanceService.getBalance(id);
+    }
+
+    @GetMapping("/balances/low/{threshold}")
+    public List<VaultBalance> getLowBalances(@AuthenticationPrincipal AuthenticatedUser principal,
+                                             @PathVariable BigDecimal threshold) {
+        isAdminOrTeller(principal);
+        return vaultBalanceService.getLowBalances(threshold);
     }
 
 
