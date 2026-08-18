@@ -315,6 +315,13 @@ public class TransactionRepositoryTest {
         assertThat(transaction.getApprovedByUserId()).isEqualTo(1);
     }
 
+    @Test
+    public void cancelTransactionTest() {
+        transactionRepository.cancelTransaction(10);
+        Transaction transaction = transactionRepository.findById(10);
+        assertThat(transaction.getStatus()).isEqualTo(TxStatus.CANCELED);
+    }
+
 
 
 }

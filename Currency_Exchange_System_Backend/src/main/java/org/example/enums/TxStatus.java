@@ -4,5 +4,5 @@ public enum TxStatus {
     PENDING,
     COMPLETED,
     REJECTED,
-    DELETED
+    CANCELED
 }
