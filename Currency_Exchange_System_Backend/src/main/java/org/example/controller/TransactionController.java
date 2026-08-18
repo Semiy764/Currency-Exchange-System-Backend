@@ -147,7 +147,7 @@ public class TransactionController {
         return transactionService.findById(id);
     }
 
-    @GetMapping("/me")
+    @GetMapping("/my")
     public List<Transaction> getMyTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
         isCustomer(principal);
         Customer customer = customerRepository.findByUserId(principal.id());
