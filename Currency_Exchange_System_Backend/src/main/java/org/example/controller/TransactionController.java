@@ -147,6 +147,13 @@ public class TransactionController {
         return transactionService.findById(id);
     }
 
+    @GetMapping("/me")
+    public List<Transaction> getMyTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
+        isCustomer(principal);
+        Customer customer = customerRepository.findByUserId(principal.id());
+        return transactionRepository.findByCustomerIdOrderByCreatedAtDesc(customer.getId().intValue());
+    }
+
 
 
     private void isAdminOrTeller(AuthenticatedUser principal) {

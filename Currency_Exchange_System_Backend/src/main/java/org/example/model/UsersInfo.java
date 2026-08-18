@@ -2,8 +2,8 @@ package org.example.model;
 
 public class UsersInfo {
 
-    protected long id;
-    protected long userId;
+    protected Long id;
+    protected Long userId;
     protected String fullname;
     protected String nationalId;
     protected String phoneNumber;
