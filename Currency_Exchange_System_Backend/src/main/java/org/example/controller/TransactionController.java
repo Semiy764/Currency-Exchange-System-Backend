@@ -2,6 +2,8 @@ package org.example.controller;
 
 import org.example.dto.request.AdminAndTellerTransactionRequest;
 import org.example.dto.request.CustomerTransactionRequest;
+import org.example.dto.request.ProfitLossDtoRequest;
+import org.example.dto.response.ProfitLossDtoResponse;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Customer;
@@ -18,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -153,8 +156,6 @@ public class TransactionController {
         Customer customer = customerRepository.findByUserId(principal.id());
         return transactionRepository.findByCustomerIdOrderByCreatedAtDesc(customer.getId().intValue());
     }
-
-
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
