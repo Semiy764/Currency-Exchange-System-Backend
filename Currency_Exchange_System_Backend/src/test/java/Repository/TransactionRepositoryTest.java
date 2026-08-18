@@ -309,9 +309,10 @@ public class TransactionRepositoryTest {
 
     @Test
     public void rejectTransactionTest() {
-        transactionRepository.rejectTransaction(5);
-        Transaction transaction = transactionRepository.findById(5);
+        transactionRepository.rejectTransaction(8, 1);
+        Transaction transaction = transactionRepository.findById(8);
         assertThat(transaction.getStatus()).isEqualTo(TxStatus.REJECTED);
+        assertThat(transaction.getApprovedByUserId()).isEqualTo(1);
     }
 
 

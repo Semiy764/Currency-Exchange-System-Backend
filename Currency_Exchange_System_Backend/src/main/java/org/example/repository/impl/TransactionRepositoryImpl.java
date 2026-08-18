@@ -454,11 +454,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public void rejectTransaction(int transactionId) {
+    public void rejectTransaction(int transactionId, int approvedByUserId) {
 
         String sql = """
                 UPDATE transactions SET 
-                status = ? WHERE id = ?
+                status = ? ,
+                approved_by_userId = ?
+                WHERE id = ?
                 """;
 
         try(
@@ -467,7 +469,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ) {
 
             statement.setString(1, TxStatus.REJECTED.name());
-            statement.setInt(2, transactionId);
+            statement.setInt(2, approvedByUserId);
+            statement.setInt(3, transactionId);
 
             statement.executeUpdate();
 

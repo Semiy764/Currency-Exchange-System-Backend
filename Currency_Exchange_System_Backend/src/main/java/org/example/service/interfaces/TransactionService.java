@@ -37,5 +37,5 @@ public interface TransactionService {
             TxStatus status);
 
     void approveTransaction(int transactionId, int approvedByUserId);
-    void rejectTransaction(int transactionId);
+    void rejectTransaction(int transactionId, int approvedByUserId);
 }

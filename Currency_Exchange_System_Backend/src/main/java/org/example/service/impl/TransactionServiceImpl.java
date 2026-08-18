@@ -243,7 +243,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void rejectTransaction(int transactionId) {
+    public void rejectTransaction(int transactionId, int approvedByUserId) {
 
         if(transactionId <= 0) {
             throw new IllegalArgumentException("Please enter a valid number for transaction id");
@@ -254,7 +254,7 @@ public class TransactionServiceImpl implements TransactionService {
             throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
         }
 
-        transactionRepository.rejectTransaction(transactionId);
+        transactionRepository.rejectTransaction(transactionId, approvedByUserId);
     }
 }
 
