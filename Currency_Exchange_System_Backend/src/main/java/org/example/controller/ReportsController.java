@@ -22,12 +22,12 @@ public class ReportsController {
         this.transactionService = transactionService;
     }
 
-//    @GetMapping("/daily")
-//    public List<Transaction> getDailyTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
-//
-//        isAdmin(principal);
-//        return transactionService
-//    }
+    @GetMapping("/daily")
+    public List<Transaction> getDailyTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
+
+        isAdmin(principal);
+        return transactionService.findTodayTransactions();
+    }
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
