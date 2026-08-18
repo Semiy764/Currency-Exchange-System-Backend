@@ -2,18 +2,17 @@ package org.example.controller;
 
 import org.example.dto.request.ProfitLossDtoRequest;
 import org.example.dto.response.ProfitLossDtoResponse;
+import org.example.dto.response.VaultSummaryDto;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Transaction;
 import org.example.repository.interfaces.TransactionRepository;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.TransactionService;
+import org.example.service.interfaces.VaultLedgerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -25,9 +24,11 @@ import java.util.List;
 public class ReportsController {
 
     private final TransactionService transactionService;
+    private final VaultLedgerService vaultLedgerService;
 
-    public ReportsController(TransactionService transactionService) {
+    public ReportsController(TransactionService transactionService, VaultLedgerService vaultLedgerService) {
         this.transactionService = transactionService;
+        this.vaultLedgerService = vaultLedgerService;
     }
 
     @GetMapping("/daily")
@@ -65,6 +66,14 @@ public class ReportsController {
 
         return response;
 
+    }
+
+    @GetMapping("/vault-summary/{threshold}")
+    public VaultSummaryDto getVaultSummary(@AuthenticationPrincipal AuthenticatedUser principal,
+                                           @PathVariable BigDecimal threshold) {
+
+        isAdminOrTeller(principal);
+        return vaultLedgerService.getVaultSummary(threshold);
     }
 
     private void isAdminOrTeller(AuthenticatedUser principal) {

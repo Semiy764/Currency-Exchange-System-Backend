@@ -1,19 +1,27 @@
 package org.example.service.impl;
 
+import org.example.dto.response.CurrencyBalanceDto;
+import org.example.dto.response.VaultSummaryDto;
 import org.example.enums.UserRole;
 import org.example.exception.AccessDeniedException;
 import org.example.exception.ResourceNotFoundException;
+import org.example.model.Currency;
 import org.example.model.User;
+import org.example.model.VaultBalance;
 import org.example.model.VaultLedger;
 import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.UserRepsitory;
+import org.example.repository.interfaces.VaultBalanceRepository;
 import org.example.repository.interfaces.VaultLedgerRepository;
 import org.example.service.interfaces.VaultLedgerService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class VaultLedgerServiceImpl implements VaultLedgerService {
@@ -21,11 +29,13 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
     private final VaultLedgerRepository vaultLedgerRepository;
     private final CurrencyRepository currencyRepository;
     private final UserRepsitory userRepsitory;
+    private final VaultBalanceRepository vaultBalanceRepository;
 
-    public VaultLedgerServiceImpl(VaultLedgerRepository vaultLedgerRepository, CurrencyRepository currencyRepository, UserRepsitory userRepsitory) {
+    public VaultLedgerServiceImpl(VaultLedgerRepository vaultLedgerRepository, CurrencyRepository currencyRepository, UserRepsitory userRepsitory, VaultBalanceRepository vaultBalanceRepository) {
         this.vaultLedgerRepository = vaultLedgerRepository;
         this.currencyRepository = currencyRepository;
         this.userRepsitory = userRepsitory;
+        this.vaultBalanceRepository = vaultBalanceRepository;
     }
 
     @Override
@@ -133,6 +143,44 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
         }
 
         return vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(currencyId, start, end);
+    }
+
+
+    @Override
+    public VaultSummaryDto getVaultSummary(BigDecimal threshold) {
+
+        List<VaultBalance> balances = vaultBalanceRepository.findAll();
+        List<Currency> currencies = currencyRepository.findAll();
+        Map<Long, Currency> currencyMap = currencies
+                .stream()
+                .collect(Collectors.toMap(Currency::getId, c -> c));
+
+        List<CurrencyBalanceDto> balanceDtos = new ArrayList<>();
+        int lowCount = 0;
+        for(VaultBalance vb : balances) {
+            Currency currency = currencyMap.get(vb.getCurrencyId());
+            boolean isLow = vb.getBalance().compareTo(threshold) < 0;
+            if(isLow) lowCount++;
+
+            CurrencyBalanceDto dto = new CurrencyBalanceDto();
+            dto.setCurrencyId(vb.getCurrencyId().intValue());
+            dto.setCurrencyCode(currency != null ? currency.getCode() : "?");
+            dto.setCurrencyName(currency != null ? currency.getName() : "?");
+            dto.setBalance(vb.getBalance());
+            dto.setLow(isLow);
+            dto.setLastUpdated(vb.getLastUpdated());
+
+            balanceDtos.add(dto);
+
+        }
+
+        VaultSummaryDto summary = new VaultSummaryDto();
+        summary.setGeneratedAt(LocalDateTime.now());
+        summary.setBalances(balanceDtos);
+        summary.setLowBalanceCount(lowCount);
+
+        return summary;
+
     }
 
     @Override

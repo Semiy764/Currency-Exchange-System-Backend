@@ -1,5 +1,6 @@
 package org.example.service.interfaces;
 
+import org.example.dto.response.VaultSummaryDto;
 import org.example.model.VaultLedger;
 
 import java.math.BigDecimal;
@@ -14,4 +15,5 @@ public interface VaultLedgerService {
     List<VaultLedger> getByPerformedByUser(int userId);
     BigDecimal sumChangesBetween(int currencyId, LocalDateTime start, LocalDateTime end);
     boolean reconcile(int currencyId, BigDecimal currenctBalance);
+    VaultSummaryDto getVaultSummary(BigDecimal threshold);
 }
