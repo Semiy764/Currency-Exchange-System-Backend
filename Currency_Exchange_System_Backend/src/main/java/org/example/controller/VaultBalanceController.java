@@ -80,6 +80,13 @@ public class VaultBalanceController {
         return vaultLedgerService.getHistory(currencyId);
     }
 
+    @GetMapping("/reconcile/{currencyId}")
+    public boolean reconcileWithLedger(@AuthenticationPrincipal AuthenticatedUser principal,
+                                       @PathVariable int currencyId) {
+        isAdmin(principal);
+        return vaultBalanceService.reconcile(currencyId);
+    }
+
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
