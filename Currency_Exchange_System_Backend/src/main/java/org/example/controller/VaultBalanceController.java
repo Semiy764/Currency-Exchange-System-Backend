@@ -55,6 +55,19 @@ public class VaultBalanceController {
         return vaultBalanceService.getBalance(request.getCurrencyId());
     }
 
+    @PostMapping("/withdraw") // bayad amount manfi bashe!!!!!!
+    public VaultBalance withdraw(@AuthenticationPrincipal AuthenticatedUser principal,
+                                @RequestBody DepositAndWithdrawRequest request) {
+        isAdmin(principal);
+        vaultBalanceService.withdraw(
+                request.getCurrencyId(),
+                request.getAmount(),
+                request.getPerformedByUserId()
+        );
+
+        return vaultBalanceService.getBalance(request.getCurrencyId());
+    }
+
 
     private void isAdminOrTeller(AuthenticatedUser principal) {
         if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
