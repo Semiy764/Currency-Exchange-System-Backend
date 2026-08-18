@@ -459,7 +459,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         String sql = """
                 UPDATE transactions SET 
                 status = ? ,
-                approved_by_userId = ?
+                approved_by_userId = ?,
+                approved_at = ?
                 WHERE id = ?
                 """;
 
@@ -470,7 +471,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
             statement.setString(1, TxStatus.REJECTED.name());
             statement.setInt(2, approvedByUserId);
-            statement.setInt(3, transactionId);
+            statement.setString(3, LocalDateTime.now().toString());
+            statement.setInt(4, transactionId);
 
             statement.executeUpdate();
 
