@@ -50,9 +50,6 @@ public class SecurityConfig {
                                         "/api/auth/register/register-customer",
                                         "/api/auth","/api/auth/login")
                                 .permitAll()
-                                // دسته‌بندی‌ها و شهرها فقط داده مرجع هستن، نیازی به لاگین ندارن
-//                        .requestMatchers(HttpMethod.GET, "/api/categories", "/api/cities").permitAll()
-                                // everything else requires a valid JWT
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

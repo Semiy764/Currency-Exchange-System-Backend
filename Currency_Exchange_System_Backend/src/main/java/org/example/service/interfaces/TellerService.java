@@ -5,7 +5,6 @@ import org.example.model.Teller;
 import java.util.List;
 
 public interface TellerService {
-
     Teller findById(int tellerId);
     List<Teller> findAll();
     boolean existsById(int tellerId);
