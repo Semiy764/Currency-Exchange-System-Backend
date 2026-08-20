@@ -1,17 +1,23 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
 import org.example.enums.UserRole;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.User;
 import org.example.repository.interfaces.UserRepsitory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepsitory {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public User save(User user) {
@@ -25,10 +31,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 VALUES(?, ?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPasswordHash());
@@ -47,6 +51,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch(SQLException e) {
             throw new RuntimeException("Error saving user: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -56,11 +62,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users WHERE id = ?
                 """;
 
-
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
 
@@ -73,6 +76,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find user by id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -84,8 +89,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery();
                 ) {
@@ -97,6 +102,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all users: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -107,10 +114,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users WHERE username = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -123,6 +128,8 @@ public class UserRepositoryImpl implements UserRepsitory {
         } catch (SQLException e) {
             throw new RuntimeException("Error in find user by username: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -132,10 +139,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT 1 FROM users WHERE username = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, username);
 
@@ -147,6 +152,8 @@ public class UserRepositoryImpl implements UserRepsitory {
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by username: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -157,10 +164,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT 1 FROM users WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -172,6 +177,8 @@ public class UserRepositoryImpl implements UserRepsitory {
             throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
 
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -182,10 +189,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 DELETE FROM users WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
             int rows = statement.executeUpdate();
@@ -195,6 +200,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -210,10 +217,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getRole().name());
@@ -229,6 +234,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in updateUser " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -240,10 +247,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users WHERE role = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, role.name());
 
@@ -257,6 +262,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find users by role: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -269,10 +276,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 WHERE is_active = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 1);
 
@@ -286,6 +291,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find active users: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -293,14 +300,11 @@ public class UserRepositoryImpl implements UserRepsitory {
     public boolean isActive(int userId) {
 
         String sql = """
-                SELECT COUNT(*) FROM users WHERE id = ?
-                AND is_active = 1 LIMIT 1
+                SELECT is_active FROM users WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -313,6 +317,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in is Active: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
