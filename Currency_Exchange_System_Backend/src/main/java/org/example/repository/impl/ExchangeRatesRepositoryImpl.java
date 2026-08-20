@@ -1,10 +1,9 @@
 package org.example.repository.impl;
-
 import org.example.database.DatabaseManager;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.ExchangeRate;
 import org.example.repository.interfaces.ExchangeRatesRepository;
 import org.springframework.stereotype.Repository;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
@@ -40,9 +39,10 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                exchangeRate.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    exchangeRate.setId(keys.getLong(1));
+                }
             }
 
             return exchangeRate;
@@ -63,15 +63,13 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 allRates.add(mapRates(resultSet));
             }
-
             return allRates;
-
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all exchange rate: " + e, e);
@@ -99,12 +97,12 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
             statement.setString(1, justDate);
             statement.setInt(2, currency_id);
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapRates(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapRates(resultSet);
+                }
+                return null;
             }
-
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find last rate: " + e, e);
@@ -127,16 +125,17 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 ) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                rates.add(mapRates(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
+
             return rates;
 
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error in find all rates of currency: " + e, e);
+            throw new RuntimeException("Error in find all rates of currencies: " + e, e);
 
         }
     }
@@ -146,7 +145,7 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
         List<ExchangeRate> rates = new ArrayList<>();
         String sql = """
-                SELECT * FROM exchange_rates 
+                SELECT * FROM exchange_rates
                 WHERE DATE(effective_date) = ?
                 AND currency_id = ?
                 ORDER BY effective_date DESC
@@ -162,9 +161,10 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
             statement.setString(1, justDate);
             statement.setInt(2, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                rates.add(mapRates(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
             return rates;
 
@@ -186,7 +186,11 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 ) {
 
             statement.setInt(1, exchangeRateId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Exchange rate not found with ID: " + exchangeRateId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete currency rates: " + e, e);
@@ -208,10 +212,13 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                rates.add(mapRates(resultSet));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
+
             return rates;
 
         } catch (SQLException e) {
@@ -239,11 +246,11 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
             statement.setString(2, end.toString());
             statement.setInt(3, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                rates.add(mapRates(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
-
             return rates;
 
         } catch (SQLException e) {
@@ -268,9 +275,10 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
+
             while(resultSet.next()) {
                 rates.add(mapRates(resultSet));
             }
@@ -285,7 +293,6 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
 
         ExchangeRate exchangeRate = new ExchangeRate();
-        // id currncyid buyrate sellrate
         exchangeRate.setId(resultSet.getInt("id"));
         exchangeRate.setCurrencyId(resultSet.getInt("currency_id"));
         exchangeRate.setBuyRate(new BigDecimal(resultSet.getString("buy_rate")));
