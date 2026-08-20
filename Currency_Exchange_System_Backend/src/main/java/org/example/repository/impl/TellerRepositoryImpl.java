@@ -5,8 +5,6 @@ import org.example.exception.ResourceNotFoundException;
 import org.example.model.Teller;
 import org.example.repository.interfaces.TellerRepository;
 import org.springframework.stereotype.Repository;
-
-import javax.naming.ldap.PagedResultsControl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

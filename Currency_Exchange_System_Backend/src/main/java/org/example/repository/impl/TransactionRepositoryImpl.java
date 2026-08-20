@@ -13,11 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.HTMLDocument;
 import javax.xml.crypto.Data;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,20 +54,22 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setInt(3, transaction.getCustomerId().intValue());
             statement.setString(4, transaction.getAmountCurrency().toString());
             statement.setString(5, transaction.getAmountToman().toString());
-            statement.setString(6, transaction.getRequestedRate().toString());
-            statement.setString(7, transaction.getRateUsed().toString());
+            setNullableBigDecimal(statement, 6, transaction.getRequestedRate());
+            setNullableBigDecimal(statement, 7, transaction.getRateUsed());
             statement.setInt(8, transaction.isRequestedByCustomer() ? 1 : 0);
-            statement.setObject(9, transaction.getPerformedByUserId());
-            statement.setObject(10, transaction.getApprovedByUserId());
+            setNullableLong(statement, 9, transaction.getPerformedByUserId());
+            setNullableLong(statement, 10, transaction.getApprovedByUserId());
             statement.setString(11, transaction.getCreatedAt().toString());
-            statement.setObject(12, transaction.getApprovedAt());
+            setNullableString(statement, 12, transaction.getApprovedAt() != null ?
+                    transaction.getApprovedAt().toString() : null);
             statement.setString(13, transaction.getStatus().name());
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                transaction.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    transaction.setId(keys.getLong(1));
+                }
             }
 
             return transaction;
@@ -94,9 +94,10 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
+
             while(resultSet.next()) {
                 allTransactions.add(mapTranasction(resultSet));
             }
@@ -122,12 +123,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapTranasction(resultSet);
-            }
 
-            return null;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapTranasction(resultSet);
+                }
+                return null;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transaction by id:" + e, e);
@@ -146,9 +148,9 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 allTransactions.add(mapTranasction(resultSet));
             }
@@ -176,10 +178,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ) {
 
             statement.setInt(1, customerId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                allTrans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    allTrans.add(mapTranasction(resultSet));
+                }
             }
+
             return allTrans;
 
         } catch (SQLException e) {
@@ -201,10 +205,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ) {
 
             statement.setString(1, status.name());
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                transactions.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    transactions.add(mapTranasction(resultSet));
+                }
             }
             return transactions;
 
@@ -229,13 +234,14 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                allTrans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    allTrans.add(mapTranasction(resultSet));
+                }
             }
-            return allTrans;
 
+            return allTrans;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by performed by user id: " + e, e);
@@ -257,10 +263,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                trans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    trans.add(mapTranasction(resultSet));
+                }
             }
 
             return trans;
@@ -289,13 +296,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setString(2, start.toString());
             statement.setString(3, finish.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                trans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    trans.add(mapTranasction(resultSet));
+                }
             }
 
             return trans;
-
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by currency id and dates between: " + e, e);
@@ -322,10 +329,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setString(2, start.toString());
             statement.setString(3, finish.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                trans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    trans.add(mapTranasction(resultSet));
+                }
             }
+
             return trans;
 
         } catch (SQLException e) {
@@ -353,8 +362,10 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setInt(2, currencyId);
             statement.setString(3, status.name());
 
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by customer id & currency id & status: " + e, e);
@@ -382,11 +393,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setString(3, start.toString());
             statement.setString(4, end.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return resultSet.getBigDecimal("total_amount");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                resultSet.next();
+                BigDecimal total = resultSet.getBigDecimal("total_amount");
+                return total != null ? total : BigDecimal.ZERO;
             }
-            return BigDecimal.ZERO;
 
 
         } catch (SQLException e) {
@@ -445,7 +456,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setInt(2, approvedByUserId);
             statement.setString(3, LocalDateTime.now().toString());
             statement.setInt(4, transactionId);
-            statement.executeUpdate();
+
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in approve transaction");
@@ -474,7 +489,10 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setString(3, LocalDateTime.now().toString());
             statement.setInt(4, transactionId);
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in reject transaction: " + e, e);
@@ -497,7 +515,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
             statement.setString(1, TxStatus.CANCELED.name());
             statement.setInt(2, transactionId);
-            statement.executeUpdate();
+
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in cancel transaction: " + e, e);
@@ -526,6 +548,30 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find today transactions" + e, e);
+        }
+    }
+
+    private void setNullableLong(PreparedStatement statement, int index, Long value) throws SQLException {
+        if (value != null) {
+            statement.setLong(index, value);
+        } else {
+            statement.setNull(index, Types.BIGINT);
+        }
+    }
+
+    private void setNullableBigDecimal(PreparedStatement statement, int index, BigDecimal value) throws SQLException {
+        if (value != null) {
+            statement.setString(index, value.toString());
+        } else {
+            statement.setNull(index, Types.VARCHAR);
+        }
+    }
+
+    private void setNullableString(PreparedStatement statement, int index, String value) throws SQLException {
+        if(value != null) {
+            statement.setString(index, value);
+        } else {
+            statement.setNull(index, Types.VARCHAR);
         }
     }
 }
