@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.Teller;
 import org.example.repository.interfaces.TellerRepository;
 import org.springframework.stereotype.Repository;
@@ -37,9 +38,10 @@ public class TellerRepositoryImpl implements TellerRepository {
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                teller.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    teller.setId(keys.getLong(1));
+                }
             }
             return teller;
 
@@ -59,8 +61,9 @@ public class TellerRepositoryImpl implements TellerRepository {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
         ) {
-            ResultSet resultSet = statement.executeQuery();
+
             while(resultSet.next()) {
                 allTellers.add(mapTeller(resultSet));
             }
@@ -82,12 +85,15 @@ public class TellerRepositoryImpl implements TellerRepository {
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
+
             statement.setInt(1, tellerId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapTeller(resultSet);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapTeller(resultSet);
+                }
+                return null;
             }
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find teller by teller id: " + e, e);
@@ -106,12 +112,13 @@ public class TellerRepositoryImpl implements TellerRepository {
                 ) {
 
             statement.setInt(1, tellerId);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapTeller(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapTeller(resultSet);
+                }
+                return null;
             }
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find teller by user id: " + e, e);
@@ -131,8 +138,10 @@ public class TellerRepositoryImpl implements TellerRepository {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing teller by user id: " + e, e);
@@ -152,8 +161,10 @@ public class TellerRepositoryImpl implements TellerRepository {
                 ) {
 
             statement.setInt(1, tellerId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing teller by id: " + e, e);
@@ -174,8 +185,10 @@ public class TellerRepositoryImpl implements TellerRepository {
                 ) {
 
             statement.setString(1, phone);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing teller by phone_number: " + e, e);
@@ -198,7 +211,11 @@ public class TellerRepositoryImpl implements TellerRepository {
                 ) {
 
             statement.setInt(1, tellerId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Teller not found with ID: " + tellerId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete teller: " + e, e);
@@ -219,7 +236,11 @@ public class TellerRepositoryImpl implements TellerRepository {
         ) {
 
             statement.setInt(1, userId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new ResourceNotFoundException("User not found with ID: " + userId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete teller: " + e, e);
@@ -250,7 +271,10 @@ public class TellerRepositoryImpl implements TellerRepository {
             statement.setInt(4, teller.getUserId().intValue());
             statement.setInt(5, teller.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Teller not found with ID: " + teller.getId());
+            }
             return teller;
 
         } catch (SQLException e) {
