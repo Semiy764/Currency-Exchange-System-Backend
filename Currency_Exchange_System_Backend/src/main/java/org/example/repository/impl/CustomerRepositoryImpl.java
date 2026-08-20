@@ -1,17 +1,21 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
-
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public Customer save(Customer customer) {
@@ -24,10 +28,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 user_id)
                 VALUES(?, ?, ?, ?)
                 """;
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             statement.setString(1, customer.getFullname());
             statement.setString(2, customer.getNationalId());
@@ -46,6 +49,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in save customer: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -56,9 +61,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery();
         ) {
 
@@ -71,6 +76,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all customers: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -81,10 +88,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, customerId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -97,6 +102,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -107,10 +114,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -123,6 +128,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by userid" + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -133,10 +140,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
 
@@ -147,6 +152,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by user_id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -157,10 +164,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -171,6 +176,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by id: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
 
@@ -183,10 +190,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE phone_number = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, phone);
 
@@ -197,6 +202,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by phone_number: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -212,10 +219,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, customer.getFullname());
             statement.setString(2, customer.getNationalId());
@@ -233,6 +238,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in update customer: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
@@ -245,10 +252,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 DELETE FROM customers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, customerId);
             int rows = statement.executeUpdate();
@@ -259,6 +264,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in remove customer: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -269,10 +276,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE national_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, nationalId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -282,6 +287,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by national id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -293,10 +300,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE full_name LIKE ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             String searchTerm = "%" + name + "%";
             statement.setString(1, searchTerm);
@@ -310,6 +315,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in search customer by name: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
@@ -321,10 +328,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE national_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, nationalId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -338,6 +343,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by national id: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -355,6 +362,5 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         return customer;
 
     }
-
 
 }
