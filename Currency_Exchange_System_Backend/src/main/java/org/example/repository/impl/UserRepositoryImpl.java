@@ -6,8 +6,6 @@ import org.example.exception.ResourceNotFoundException;
 import org.example.model.User;
 import org.example.repository.interfaces.UserRepsitory;
 import org.springframework.stereotype.Repository;
-
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
