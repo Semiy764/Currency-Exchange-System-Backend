@@ -1,10 +1,13 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Teller;
 import org.example.repository.interfaces.TellerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,8 @@ import java.util.List;
 @Repository
 public class TellerRepositoryImpl implements TellerRepository {
 
+    @Autowired
+    private DataSource dataSource;
     @Override
     public Teller save(Teller teller) {
 
@@ -24,10 +29,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 VALUES(?, ?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, teller.getFullname());
             statement.setString(2, teller.getNationalId());
@@ -45,6 +48,8 @@ public class TellerRepositoryImpl implements TellerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in save teller: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -56,8 +61,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 SELECT * FROM tellers
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery();
         ) {
@@ -69,6 +74,8 @@ public class TellerRepositoryImpl implements TellerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all tellers: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -79,10 +86,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 SELECT * FROM tellers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, tellerId);
 
@@ -95,6 +100,8 @@ public class TellerRepositoryImpl implements TellerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find teller by teller id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -104,10 +111,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 SELECT * FROM tellers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, tellerId);
 
@@ -120,6 +125,8 @@ public class TellerRepositoryImpl implements TellerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find teller by user id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -130,10 +137,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 SELECT 1 FROM tellers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
 
@@ -143,6 +148,8 @@ public class TellerRepositoryImpl implements TellerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing teller by user id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -153,10 +160,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 SELECT 1 FROM tellers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, tellerId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -167,6 +172,8 @@ public class TellerRepositoryImpl implements TellerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing teller by id: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -177,10 +184,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 SELECT 1 FROM tellers WHERE phone_number = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, phone);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -191,6 +196,8 @@ public class TellerRepositoryImpl implements TellerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing teller by phone_number: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
 
@@ -203,10 +210,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 DELETE FROM tellers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, tellerId);
             int rows = statement.executeUpdate();
@@ -218,6 +223,8 @@ public class TellerRepositoryImpl implements TellerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete teller: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -228,10 +235,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 DELETE FROM tellers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-        ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
             int rows = statement.executeUpdate();
@@ -243,6 +248,8 @@ public class TellerRepositoryImpl implements TellerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete teller: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -258,10 +265,8 @@ public class TellerRepositoryImpl implements TellerRepository {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, teller.getFullname());
             statement.setString(2, teller.getNationalId());
@@ -276,8 +281,10 @@ public class TellerRepositoryImpl implements TellerRepository {
             return teller;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in delete teller: " + e, e);
+            throw new RuntimeException("Error in update teller: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
