@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
 import org.springframework.stereotype.Repository;
@@ -35,9 +36,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                customer.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    customer.setId(keys.getLong(1));
+                }
             }
 
             return customer;
@@ -57,9 +59,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ResultSet resultSet = statement.executeQuery();
         ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 customers.add(mapCustomer(resultSet));
             }
@@ -85,11 +87,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 ) {
             statement.setInt(1, customerId);
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapCustomer(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by id: " + e.getMessage(), e);
@@ -108,11 +112,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapCustomer(resultSet);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by userid" + e.getMessage(), e);
@@ -132,8 +139,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by user_id: " + e.getMessage(), e);
@@ -152,8 +162,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by id: " + e.getMessage(), e);
@@ -176,8 +189,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 ) {
 
             statement.setString(1, phone);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by phone_number: " + e.getMessage(), e);
@@ -208,14 +223,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             statement.setInt(4, customer.getUserId().intValue());
             statement.setInt(5, customer.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Customer not found with ID: " + customer.getId());
+            }
+
             return customer;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in update customer: " + e.getMessage(), e);
 
         }
-
 
     }
 
@@ -233,7 +251,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 ) {
 
             statement.setInt(1, customerId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Customer not found with ID: " + customerId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in remove customer: " + e.getMessage(), e);
@@ -253,8 +275,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 ) {
 
             statement.setString(1, nationalId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by national id: " + e, e);
@@ -276,14 +300,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             String searchTerm = "%" + name + "%";
             statement.setString(1, searchTerm);
-            ResultSet resultSet = statement.executeQuery();
-
-            while(resultSet.next()) {
-                customers.add(mapCustomer(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    customers.add(mapCustomer(resultSet));
+                }
             }
 
             return customers;
-
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in search customer by name: " + e, e);
@@ -304,12 +327,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 ) {
 
             statement.setString(1, nationalId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapCustomer(resultSet);
-            }
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
 
-            return null;
+                return null;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by national id: " + e, e);
@@ -323,8 +347,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         customer.setFullname(resultSet.getString("full_name"));
         customer.setId(resultSet.getInt("id"));
         customer.setNationalId(resultSet.getString("national_id"));
-        customer.setUserId(resultSet.getLong("user_id"));
         customer.setPhoneNumber(resultSet.getString("phone_number"));
+
+        long userIdValue = resultSet.getInt("user_id");
+        customer.setUserId(resultSet.wasNull() ? null : userIdValue);
 
         return customer;
 
