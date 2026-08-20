@@ -9,7 +9,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// agar query hich ? nadare resultset ro tooye try avali biyar vali agar ? dasht bayad yek try joda barash benevisi!!
+// harja dar query update ya delete bood bayad int rows begiri!!! va dige nemikhad dar try bebandish!!!
 @Repository
 public class CurrencyRepositoryImpl implements CurrencyRepository {
 
@@ -24,7 +25,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 VALUES(?, ?, ?)
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ) {
@@ -33,9 +34,10 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             statement.setString(3, currency.getSymbol());
 
             statement.executeUpdate();
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                currency.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    currency.setId(keys.getLong(1));
+                }
             }
 
             return currency;
@@ -53,12 +55,13 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+                ResultSet resultSet = statement.executeQuery();
 
-            ResultSet resultSet = statement.executeQuery();
+        ) {
+
             while(resultSet.next()) {
                 allCurrencies.add(mapCurrency(resultSet));
             }
@@ -78,17 +81,19 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE id = ?
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by id: " + e, e);
@@ -102,18 +107,20 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE symbol = ?
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             statement.setString(1, symbol);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by symbol: " + e, e);
@@ -128,19 +135,19 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE name = ?
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
-
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by name: " + e, e);
@@ -153,19 +160,22 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE code = ?
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             statement.setString(1, code);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
 
-            return null;
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by code: " + e, e);
@@ -179,13 +189,17 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 DELETE FROM currencies WHERE id = ?
                 """;
 
-        try(
+        try (
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             statement.setInt(1, currencyId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete currency: " + e, e);
@@ -206,8 +220,9 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 ) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing currency by id: " + e, e);
@@ -226,8 +241,9 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing currency by id: " + e, e);
@@ -246,8 +262,11 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setString(1, code);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing currency by code: " + e, e);
@@ -274,7 +293,11 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             statement.setString(3, currency.getSymbol());
             statement.setInt(4, currency.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Currency not found with ID: " + currency.getId());
+            }
+
             return currency;
 
         } catch (SQLException e) {
@@ -298,9 +321,11 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 ) {
 
             statement.setInt(1, 1);
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                foundCurrencies.add(mapCurrency(resultSet));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    foundCurrencies.add(mapCurrency(resultSet));
+                }
             }
 
             return foundCurrencies;
@@ -374,11 +399,12 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 ) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                 return resultSet.getBoolean("is_active");
-            } else {
-                throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return resultSet.getBoolean("is_active");
+                } else {
+                    throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+                }
             }
 
         } catch (SQLException e) {
