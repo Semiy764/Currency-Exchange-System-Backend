@@ -2,6 +2,7 @@ package org.example.repository.impl;
 
 import org.example.database.DatabaseManager;
 import org.example.enums.UserRole;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.User;
 import org.example.repository.interfaces.UserRepsitory;
 import org.springframework.stereotype.Repository;
@@ -38,9 +39,10 @@ public class UserRepositoryImpl implements UserRepsitory {
 
             statement.executeUpdate();
 
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if(generatedKeys.next()) {
-                user.setId(generatedKeys.getLong(1));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if(generatedKeys.next()) {
+                    user.setId(generatedKeys.getLong(1));
+                }
             }
 
             return user;
@@ -63,14 +65,13 @@ public class UserRepositoryImpl implements UserRepsitory {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapUser(resultSet);
+                }
+                return null;
             }
-
-            return null;
-
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find user by id: " + e.getMessage(), e);
@@ -88,9 +89,9 @@ public class UserRepositoryImpl implements UserRepsitory {
         try(
                 Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 allUsers.add(mapUser(resultSet));
             }
@@ -113,12 +114,13 @@ public class UserRepositoryImpl implements UserRepsitory {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
             statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapUser(resultSet);
+                }
+                return null;
             }
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find user by username: " + e.getMessage(), e);
@@ -139,8 +141,10 @@ public class UserRepositoryImpl implements UserRepsitory {
 
             statement.setString(1, username);
 
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by username: " + e.getMessage(), e);
@@ -161,8 +165,10 @@ public class UserRepositoryImpl implements UserRepsitory {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
@@ -184,7 +190,10 @@ public class UserRepositoryImpl implements UserRepsitory {
                 ) {
 
             statement.setInt(1, userId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("User not found with ID: " + userId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
@@ -214,7 +223,10 @@ public class UserRepositoryImpl implements UserRepsitory {
             statement.setString(4, user.getPasswordHash());
             statement.setInt(5, user.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("User not found with ID: " + user.getId());
+            }
             return user;
 
         } catch (SQLException e) {
@@ -237,10 +249,12 @@ public class UserRepositoryImpl implements UserRepsitory {
 
             statement.setString(1, role.name());
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                users.add(mapUser(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    users.add(mapUser(resultSet));
+                }
             }
+
             return users;
 
         } catch (SQLException e) {
@@ -263,11 +277,13 @@ public class UserRepositoryImpl implements UserRepsitory {
                 ) {
 
             statement.setInt(1, 1);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                users.add(mapUser(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    users.add(mapUser(resultSet));
+                }
             }
+
             return users;
 
         } catch (SQLException e) {
@@ -289,14 +305,13 @@ public class UserRepositoryImpl implements UserRepsitory {
                 ) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                int count = resultSet.getInt(1);
-                boolean isActive = count > 0;
-                return isActive;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return resultSet.getInt("is_active") == 1;
+                }
+                throw new ResourceNotFoundException("User not found with ID: " + userId);
             }
 
-            return false;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in is Active: " + e.getMessage(), e);

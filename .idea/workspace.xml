@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TellerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TellerRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TransactionRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/TransactionRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/UserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/repository/impl/UserRepositoryImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +234,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend\docs" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TransactionRepositoryTest.findTodayTransactionsTest">
+  <component name="RunManager" selected="Spring Boot.App">
     <configuration name="TransactionRepositoryTest.cancelTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -300,22 +299,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TransactionServiceTest.rejectTransactionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.TransactionServiceTest" />
-      <option name="METHOD_NAME" value="rejectTransactionTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Currency_Exchange_System_Backend_Project" />
       <method v="2">
@@ -327,20 +310,34 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.App" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="JUnit.TransactionRepositoryTest.findTodayTransactionsTest" />
       <item itemvalue="JUnit.TransactionRepositoryTest.cancelTransactionTest" />
       <item itemvalue="JUnit.TransactionRepositoryTest.rejectTransactionTest" />
       <item itemvalue="JUnit.TransactionRepositoryTest.transactionSaveTest" />
-      <item itemvalue="JUnit.TransactionServiceTest.rejectTransactionTest" />
+      <item itemvalue="Spring Boot.App" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.App" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findTodayTransactionsTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.transactionSaveTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.cancelTransactionTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.rejectTransactionTest" />
-        <item itemvalue="JUnit.TransactionServiceTest.rejectTransactionTest" />
       </list>
     </recent_temporary>
   </component>
