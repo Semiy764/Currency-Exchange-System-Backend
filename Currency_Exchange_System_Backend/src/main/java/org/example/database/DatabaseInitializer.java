@@ -51,8 +51,8 @@ public class DatabaseInitializer {
                 CREATE TABLE IF NOT EXISTS "tellers" (
                 	"id"	INTEGER,
                 	"full_name"	TEXT NOT NULL,
-                	"national_id"	TEXT NOT NULL,
-                	"phone_number"	TEXT,
+                	"national_id"	TEXT NOT NULL UNIQUE,
+                	"phone_number"	TEXT NOT NULL UNIQUE,
                 	"user_id"	INTEGER NOT NULL UNIQUE,
                 	PRIMARY KEY("id" AUTOINCREMENT),
                 	FOREIGN KEY("user_id") REFERENCES "users"("id")

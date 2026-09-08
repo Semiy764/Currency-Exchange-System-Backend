@@ -1,11 +1,14 @@
 package org.example.repository.impl;
 
+import org.example.exception.DuplicateResourceException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Teller;
 import org.example.repository.interfaces.TellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -47,6 +50,9 @@ public class TellerRepositoryImpl implements TellerRepository {
             return teller;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("user id or phone number or national id already exists");
+            }
             throw new RuntimeException("Error in save teller: " + e, e);
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
@@ -281,7 +287,62 @@ public class TellerRepositoryImpl implements TellerRepository {
             return teller;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("User id or national id or phone number already exists");
+            }
             throw new RuntimeException("Error in update teller: " + e, e);
+
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public Teller findByPhone(String phoneNumber) {
+        String sql = """
+                SELECT * FROM tellers WHERE phone_number = ?
+                """;
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, phoneNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapTeller(resultSet);
+                }
+
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find teller by phone number: " + e, e);
+
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public Teller findByNationalId(String nationalId) {
+        String sql = """
+                SELECT * FROM tellers WHERE national_id = ?
+                """;
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, nationalId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapTeller(resultSet);
+                }
+
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find teller by national id: " + e, e);
 
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
@@ -298,5 +359,12 @@ public class TellerRepositoryImpl implements TellerRepository {
         teller.setPhoneNumber(resultSet.getString("phone_number"));
 
         return teller;
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 }
