@@ -1,5 +1,6 @@
 package org.example.repository.impl;
 
+import org.example.exception.DuplicateResourceException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
@@ -51,6 +52,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             return customer;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("user id or phone name or national id already exists");
+            }
             throw new RuntimeException("Error in save customer: " + e.getMessage(), e);
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
@@ -239,6 +243,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             return customer;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("user id or phone name or national id already exists");
+            }
             throw new RuntimeException("Error in update customer: " + e.getMessage(), e);
 
         } finally {
@@ -349,6 +356,34 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
         }
+    }
+
+    @Override
+    public Customer findByPhone(String phoneNumber) {
+
+        String sql = """
+                SELECT * FROM customers WHERE phone_number = ?
+                """;
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, phoneNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
+
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find customer by phone number: " + e, e);
+
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+
     }
 
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
