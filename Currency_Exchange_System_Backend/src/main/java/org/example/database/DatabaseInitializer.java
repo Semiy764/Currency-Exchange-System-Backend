@@ -64,7 +64,7 @@ public class DatabaseInitializer {
                     CREATE TABLE IF NOT EXISTS "currencies" (
                 	"id"	INTEGER,
                 	"code"	TEXT NOT NULL UNIQUE,
-                	"name"	TEXT NOT NULL,
+                	"name"	TEXT NOT NULL UNIQUE,
                 	"symbol"	TEXT,
                 	"is_active"    INTEGER NOT NULL DEFAULT 1,
                 	PRIMARY KEY("id" AUTOINCREMENT)

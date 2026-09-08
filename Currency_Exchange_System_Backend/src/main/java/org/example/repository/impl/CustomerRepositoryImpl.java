@@ -6,6 +6,9 @@ import org.example.repository.interfaces.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
+
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -361,6 +364,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         return customer;
 
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 
 }

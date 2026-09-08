@@ -1,4 +1,5 @@
 package org.example.repository.impl;
+import org.example.exception.DuplicateResourceException;
 import org.example.exception.EntityNotFoundException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Currency;
@@ -6,6 +7,8 @@ import org.example.repository.interfaces.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -47,6 +50,9 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             return currency;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("Currency code or name already exists");
+            }
             throw new RuntimeException("Error in save currency: " + e, e);
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
@@ -307,6 +313,9 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             return currency;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("Currency code or name already exists");
+            }
             throw new RuntimeException("Error in update currency: " + e, e);
 
         } finally {
@@ -429,5 +438,12 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         currency.setActive(resultSet.getInt("is_active") == 1);
         return currency;
 
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 }
