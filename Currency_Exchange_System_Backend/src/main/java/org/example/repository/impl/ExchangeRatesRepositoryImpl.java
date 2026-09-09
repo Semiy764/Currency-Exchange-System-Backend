@@ -5,6 +5,9 @@ import org.example.repository.interfaces.ExchangeRatesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
+
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -311,5 +314,12 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         exchangeRate.setCreatedBy(resultSet.getInt("created_by"));
 
         return exchangeRate;
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 }

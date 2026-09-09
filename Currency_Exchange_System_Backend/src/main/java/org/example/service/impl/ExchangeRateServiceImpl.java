@@ -4,21 +4,21 @@ import org.example.enums.TxType;
 import org.example.enums.UserRole;
 import org.example.exception.AccessDeniedException;
 import org.example.exception.ResourceNotFoundException;
+import org.example.model.Currency;
 import org.example.model.ExchangeRate;
 import org.example.model.User;
 import org.example.repository.interfaces.CurrencyRepository;
 import org.example.repository.interfaces.ExchangeRatesRepository;
 import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.ExchangeRateService;
-import org.springframework.security.core.parameters.P;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.module.ResolutionException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
+@Service
 public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     private final ExchangeRatesRepository exchangeRatesRepository;
@@ -33,14 +33,15 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     @Override
+    @Transactional
     public ExchangeRate setRate(int currencyId, BigDecimal buyRate, BigDecimal sellRate, int createdByUserId) {
 
         if(currencyId <= 0) {
             throw new IllegalArgumentException("Enter a valid number for currency id");
         }
 
-        if(!currencyRepository.existsById(currencyId)) {
-            throw new ResolutionException("Currency not found with ID: " + currencyId);
+        if (createdByUserId <= 0) {
+            throw new IllegalArgumentException("Enter a valid user id");
         }
 
         if(buyRate == null) {
@@ -60,15 +61,21 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             throw new IllegalArgumentException("Enter a valid number for sell rate");
         }
 
+        Currency currency = currencyRepository.findById(currencyId);
+        if (currency == null) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
         User user = userRepsitory.findById(createdByUserId);
 
         if(user == null) {
-            throw new ResolutionException("User not found with ID: " + createdByUserId);
+            throw new ResourceNotFoundException("User not found with ID: " + createdByUserId);
         }
 
         if(user.getRole() == UserRole.CUSTOMER) {
             throw new AccessDeniedException("Access denied");
         }
+
 
         ExchangeRate exchangeRate = new ExchangeRate(buyRate, sellRate, createdByUserId, LocalDateTime.now(),currencyId);
         return exchangeRatesRepository.save(exchangeRate);
@@ -78,6 +85,10 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Override
     public ExchangeRate getCurrentRate(int currencyId) {
+
+        if (currencyId <= 0) {
+            throw new IllegalArgumentException("Enter a valid currency id");
+        }
 
         if(!currencyRepository.existsById(currencyId)) {
             throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
@@ -112,10 +123,6 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             throw new IllegalArgumentException("Enter a valid number for currency id");
         }
 
-        if(!currencyRepository.existsById(currencyId)) {
-            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
-        }
-
         if(start == null) {
             throw new IllegalArgumentException("Start cannot be null");
         }
@@ -128,6 +135,11 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             throw new IllegalArgumentException("Start cannot be after end");
         }
 
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
+
         return exchangeRatesRepository.findByCurrencyIdAndEffectiveDateBetween(currencyId, start, end);
     }
 
@@ -138,15 +150,20 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             throw new IllegalArgumentException("Please enter a valid number for currency id");
         }
 
-        if(!currencyRepository.existsById(currencyId)) {
-            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
-        }
-
         if(type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
+        if(!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
         ExchangeRate rate = exchangeRatesRepository.findLastRateToday(currencyId);
+
+        if (rate == null) {
+            throw new ResourceNotFoundException("No exchange rate has been set today for currency ID: "
+                    + currencyId);
+        }
         return type == TxType.BUY ? rate.getBuyRate() : rate.getsellRate();
     }
 
@@ -156,6 +173,15 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         if(requestedRate == null || currentRate == null) {
             return false;
         }
+
+        if (tolerancePercent == null) {
+            throw new IllegalArgumentException("tolerance percent cannot be null");
+        }
+
+        if (tolerancePercent.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Tolerance percent cannot be negative");
+        }
+
         BigDecimal diff = requestedRate.subtract(currentRate).abs();
         BigDecimal maxAllowedDiff = currentRate.multiply(tolerancePercent);
 
