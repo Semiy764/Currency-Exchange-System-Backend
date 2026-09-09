@@ -1,12 +1,15 @@
 package org.example.repository.impl;
 
 import org.example.enums.UserRole;
+import org.example.exception.DuplicateResourceException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.User;
 import org.example.repository.interfaces.UserRepsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -50,6 +53,9 @@ public class UserRepositoryImpl implements UserRepsitory {
             return user;
 
         } catch(SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("username already exists");
+            }
             throw new RuntimeException("Error saving user: " + e.getMessage(), e);
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
@@ -233,6 +239,9 @@ public class UserRepositoryImpl implements UserRepsitory {
             return user;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("username already exists");
+            }
             throw new RuntimeException("Error in updateUser " + e.getMessage(), e);
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
@@ -332,6 +341,13 @@ public class UserRepositoryImpl implements UserRepsitory {
         user.setActive(res.getInt("is_active") == 1);
 
         return user;
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 
 
