@@ -33,7 +33,6 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     @Override
-    @Transactional
     public ExchangeRate setRate(int currencyId, BigDecimal buyRate, BigDecimal sellRate, int createdByUserId) {
 
         if(currencyId <= 0) {

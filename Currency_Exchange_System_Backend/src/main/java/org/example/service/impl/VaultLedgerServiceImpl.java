@@ -15,7 +15,6 @@ import org.example.repository.interfaces.VaultBalanceRepository;
 import org.example.repository.interfaces.VaultLedgerRepository;
 import org.example.service.interfaces.VaultLedgerService;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,6 +42,40 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
 
         if(vaultLedger == null) {
             throw new IllegalArgumentException("vault ledger cannot be null");
+        }
+
+        if (vaultLedger.getCurrencyId() == null) {
+            throw new IllegalArgumentException("Currency id is required");
+        }
+
+        if (vaultLedger.getChangeAmount() == null) {
+            throw new IllegalArgumentException("Change amount cannot be null");
+        }
+
+        if (vaultLedger.getReason() == null) {
+            throw new IllegalArgumentException("Reason cannot be null");
+        }
+
+        if (vaultLedger.getCreatedAt() == null) {
+            throw new IllegalArgumentException("Created at date cannot be null");
+        }
+
+        if (vaultLedger.getPreformedByUserId() == null) {
+            throw new IllegalArgumentException("Preformed by user id cannot be null");
+        }
+
+        if (!currencyRepository.existsById(vaultLedger.getCurrencyId().intValue())) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + vaultLedger.getCurrencyId());
+        }
+
+        User user = userRepsitory.findById(vaultLedger.getPreformedByUserId().intValue());
+
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found with ID: " + vaultLedger.getPreformedByUserId());
+        }
+
+        if (user.getRole() == UserRole.CUSTOMER) {
+            throw new AccessDeniedException("Access denied");
         }
 
         return vaultLedgerRepository.save(vaultLedger);
@@ -110,7 +143,6 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
 
         UserRole role = user.getRole();
 
-
         if(role == UserRole.CUSTOMER) {
             throw new AccessDeniedException("Access denied");
         }
@@ -142,12 +174,20 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
             throw new IllegalArgumentException("Start date cannot be in future");
         }
 
+        if (!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+        }
+
         return vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(currencyId, start, end);
     }
 
 
     @Override
     public VaultSummaryDto getVaultSummary(BigDecimal threshold) {
+
+        if (threshold == null) {
+            throw new IllegalArgumentException("Threshold cannot be null");
+        }
 
         List<VaultBalance> balances = vaultBalanceRepository.findAll();
         List<Currency> currencies = currencyRepository.findAll();
@@ -192,6 +232,10 @@ public class VaultLedgerServiceImpl implements VaultLedgerService {
 
         if(currenctBalance == null) {
             throw new IllegalArgumentException("Balance cannot be null");
+        }
+
+        if (!currencyRepository.existsById(currencyId)) {
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
         }
 
         BigDecimal sumFromLedger = vaultLedgerRepository.sumChangeAmountBycurrencyIdAndCreatedAtBetween(
