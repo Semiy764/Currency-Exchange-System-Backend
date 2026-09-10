@@ -1,8 +1,6 @@
 package org.example.controller;
 
-import org.example.exception.ResourceNotFoundException;
 import org.example.model.Teller;
-import org.example.repository.interfaces.TellerRepository;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.TellerService;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/tellers")
+@RequestMapping("/api/tellers")
 public class TellerController {
 
     private final TellerService tellerService;
@@ -38,6 +36,11 @@ public class TellerController {
 
         isAdmin(principal);
         return tellerService.findById(tellerId);
+    }
+
+    @GetMapping("/me")
+    public Teller getMyProfile(@AuthenticationPrincipal AuthenticatedUser principal) {
+        return tellerService.findByUserId(principal.id());
     }
 
     private void isAdmin(AuthenticatedUser principal) {

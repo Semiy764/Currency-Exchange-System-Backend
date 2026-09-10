@@ -23,6 +23,7 @@ public class CustomerController {
 
     @GetMapping
     public List<Customer> getAllCustomers(@AuthenticationPrincipal AuthenticatedUser principal) {
+        isAdminOrTeller(principal);
         return customerService.findAll();
     }
 
@@ -39,6 +40,11 @@ public class CustomerController {
 
         isAdminOrTeller(principal);
         return customerService.findByNationalId(nationalCode);
+    }
+
+    @GetMapping("/me")
+    public Customer getMyProfile(@AuthenticationPrincipal AuthenticatedUser principal) {
+        return customerService.findByUserId(principal.id());
     }
 
 
