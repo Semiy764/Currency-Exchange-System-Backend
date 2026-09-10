@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @RestController
@@ -47,8 +46,9 @@ public class CurrencyController {
                                @RequestBody CurrencyRequest request,
                                @PathVariable int id) {
 
+        requireAdmin(principal);
+
         Currency currency = currencyService.findById(id);
-        currency.setActive(true);
         currency.setName(request.getName());
         currency.setCode(request.getCode());
         currency.setSymbol(request.getSymbol());
@@ -62,6 +62,14 @@ public class CurrencyController {
                                        @PathVariable int id) {
         requireAdmin(principal);
         currencyService.deactivateCurrency(id);
+        return currencyService.findById(id);
+    }
+
+    @PostMapping("/{id}/activate")
+    public Currency activateCurrency(@AuthenticationPrincipal AuthenticatedUser principal,
+                                       @PathVariable int id) {
+        requireAdmin(principal);
+        currencyService.activateCurrency(id);
         return currencyService.findById(id);
     }
 
