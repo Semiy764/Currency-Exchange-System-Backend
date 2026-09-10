@@ -47,7 +47,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                                 // register / login must be reachable without a token
-                                .requestMatchers("/api/auth/register/register-teller",
+                                .requestMatchers(
                                         "/api/auth/register/register-customer",
                                         "/api/auth","/api/auth/login")
                                 .permitAll()
