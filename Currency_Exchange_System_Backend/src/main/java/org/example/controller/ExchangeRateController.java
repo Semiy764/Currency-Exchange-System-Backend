@@ -5,12 +5,9 @@ import org.example.model.ExchangeRate;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.ExchangeRateService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,6 +29,9 @@ public class ExchangeRateController {
     public ExchangeRate addRate(@AuthenticationPrincipal AuthenticatedUser principal,
                                 @RequestBody ExchangeRateRequest request) {
         isAdminOrTeller(principal);
+        if (request.getCurrencyId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Currency id is required");
+        }
         return exchangeRateService.setRate(request.getCurrencyId().intValue(), request.getBuyRate(), request.getSellRate(), principal.id());
     }
 
