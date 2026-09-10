@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.request.UserUpdateRequest;
 import org.example.dto.response.UserResponse;
 import org.example.model.User;
 import org.example.security.AuthenticatedUser;
@@ -8,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,11 +40,21 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserResponse userinfoChange(@RequestBody Map<Object, Object> infos,
-                                       @PathVariable int id) {
+    public UserResponse userinfoChange(@RequestBody UserUpdateRequest infos,
+                                       @PathVariable int id,
+                                       @AuthenticationPrincipal AuthenticatedUser principal) {
+
+        requireAdmin(principal);
         User user = userService.findById(id);
-        user.setUsername(infos.get("username").toString());
-        user.setActive(infos.get("isActive").toString().equals("true"));
+        if (infos.getUsername() == null || infos.getUsername().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
+        }
+        if (infos.getActive() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Is active is required");
+        }
+
+        user.setUsername(infos.getUsername());
+        user.setActive(infos.getActive());
         userService.updateUser(id, user);
         return map(user);
     }
@@ -74,7 +83,7 @@ public class UserController {
     }
 
     private void requireAdminOrTeller(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role()) && !"Teller".equals(principal.role())) {
+            if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
         }
     }
