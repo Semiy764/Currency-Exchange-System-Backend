@@ -1,9 +1,7 @@
 package org.example.model;
 
-import jakarta.annotation.Nullable;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

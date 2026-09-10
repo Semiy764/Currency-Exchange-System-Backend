@@ -9,6 +9,10 @@ import org.example.repository.interfaces.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
+
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -447,6 +451,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     // @Transactional check kon koja ha dar code bayad begzari??????
 
     @Override
+    @Transactional
     public void approveTransaction(int transactionId, int approvedByUserId) {
 
         String sql = """
@@ -454,7 +459,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 status = ?,
                 approved_by_userId = ?,
                 approved_at = ?
-                WHERE id = ?
+                WHERE id = ? AND status = ?
                 """;
 
         Connection connection = DataSourceUtils.getConnection(dataSource);
@@ -464,6 +469,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setInt(2, approvedByUserId);
             statement.setString(3, LocalDateTime.now().toString());
             statement.setInt(4, transactionId);
+            statement.setString(5, TxStatus.PENDING.name());
 
             int rows = statement.executeUpdate();
             if (rows == 0) {
@@ -479,6 +485,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
+    @Transactional
     public void rejectTransaction(int transactionId, int approvedByUserId) {
 
         String sql = """
@@ -486,7 +493,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 status = ? ,
                 approved_by_userId = ?,
                 approved_at = ?
-                WHERE id = ?
+                WHERE id = ? AND status = ?
                 """;
 
         Connection connection = DataSourceUtils.getConnection(dataSource);
@@ -496,6 +503,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setInt(2, approvedByUserId);
             statement.setString(3, LocalDateTime.now().toString());
             statement.setInt(4, transactionId);
+            statement.setString(5, TxStatus.PENDING.name());
+
 
             int rows = statement.executeUpdate();
             if(rows == 0) {
@@ -510,12 +519,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
+    @Transactional
     public void cancelTransaction(int transactionId) {
 
         String sql = """
                 UPDATE transactions SET
                 status = ?
-                WHERE id = ?
+                WHERE id = ? AND status = ?
                 """;
 
         Connection connection = DataSourceUtils.getConnection(dataSource);
@@ -523,6 +533,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
             statement.setString(1, TxStatus.CANCELED.name());
             statement.setInt(2, transactionId);
+            statement.setString(3, TxStatus.PENDING.name());
+
 
             int rows = statement.executeUpdate();
             if (rows == 0) {
@@ -586,4 +598,5 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             statement.setNull(index, Types.VARCHAR);
         }
     }
+
 }
