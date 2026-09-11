@@ -6,10 +6,9 @@ import org.example.model.VaultLedger;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.VaultBalanceService;
 import org.example.service.interfaces.VaultLedgerService;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,29 +26,26 @@ public class VaultBalanceController {
     }
 
     @GetMapping("/balances")
-    public List<VaultBalance> getAllBalances(@AuthenticationPrincipal AuthenticatedUser principal) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public List<VaultBalance> getAllBalances() {
         return vaultBalanceService.getAllBalances();
     }
 
     @GetMapping("/balances/{id}")
-    public VaultBalance getCurrencyVaultBalance(@AuthenticationPrincipal AuthenticatedUser principal,
-                                                @PathVariable int id) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public VaultBalance getCurrencyVaultBalance(@PathVariable int id) {
         return vaultBalanceService.getBalance(id);
     }
 
     @GetMapping("/balances/low/{threshold}")
-    public List<VaultBalance> getLowBalances(@AuthenticationPrincipal AuthenticatedUser principal,
-                                             @PathVariable BigDecimal threshold) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public List<VaultBalance> getLowBalances(@PathVariable BigDecimal threshold) {
         return vaultBalanceService.getLowBalances(threshold);
     }
 
     @PostMapping("/deposit")
-    public VaultBalance deposit(@AuthenticationPrincipal AuthenticatedUser principal,
-                                @RequestBody DepositAndWithdrawRequest request) {
-        isAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public VaultBalance deposit(@RequestBody DepositAndWithdrawRequest request) {
         vaultBalanceService.deposit(
                 request.getCurrencyId(),
                 request.getAmount(),
@@ -60,9 +56,8 @@ public class VaultBalanceController {
     }
 
     @PostMapping("/withdraw") // bayad amount manfi bashe!!!!!!
-    public VaultBalance withdraw(@AuthenticationPrincipal AuthenticatedUser principal,
-                                @RequestBody DepositAndWithdrawRequest request) {
-        isAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public VaultBalance withdraw(@RequestBody DepositAndWithdrawRequest request) {
         vaultBalanceService.withdraw(
                 request.getCurrencyId(),
                 request.getAmount(),
@@ -74,29 +69,14 @@ public class VaultBalanceController {
 
 
     @GetMapping("/ledger/{currencyId}")
-    public List<VaultLedger> getCurrencyLedger(@AuthenticationPrincipal AuthenticatedUser principal,
-                                               @PathVariable int currencyId) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public List<VaultLedger> getCurrencyLedger(@PathVariable int currencyId) {
         return vaultLedgerService.getHistory(currencyId);
     }
 
     @GetMapping("/reconcile/{currencyId}")
-    public boolean reconcileWithLedger(@AuthenticationPrincipal AuthenticatedUser principal,
-                                       @PathVariable int currencyId) {
-        isAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public boolean reconcileWithLedger(@PathVariable int currencyId) {
         return vaultBalanceService.reconcile(currencyId);
-    }
-
-
-    private void isAdminOrTeller(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
-        }
-    }
-
-    private void isAdmin(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
-        }
     }
 }
