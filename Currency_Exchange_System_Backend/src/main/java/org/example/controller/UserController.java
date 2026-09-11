@@ -1,16 +1,12 @@
 package org.example.controller;
 
+import org.example.dto.request.UserUpdateRequest;
 import org.example.dto.response.UserResponse;
 import org.example.model.User;
-import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> findAll(@AuthenticationPrincipal AuthenticatedUser principal) {
-        requireAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> findAll() {
         return userService
                 .findAll()
                 .stream()
@@ -34,49 +30,44 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserResponse getUserById(@AuthenticationPrincipal AuthenticatedUser principal,
-                                    @PathVariable int id) {
-        requireAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public UserResponse getUserById(@PathVariable int id) {
         return map(userService.findById(id));
     }
 
     @PutMapping("/{id}")
-    public UserResponse userinfoChange(@RequestBody Map<Object, Object> infos,
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse userinfoChange(@RequestBody UserUpdateRequest infos,
                                        @PathVariable int id) {
+
+
         User user = userService.findById(id);
-        user.setUsername(infos.get("username").toString());
-        user.setActive(infos.get("isActive").toString().equals("true"));
+        if (infos.getUsername() == null || infos.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Username is required");
+        }
+        if (infos.getActive() == null) {
+            throw new IllegalArgumentException("Is active is required");
+        }
+
+        user.setUsername(infos.getUsername());
+        user.setActive(infos.getActive());
         userService.updateUser(id, user);
         return map(user);
     }
 
     @PostMapping("/{id}/deactivate")
-    public UserResponse deactivateUser(@PathVariable int id,
-                                       @AuthenticationPrincipal AuthenticatedUser principal) {
-        requireAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse deactivateUser(@PathVariable int id) {
         userService.deactivateUser(id);
         return map(userService.findById(id));
     }
 
     @PostMapping("/{id}/activate")
-    public UserResponse activateUser(@PathVariable int id,
-                                     @AuthenticationPrincipal AuthenticatedUser principal) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse activateUser(@PathVariable int id) {
 
-        requireAdmin(principal);
         userService.activateUser(id);
         return map(userService.findById(id));
-    }
-
-    private void requireAdmin(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admins only");
-        }
-    }
-
-    private void requireAdminOrTeller(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role()) && !"Teller".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
-        }
     }
 
     private UserResponse map(User user) {

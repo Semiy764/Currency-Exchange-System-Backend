@@ -1,10 +1,14 @@
 package org.example.repository.impl;
-
-import org.example.database.DatabaseManager;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.ExchangeRate;
 import org.example.repository.interfaces.ExchangeRatesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
@@ -14,6 +18,9 @@ import java.util.List;
 
 @Repository
 public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public ExchangeRate save(ExchangeRate exchangeRate) {
@@ -27,8 +34,8 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 VALUES(?, ?, ?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (
                 PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ) {
 
@@ -40,15 +47,18 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                exchangeRate.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    exchangeRate.setId(keys.getLong(1));
+                }
             }
 
             return exchangeRate;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in save exchange rate: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -60,22 +70,22 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 SELECT * FROM exchange_rates
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 allRates.add(mapRates(resultSet));
             }
-
             return allRates;
-
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all exchange rate: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -90,24 +100,24 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 LIMIT 1
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             String justDate = LocalDate.now().toString();
             statement.setString(1, justDate);
             statement.setInt(2, currency_id);
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapRates(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapRates(resultSet);
+                }
+                return null;
             }
-
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find last rate: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -121,23 +131,24 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 ORDER BY effective_date DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                rates.add(mapRates(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
+
             return rates;
 
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error in find all rates of currency: " + e, e);
+            throw new RuntimeException("Error in find all rates of currencies: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -146,31 +157,32 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
         List<ExchangeRate> rates = new ArrayList<>();
         String sql = """
-                SELECT * FROM exchange_rates 
+                SELECT * FROM exchange_rates
                 WHERE DATE(effective_date) = ?
                 AND currency_id = ?
                 ORDER BY effective_date DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
 
             String justDate = LocalDate.now().toString();
             statement.setString(1, justDate);
             statement.setInt(2, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                rates.add(mapRates(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
             return rates;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all currency rates today: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -180,16 +192,20 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 DELETE FROM exchange_rates WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, exchangeRateId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Exchange rate not found with ID: " + exchangeRateId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete currency rates: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -203,19 +219,22 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                rates.add(mapRates(resultSet));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
+
             return rates;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find rate by created by " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
@@ -231,24 +250,24 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 ORDER BY effective_date DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, start.toString());
             statement.setString(2, end.toString());
             statement.setInt(3, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                rates.add(mapRates(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    rates.add(mapRates(resultSet));
+                }
             }
-
             return rates;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by currencyId and effective date between: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -265,12 +284,12 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
                 ORDER BY currency_id
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+                ResultSet resultSet = statement.executeQuery()) {
 
-            ResultSet resultSet = statement.executeQuery();
+
             while(resultSet.next()) {
                 rates.add(mapRates(resultSet));
             }
@@ -278,6 +297,8 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find latest rate for all currencies: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
@@ -285,7 +306,6 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
     private ExchangeRate mapRates(ResultSet resultSet) throws SQLException {
 
         ExchangeRate exchangeRate = new ExchangeRate();
-        // id currncyid buyrate sellrate
         exchangeRate.setId(resultSet.getInt("id"));
         exchangeRate.setCurrencyId(resultSet.getInt("currency_id"));
         exchangeRate.setBuyRate(new BigDecimal(resultSet.getString("buy_rate")));
@@ -294,5 +314,12 @@ public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository {
         exchangeRate.setCreatedBy(resultSet.getInt("created_by"));
 
         return exchangeRate;
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 }

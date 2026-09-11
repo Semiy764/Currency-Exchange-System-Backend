@@ -2,31 +2,25 @@ package org.example.service.impl;
 
 import org.example.enums.UserRole;
 import org.example.exception.ResourceNotFoundException;
-import org.example.model.Teller;
 import org.example.model.User;
-import org.example.repository.impl.UserRepositoryImpl;
-import org.example.repository.interfaces.CustomerRepository;
-import org.example.repository.interfaces.TellerRepository;
 import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
+// yadet bashe naghshe user ha ro dar layer service ham ba prequthorized check koni!!!!
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepsitory userRepsitory;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepsitory userRepsitory, CustomerRepository customerRepository, TellerRepository tellerRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepsitory userRepsitory, PasswordEncoder passwordEncoder) {
         this.userRepsitory = userRepsitory;
-
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,6 +28,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(int userId) {
 
+        if (userId <= 0) {
+            throw new IllegalArgumentException("Please enter a valid user id");
+        }
         User user = userRepsitory.findById(userId);
         if(user == null) {
             throw new ResourceNotFoundException("User not found with ID: " + userId);
@@ -44,8 +41,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
 
-        User user = userRepsitory.findByUsername(username);
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Enter a valid username");
+        }
 
+        User user = userRepsitory.findByUsername(username);
         if(user == null) {
             throw new ResourceNotFoundException("User not found with username: " + username);
         }
@@ -54,48 +54,79 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        List<User> allUsers = userRepsitory.findAll();
-        return allUsers;
+        return userRepsitory.findAll();
     }
 
     @Override
     public List<User> findByRole(UserRole role) {
-        List<User> users = userRepsitory.findByRole(role);
-        return users;
+
+        if (role == null) {
+            throw new IllegalArgumentException("Role cannot be null");
+        }
+        return userRepsitory.findByRole(role);
+
     }
 
     @Override
     public List<User> findActiveUsers() {
-        List<User> users = userRepsitory.findActiveUsers();
-        return users;
+        return userRepsitory.findActiveUsers();
     }
 
     @Override
     public boolean existsByUsername(String username) {
+
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Enter a valid username");
+        }
         return userRepsitory.existsByUsername(username);
     }
 
     @Override
+    @Transactional
     public User updateUser(int userId, User user) {
 
-        if(userId != user.getId()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "user id in path does not match user id in request body"
-            );
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("User id cannot be null");
+        }
+
+        if (userId <= 0) {
+            throw new IllegalArgumentException("User in must be positive");
+        }
+
+        if(userId != user.getId().intValue()) {
+            throw new IllegalArgumentException("User id in path does not match user id in request body");
         }
 
         User existing = userRepsitory.findById(userId);
         if(existing == null) {
-            throw new ResourceNotFoundException("user not found with ID: " + userId);
+            throw new ResourceNotFoundException("User not found with ID: " + userId);
         }
 
-        return userRepsitory.update(user);
+
+
+        if (user.getUsername() == null || user.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Username is required");
+        }
+
+        if (user.getRole() == null) {
+            throw new IllegalArgumentException("User role is required");
+        }
+
+        existing.setUsername(user.getUsername());
+        existing.setRole(user.getRole());
+        return userRepsitory.update(existing);
     }
 
     @Override
     public void deactivateUser(int userId) {
 
+        if (userId <= 0) {
+            throw new IllegalArgumentException("user id must be positive");
+        }
         User user = userRepsitory.findById(userId);
         if(user == null) {
             throw new ResourceNotFoundException("User not found with userId: " + userId);
@@ -109,6 +140,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void activateUser(int userId) {
 
+        if (userId <= 0) {
+            throw new IllegalArgumentException("user id must be positive");
+        }
         User user = userRepsitory.findById(userId);
         if(user == null) {
             throw new ResourceNotFoundException("User not found with userId: " + userId);
@@ -119,13 +153,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public void resetPassword(int userId, String newPassword) { // this method is just usable by admin!!!
 
         if(newPassword == null || newPassword.length() < 8) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "new password must be at least 8 characters"
-            );
+            throw new IllegalArgumentException("new password must be at least 8 characters");
         }
 
         User user = userRepsitory.findById(userId);
@@ -141,14 +173,15 @@ public class UserServiceImpl implements UserService {
     public boolean isActive(int userId) {
 
         if(userId <= 0) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Enter a valid amount for userID"
-            );
+            throw new IllegalArgumentException("user id must be positive");
         }
-        if(!userRepsitory.existsById(userId)) {
+
+        User user = userRepsitory.findById(userId);
+        if(user == null) {
             throw new ResourceNotFoundException("user not found with id: " + userId);
         }
-        return userRepsitory.isActive(userId);
+        return user.isActive();
     }
+
+
 }

@@ -76,12 +76,17 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     }
 
     // deposit : variz kardan
-//    @Transactional
+
     @Override
+    @Transactional
     public void deposit(int currencyId, BigDecimal amount, int performedByUserId) {
 
         if(amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("deposit amount must be positive");
+        }
+
+        if (currencyId <= 0) {
+            throw new IllegalArgumentException("Enter a valid currency id");
         }
 
         if(performedByUserId <= 0) {
@@ -115,8 +120,8 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         vaultLedgerService.recordEntry(vaultLedger);
     }
 
-//    @Transactional
     @Override
+    @Transactional
     public void withdraw(int currencyId, BigDecimal amount, int performedByUserId) {
 
         if(amount == null || amount.compareTo(BigDecimal.ZERO) >= 0) {
@@ -125,6 +130,10 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
 
         if(performedByUserId <= 0) {
             throw new IllegalArgumentException("Please enter a valid number for performed by user id");
+        }
+
+        if (currencyId <= 0) {
+            throw new IllegalArgumentException("Enter a valid currency id");
         }
 
         Currency currency = currencyRepository.findById(currencyId);
@@ -138,6 +147,10 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         }
 
         VaultBalance balance = vaultBalanceRepository.findByCurrencyId(currencyId);
+
+        if (balance == null) {
+            throw new ResourceNotFoundException("Balance not found");
+        }
 
         BigDecimal withdrawalAmount = amount.negate();
         if(balance.getBalance().compareTo(withdrawalAmount) < 0) {
@@ -163,6 +176,7 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     }
 
     @Override
+    @Transactional
     public void increaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId) {
 
         if(transactionId <= 0) {
@@ -199,6 +213,7 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
     }
 
     @Override
+    @Transactional
     public void decreaseForApprovedTransaction(int currencyId, BigDecimal amount, int transactionId) {
 
         if(transactionId <= 0) {
@@ -224,6 +239,11 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
 
         BigDecimal decreaseAmount = amount.negate();
         VaultBalance balance = vaultBalanceRepository.findByCurrencyId(currencyId);
+
+        if (balance == null) {
+            throw new ResourceNotFoundException("Balance not found");
+        }
+
         if(balance.getBalance().compareTo(decreaseAmount) < 0) {
             throw new InsufficientBalanceException("amount is bigger than vault balance");
         }
@@ -245,6 +265,11 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
         if(currencyId <= 0) {
             throw new IllegalArgumentException("Please enter a valid number for currency id");
         }
+
+        if (requireAmount == null) {
+            throw new IllegalArgumentException("Amount is required");
+        }
+
         if(requireAmount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Please enter a valid number for require amount");
         }
@@ -252,6 +277,10 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
             throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
         }
         VaultBalance vaultBalance = vaultBalanceRepository.findByCurrencyId(currencyId);
+
+        if (vaultBalance == null) {
+            throw new ResourceNotFoundException("Vault balance not found");
+        }
         return vaultBalance.getBalance().compareTo(requireAmount) >= 0;
     }
 
@@ -262,7 +291,7 @@ public class VaultBalanceServiceImpl implements VaultBalanceService {
             throw new IllegalArgumentException("Enter a valid number for currency id");
         }
         if(!currencyRepository.existsById(currencyId)) {
-            throw new IllegalArgumentException("Currency not found with ID: " + currencyId);
+            throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
         }
         VaultBalance vaultBalance = getBalance(currencyId);
         return vaultLedgerService.reconcile(currencyId, vaultBalance.getBalance());

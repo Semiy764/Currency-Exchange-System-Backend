@@ -1,8 +1,9 @@
 package org.example.service.impl;
-
 import org.example.dto.request.RegisterRequest;
-import org.example.dto.response.AuthResponse;
 import org.example.enums.UserRole;
+import org.example.exception.AccessDeniedException;
+import org.example.exception.DuplicateResourceException;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.model.Teller;
 import org.example.model.User;
@@ -10,11 +11,10 @@ import org.example.repository.interfaces.CustomerRepository;
 import org.example.repository.interfaces.TellerRepository;
 import org.example.repository.interfaces.UserRepsitory;
 import org.example.service.interfaces.AuthService;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -34,13 +34,27 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
+    @Transactional
     public User register(RegisterRequest request) {
 
-        if(userRepsitory.existsByUsername(request.getUsername())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "this username already exists"
-                    );
+        if (request.getUsername() == null || request.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Please enter a valid username");
+        }
+
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new IllegalArgumentException("Please enter a valid password");
+        }
+
+        if (request.getFullName() == null || request.getFullName().isBlank()) {
+            throw new IllegalArgumentException("Please enter a valid full name");
+        }
+
+        if (request.getPhone() == null || request.getPhone().isBlank()) {
+            throw new IllegalArgumentException("Phone number re required");
+        }
+
+        if (request.getNationalId() == null || request.getNationalId().isBlank()) {
+            throw new IllegalArgumentException("National id is required");
         }
 
         UserRole role = request.getRole();
@@ -51,10 +65,12 @@ public class AuthServiceImpl implements AuthService {
         }
 
         if(role == UserRole.CUSTOMER && customerRepository.existsByPhone(request.getPhone())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "this phone number already exists"
-            );
+            throw new DuplicateResourceException("this phone number already exists");
+        }
+
+
+        if(userRepsitory.existsByUsername(request.getUsername())) {
+            throw new DuplicateResourceException("This user name already exists");
         }
 
         User user = new User();
@@ -90,20 +106,21 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public User login(String username, String password) {
 
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Enter a valid username");
+        }
+
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Enter a valid password");
+        }
         User user = userRepsitory.findByUsername(username);
 
         if(user == null || !passwordEncoder.matches(password, user.getPasswordHash())) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED,
-                    "Invalid username or password"
-            );
+            throw new AccessDeniedException("Invalid username or password");
         }
 
         if(!user.isActive()) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Account is deactivated. Please contact support"
-            );
+            throw new AccessDeniedException("Account is deactivated. Please contact support");
         }
 
         return user;
@@ -112,36 +129,31 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void changePassword(int userId, String oldPassword, String newPassword) {
 
-        if(oldPassword == null || oldPassword.isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "old password is required"
-            );
+        if (userId <= 0) {
+            throw new IllegalArgumentException("Enter a valid user id");
         }
 
-        if(newPassword == null || newPassword.length() < 8) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "your new password must be at least 8 characters"
-            );
+        if(oldPassword == null || oldPassword.isBlank()) {
+            throw new IllegalArgumentException("old password is required");
+        }
+
+        if(newPassword == null || newPassword.isBlank() || newPassword.length() < 8) {
+            throw new IllegalArgumentException("your new password must be at least 8 characters");
         }
 
          User user = userRepsitory.findById(userId);
 
-         if(!passwordEncoder.matches(oldPassword, user.getPasswordHash())) {
-             throw new ResponseStatusException(
-                     HttpStatus.UNAUTHORIZED,
-                     "old password is incorrect"
-             );
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found with ID: " + userId);
+        }
+
+        if(!passwordEncoder.matches(oldPassword, user.getPasswordHash())) {
+             throw new AccessDeniedException("old password is incorrect");
          }
 
          if(passwordEncoder.matches(newPassword, user.getPasswordHash())) {
-             throw new ResponseStatusException(
-                     HttpStatus.BAD_REQUEST,
-                     "new password must be different from old password"
-             );
+             throw new AccessDeniedException("new password must be different from old password");
          }
-
          user.setPasswordHash(passwordEncoder.encode(newPassword));
          userRepsitory.update(user);
     }

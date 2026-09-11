@@ -1,14 +1,15 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
+import org.example.exception.DuplicateResourceException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.VaultBalance;
 import org.example.repository.interfaces.VaultBalanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
-import javax.naming.ldap.PagedResultsControl;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -33,25 +34,29 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 VALUES (?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, vaultBalance.getCurrencyId().intValue());
             statement.setString(2, vaultBalance.getBalance().toString());
             statement.setString(3, vaultBalance.getLastUpdated().toString());
 
             statement.executeUpdate();
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                vaultBalance.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    vaultBalance.setId(keys.getLong(1));
+                }
             }
 
             return vaultBalance;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("Currency id already exists");
+            }
             throw new RuntimeException("Error in save vault balance: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -62,13 +67,11 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
         String sql = """
                 SELECT * FROM vault_balances
                 """;
-
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
-
-            ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
                 allBalances.add(mapBalances(resultSet));
@@ -78,6 +81,8 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all balances: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -89,18 +94,20 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 currency_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in exist balance by currency id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -110,22 +117,24 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 SELECT * FROM vault_balances WHERE currency_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapBalances(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapBalances(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find balance by currency id: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
@@ -134,16 +143,14 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
     public void adjustBalance(int currencyId, BigDecimal amount) {
 
         String sql = """
-                UPDATE vault_balances SET 
+                UPDATE vault_balances SET
                 balance = balance + ?,
                 lastUpdated = ?
                 WHERE currency_id = ?
                 """;
 
-        try(
-                Connection connection = DataSourceUtils.getConnection(dataSource);
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setBigDecimal(1, amount);
             statement.setString(2, LocalDateTime.now().toString());
@@ -156,6 +163,8 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in adjust balance: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -165,15 +174,19 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 DELETE FROM vault_balances WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-            statement.executeUpdate();
+
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Vault balance not found with ID: " + id);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete vault balance: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -184,20 +197,23 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
                 SELECT * FROM vault_balances WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapBalances(resultSet);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapBalances(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find balance by id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -206,27 +222,27 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
 
         List<VaultBalance> balances = new ArrayList<>();
         String sql = """
-                SELECT * FROM vault_balances WHERE 
+                SELECT * FROM vault_balances WHERE
                 CAST (balance AS REAL) <= ?
-                ORDER BY CAST (balance AS REAL) DESC 
+                ORDER BY CAST (balance AS REAL) DESC
                 """;
-
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setBigDecimal(1, threshold);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                balances.add(mapBalances(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    balances.add(mapBalances(resultSet));
+                }
             }
-            return balances;
 
+            return balances;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by balance less than: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -240,5 +256,12 @@ public class VaultBalanceRepositoryImpl implements VaultBalanceRepository {
         vaultBalance.setLastUpdated(LocalDateTime.parse(resultSet.getString("lastUpdated")));
 
         return vaultBalance;
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
  }

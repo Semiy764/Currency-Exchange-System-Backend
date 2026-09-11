@@ -40,4 +40,20 @@ public class DatabaseManager {
 
         return DriverManager.getConnection(URL);
     }
+
+    /**
+     * Exposes the resolved absolute path to the sqlite file (without the JDBC prefix),
+     * so other parts of the app (e.g. Spring's DataSource configuration) can build the
+     * same URL and always point at the same physical file, regardless of working directory.
+     */
+    public static String getDbPath() {
+        File dbFile = new File(DB_PATH);
+        File parentDir = dbFile.getParentFile();
+
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
+        return DB_PATH;
+    }
 }

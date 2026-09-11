@@ -38,8 +38,8 @@ public class DatabaseInitializer {
                     CREATE TABLE IF NOT EXISTS "customers" (
                 	"id"	INTEGER,
                 	"full_name"	TEXT NOT NULL,
-                	"national_id"	TEXT NOT NULL,
-                	"phone_number"	TEXT,
+                	"national_id"	TEXT NOT NULL UNIQUE,
+                	"phone_number"	TEXT NOT NULL UNIQUE,
                 	"user_id"	INTEGER NOT NULL UNIQUE,
                 	PRIMARY KEY("id" AUTOINCREMENT),
                 	FOREIGN KEY("user_id") REFERENCES "users"("id")
@@ -51,8 +51,8 @@ public class DatabaseInitializer {
                 CREATE TABLE IF NOT EXISTS "tellers" (
                 	"id"	INTEGER,
                 	"full_name"	TEXT NOT NULL,
-                	"national_id"	TEXT NOT NULL,
-                	"phone_number"	TEXT,
+                	"national_id"	TEXT NOT NULL UNIQUE,
+                	"phone_number"	TEXT NOT NULL UNIQUE,
                 	"user_id"	INTEGER NOT NULL UNIQUE,
                 	PRIMARY KEY("id" AUTOINCREMENT),
                 	FOREIGN KEY("user_id") REFERENCES "users"("id")
@@ -64,7 +64,7 @@ public class DatabaseInitializer {
                     CREATE TABLE IF NOT EXISTS "currencies" (
                 	"id"	INTEGER,
                 	"code"	TEXT NOT NULL UNIQUE,
-                	"name"	TEXT NOT NULL,
+                	"name"	TEXT NOT NULL UNIQUE,
                 	"symbol"	TEXT,
                 	"is_active"    INTEGER NOT NULL DEFAULT 1,
                 	PRIMARY KEY("id" AUTOINCREMENT)
@@ -95,8 +95,8 @@ public class DatabaseInitializer {
                 	"customer_id"   INTEGER NOT NULL,
                 	"amount_currency"	TEXT NOT NULL,
                 	"amount_toman"	TEXT NOT NULL,
-                	"requested_rate"	TEXT,
-                	"rate_used"	TEXT,
+                	"requested_rate" TEXT,
+                	"rate_used"	TEXT NOT NULL,
                 	"requested_by_customer"	INTEGER NOT NULL DEFAULT 0,
                 	"performed_by_userId"	INTEGER,
                 	"approved_by_userId"	INTEGER,

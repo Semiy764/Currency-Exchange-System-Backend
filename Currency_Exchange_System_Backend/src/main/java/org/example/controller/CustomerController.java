@@ -3,11 +3,9 @@ package org.example.controller;
 import org.example.model.Customer;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.CustomerService;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @RestController
@@ -22,32 +20,25 @@ public class CustomerController {
 
 
     @GetMapping
-    public List<Customer> getAllCustomers(@AuthenticationPrincipal AuthenticatedUser principal) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public List<Customer> getAllCustomers() {
         return customerService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomer(@PathVariable int id,
-                            @AuthenticationPrincipal AuthenticatedUser principal) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public Customer getCustomer(@PathVariable int id) {
         return customerService.findById(id);
     }
 
     @GetMapping("/search")
-    public Customer searchByNationalCode(@RequestParam(required = true) String nationalCode,
-                                         @AuthenticationPrincipal AuthenticatedUser principal) {
-
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public Customer searchByNationalCode(@RequestParam(required = true) String nationalCode) {
         return customerService.findByNationalId(nationalCode);
     }
 
-
-    private void isAdminOrTeller(AuthenticatedUser principal) {
-
-        if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
-        }
+    @GetMapping("/me")
+    public Customer getMyProfile(@AuthenticationPrincipal AuthenticatedUser principal) {
+        return customerService.findByUserId(principal.id());
     }
-
-
 }

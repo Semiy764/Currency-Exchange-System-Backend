@@ -29,4 +29,7 @@ public interface CustomerRepository {
     List<Customer> searchByName(String name);
 
     Customer findByNationalId(String nationalId);
+
+    Customer findByPhone(String phoneNumber);
+
 }

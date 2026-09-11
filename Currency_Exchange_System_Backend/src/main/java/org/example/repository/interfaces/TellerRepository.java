@@ -26,4 +26,8 @@ public interface TellerRepository {
     boolean existsById(int tellerId);
 
     boolean existsByPhone(String phone);
+
+    Teller findByNationalId(String nationalId);
+
+    Teller findByPhone(String phoneNumber);
 }

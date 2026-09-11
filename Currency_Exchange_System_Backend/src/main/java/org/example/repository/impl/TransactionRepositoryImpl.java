@@ -1,29 +1,30 @@
 package org.example.repository.impl;
 
-import jdk.jfr.Registered;
-import org.example.database.DatabaseManager;
+
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Transaction;
 import org.example.repository.interfaces.TransactionRepository;
-import org.hibernate.ConnectionReleaseMode;
-import org.springframework.boot.sql.init.DatabaseInitializationSettings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
-import javax.swing.text.html.HTMLDocument;
-import javax.xml.crypto.Data;
+import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class TransactionRepositoryImpl implements TransactionRepository {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public Transaction save(Transaction transaction) {
@@ -46,36 +47,38 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
 
             statement.setString(1, transaction.getTxType().name());
             statement.setInt(2, transaction.getCurrencyId().intValue());
             statement.setInt(3, transaction.getCustomerId().intValue());
             statement.setString(4, transaction.getAmountCurrency().toString());
             statement.setString(5, transaction.getAmountToman().toString());
-            statement.setString(6, transaction.getRequestedRate().toString());
-            statement.setString(7, transaction.getRateUsed().toString());
+            setNullableBigDecimal(statement, 6, transaction.getRequestedRate());
+            setNullableBigDecimal(statement, 7, transaction.getRateUsed());
             statement.setInt(8, transaction.isRequestedByCustomer() ? 1 : 0);
-            statement.setObject(9, transaction.getPerformedByUserId());
-            statement.setObject(10, transaction.getApprovedByUserId());
+            setNullableLong(statement, 9, transaction.getPerformedByUserId());
+            setNullableLong(statement, 10, transaction.getApprovedByUserId());
             statement.setString(11, transaction.getCreatedAt().toString());
-            statement.setObject(12, transaction.getApprovedAt());
+            setNullableString(statement, 12, transaction.getApprovedAt() != null ?
+                    transaction.getApprovedAt().toString() : null);
             statement.setString(13, transaction.getStatus().name());
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                transaction.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    transaction.setId(keys.getLong(1));
+                }
             }
 
             return transaction;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in save transaction:" + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
 
@@ -91,12 +94,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ORDER BY created_at DESC
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
+
             while(resultSet.next()) {
                 allTransactions.add(mapTranasction(resultSet));
             }
@@ -106,6 +110,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all transactions:" + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -116,21 +122,24 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 SELECT * FROM transactions WHERE id = ?
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapTranasction(resultSet);
-            }
 
-            return null;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapTranasction(resultSet);
+                }
+                return null;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transaction by id:" + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -143,12 +152,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ORDER BY created_at DESC
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 allTransactions.add(mapTranasction(resultSet));
             }
@@ -158,6 +167,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions order by created at desc:" + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -170,20 +181,22 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 ORDER BY created_at DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, customerId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                allTrans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    allTrans.add(mapTranasction(resultSet));
+                }
             }
+
             return allTrans;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by customer id order by desc: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -195,22 +208,23 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 SELECT * FROM transactions WHERE status = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, status.name());
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                transactions.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    transactions.add(mapTranasction(resultSet));
+                }
             }
             return transactions;
 
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by status order by desc: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -219,26 +233,27 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         List<Transaction> allTrans = new ArrayList<>();
         String sql = """
-                SELECT * FROM transactions 
-                WHERE performed_by_userId = ? 
+                SELECT * FROM transactions
+                WHERE performed_by_userId = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                allTrans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    allTrans.add(mapTranasction(resultSet));
+                }
             }
-            return allTrans;
 
+            return allTrans;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by performed by user id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -247,26 +262,27 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         List<Transaction> trans = new ArrayList<>();
         String sql = """
-                SELECT * FROM transactions 
+                SELECT * FROM transactions
                 WHERE approved_by_userId = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                trans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    trans.add(mapTranasction(resultSet));
+                }
             }
 
             return trans;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by approved by user id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -277,28 +293,29 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         String sql = """
                 SELECT * FROM transactions WHERE currency_id = ?
                 AND created_at BETWEEN ? AND ?
-                ORDER BY created_at DESC 
+                ORDER BY created_at DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
             statement.setString(2, start.toString());
             statement.setString(3, finish.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                trans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    trans.add(mapTranasction(resultSet));
+                }
             }
 
             return trans;
 
-
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by currency id and dates between: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -307,30 +324,31 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         List<Transaction> trans = new ArrayList<>();
         String sql = """
-                SELECT * FROM transactions 
+                SELECT * FROM transactions
                 WHERE status = ? AND created_at
                 BETWEEN ? AND ?
                 ORDER BY created_at DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, status.name());
             statement.setString(2, start.toString());
             statement.setString(3, finish.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                trans.add(mapTranasction(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    trans.add(mapTranasction(resultSet));
+                }
             }
+
             return trans;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find transactions by status and dates between: " + e, e);
-
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -338,27 +356,29 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public boolean existsByCustomerIdAndCurrencyIdAndStatus(int customerId, int currencyId, TxStatus status) {
 
         String sql = """
-                SELECT 1 FROM transactions 
+                SELECT 1 FROM transactions
                 WHERE customer_id = ?
                 AND currency_id = ?
                 AND status = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, customerId);
             statement.setInt(2, currencyId);
             statement.setString(3, status.name());
 
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by customer id & currency id & status: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -367,30 +387,30 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         String sql = """
                 SELECT SUM(amount_toman) as total_amount
-                FROM transactions WHERE 
-                type = ? AND status = ? AND created_at 
+                FROM transactions WHERE
+                type = ? AND status = ? AND created_at
                 BETWEEN ? AND ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, type.name());
             statement.setString(2, status.name());
             statement.setString(3, start.toString());
             statement.setString(4, end.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return resultSet.getBigDecimal("total_amount");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                resultSet.next();
+                BigDecimal total = resultSet.getBigDecimal("total_amount");
+                return total != null ? total : BigDecimal.ZERO;
             }
-            return BigDecimal.ZERO;
 
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in calculate sum amount tomans between: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -403,8 +423,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         transaction.setCustomerId(resultSet.getLong("customer_id"));
         transaction.setAmountCurrency(new BigDecimal(resultSet.getString("amount_currency")));
         transaction.setAmountToman(new BigDecimal(resultSet.getString("amount_toman")));
-        transaction.setRequestedRate(new BigDecimal(resultSet.getString("requested_rate")));
-        transaction.setRateUsed(new BigDecimal(resultSet.getString("rate_used")));
+
+        String requestedRate = resultSet.getString("requested_rate");
+        transaction.setRequestedRate(requestedRate != null ? new BigDecimal(requestedRate) : null);
+
+        String rateUsed = resultSet.getString("rate_used");
+        transaction.setRateUsed(rateUsed != null ? new BigDecimal(rateUsed) : null);
+
         transaction.setRequestedByCustomer(resultSet.getInt("requested_by_customer") == 1);
 
         long performedByUserIdRaw = resultSet.getLong("performed_by_userId");
@@ -426,6 +451,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     // @Transactional check kon koja ha dar code bayad begzari??????
 
     @Override
+    @Transactional
     public void approveTransaction(int transactionId, int approvedByUserId) {
 
         String sql = """
@@ -433,74 +459,92 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 status = ?,
                 approved_by_userId = ?,
                 approved_at = ?
-                WHERE id = ?
+                WHERE id = ? AND status = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, TxStatus.COMPLETED.name());
             statement.setInt(2, approvedByUserId);
             statement.setString(3, LocalDateTime.now().toString());
             statement.setInt(4, transactionId);
-            statement.executeUpdate();
+            statement.setString(5, TxStatus.PENDING.name());
+
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in approve transaction");
+            throw new RuntimeException("Error in approve transaction: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
 
     @Override
+    @Transactional
     public void rejectTransaction(int transactionId, int approvedByUserId) {
 
         String sql = """
-                UPDATE transactions SET 
+                UPDATE transactions SET
                 status = ? ,
                 approved_by_userId = ?,
                 approved_at = ?
-                WHERE id = ?
+                WHERE id = ? AND status = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, TxStatus.REJECTED.name());
             statement.setInt(2, approvedByUserId);
             statement.setString(3, LocalDateTime.now().toString());
             statement.setInt(4, transactionId);
+            statement.setString(5, TxStatus.PENDING.name());
 
-            statement.executeUpdate();
+
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in reject transaction: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
     @Override
+    @Transactional
     public void cancelTransaction(int transactionId) {
 
         String sql = """
                 UPDATE transactions SET
                 status = ?
-                WHERE id = ?
+                WHERE id = ? AND status = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, TxStatus.CANCELED.name());
             statement.setInt(2, transactionId);
-            statement.executeUpdate();
+            statement.setString(3, TxStatus.PENDING.name());
+
+
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Transaction not found with ID: " + transactionId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in cancel transaction: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -512,8 +556,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 DATE(created_at) = DATE('now')
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery();
                 ) {
@@ -526,6 +570,33 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find today transactions" + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
+
+    private void setNullableLong(PreparedStatement statement, int index, Long value) throws SQLException {
+        if (value != null) {
+            statement.setLong(index, value);
+        } else {
+            statement.setNull(index, Types.BIGINT);
+        }
+    }
+
+    private void setNullableBigDecimal(PreparedStatement statement, int index, BigDecimal value) throws SQLException {
+        if (value != null) {
+            statement.setString(index, value.toString());
+        } else {
+            statement.setNull(index, Types.VARCHAR);
+        }
+    }
+
+    private void setNullableString(PreparedStatement statement, int index, String value) throws SQLException {
+        if(value != null) {
+            statement.setString(index, value);
+        } else {
+            statement.setNull(index, Types.VARCHAR);
+        }
+    }
+
 }

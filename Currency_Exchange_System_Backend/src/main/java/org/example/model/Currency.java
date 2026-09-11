@@ -20,7 +20,6 @@ public class Currency {
 
     public Currency(String code, String name, String symbol) {
         this.code = code;
-        this.id = id;
         this.name = name;
         this.symbol = symbol;
         this.isActive = true;

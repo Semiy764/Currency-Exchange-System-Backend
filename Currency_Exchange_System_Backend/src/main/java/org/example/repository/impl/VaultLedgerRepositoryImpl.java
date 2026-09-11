@@ -1,12 +1,12 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
 import org.example.enums.LedgerReason;
 import org.example.model.VaultLedger;
 import org.example.repository.interfaces.VaultLedgerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
-
-import javax.naming.ldap.PagedResultsControl;
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -16,8 +16,12 @@ import java.util.List;
 @Repository
 public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     public VaultLedger save(VaultLedger vaultLedger) {
+
 
         String sql = """
                 INSERT INTO vault_ledgers (
@@ -29,10 +33,8 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 VALUES(?, ?, ?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, vaultLedger.getCurrencyId().intValue());
             statement.setInt(2, vaultLedger.getChangeAmount().intValue());
@@ -41,16 +43,21 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
             statement.setInt(5, vaultLedger.getPreformedByUserId().intValue());
 
             statement.executeUpdate();
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                vaultLedger.setId(keys.getLong(1));
+
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    vaultLedger.setId(keys.getLong(1));
+                }
             }
 
             return vaultLedger;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in save vault ledger: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
+
     }
 
     @Override
@@ -61,21 +68,22 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 SELECT * FROM vault_ledgers
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 allLedgers.add(mapVaultLedger(resultSet));
             }
-
             return allLedgers;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all vault ledgers: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -86,22 +94,25 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 SELECT * FROM vault_ledgers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapVaultLedger(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapVaultLedger(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find vault ledger by id: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -114,22 +125,24 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 ORDER BY created_at DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                ledgers.add(mapVaultLedger(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    ledgers.add(mapVaultLedger(resultSet));
+                }
             }
+
             return ledgers;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find vault ledgers by currency id: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -146,18 +159,17 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 DESC
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, start.toString());
             statement.setString(2, end.toString());
             statement.setInt(3, currencyId);
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                ledgers.add(mapVaultLedger(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    ledgers.add(mapVaultLedger(resultSet));
+                }
             }
 
             return ledgers;
@@ -165,6 +177,8 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by currency id and created at between: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -176,23 +190,23 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 SELECT * FROM vault_ledgers WHERE performed_by_userId = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                ledgers.add(mapVaultLedger(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    ledgers.add(mapVaultLedger(resultSet));
+                }
             }
 
             return ledgers;
 
-
         } catch (SQLException e) {
             throw new RuntimeException("Error in find by performed by user id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
 
@@ -207,23 +221,24 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 created_at DESC LIMIT ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, limit);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                ledgers.add(mapVaultLedger(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    ledgers.add(mapVaultLedger(resultSet));
+                }
             }
-            return ledgers;
 
+            return ledgers;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find top N: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -236,25 +251,27 @@ public class VaultLedgerRepositoryImpl implements VaultLedgerRepository {
                 AND created_at between ? AND ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
             statement.setString(2, start.toString());
             statement.setString(3, finish.toString());
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if(resultSet.next()) {
-                return resultSet.getBigDecimal("total_change");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return resultSet.getBigDecimal("total_change");
+                }
+                return BigDecimal.ZERO;
             }
-            return BigDecimal.ZERO;
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in calculate sum change amounts: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 

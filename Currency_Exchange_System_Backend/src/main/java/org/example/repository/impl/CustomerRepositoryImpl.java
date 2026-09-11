@@ -1,16 +1,25 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
+import org.example.exception.DuplicateResourceException;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.Customer;
 import org.example.repository.interfaces.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public Customer save(Customer customer) {
@@ -23,10 +32,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 user_id)
                 VALUES(?, ?, ?, ?)
                 """;
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             statement.setString(1, customer.getFullname());
             statement.setString(2, customer.getNationalId());
@@ -35,15 +43,21 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
             statement.executeUpdate();
 
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                customer.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    customer.setId(keys.getLong(1));
+                }
             }
 
             return customer;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("user id or phone name or national id already exists");
+            }
             throw new RuntimeException("Error in save customer: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -54,12 +68,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
         ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 customers.add(mapCustomer(resultSet));
             }
@@ -69,6 +83,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all customers: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -79,20 +95,22 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, customerId);
 
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapCustomer(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -103,19 +121,22 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapCustomer(resultSet);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by userid" + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -126,17 +147,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE user_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by user_id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -147,17 +171,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by id: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
 
@@ -170,18 +197,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE phone_number = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, phone);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by phone_number: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -197,10 +226,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, customer.getFullname());
             statement.setString(2, customer.getNationalId());
@@ -208,14 +235,22 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             statement.setInt(4, customer.getUserId().intValue());
             statement.setInt(5, customer.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Customer not found with ID: " + customer.getId());
+            }
+
             return customer;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("user id or phone name or national id already exists");
+            }
             throw new RuntimeException("Error in update customer: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
-
 
     }
 
@@ -227,16 +262,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 DELETE FROM customers WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, customerId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Customer not found with ID: " + customerId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in remove customer: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -247,17 +286,19 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT 1 FROM customers WHERE national_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, nationalId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing customer by national id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -269,24 +310,23 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE full_name LIKE ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             String searchTerm = "%" + name + "%";
             statement.setString(1, searchTerm);
-            ResultSet resultSet = statement.executeQuery();
-
-            while(resultSet.next()) {
-                customers.add(mapCustomer(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    customers.add(mapCustomer(resultSet));
+                }
             }
 
             return customers;
 
-
         } catch (SQLException e) {
             throw new RuntimeException("Error in search customer by name: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
 
     }
@@ -298,23 +338,52 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 SELECT * FROM customers WHERE national_id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, nationalId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return mapCustomer(resultSet);
-            }
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
 
-            return null;
+                return null;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find customer by national id: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
+    }
+
+    @Override
+    public Customer findByPhone(String phoneNumber) {
+
+        String sql = """
+                SELECT * FROM customers WHERE phone_number = ?
+                """;
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, phoneNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCustomer(resultSet);
+                }
+
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in find customer by phone number: " + e, e);
+
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+
     }
 
     private Customer mapCustomer(ResultSet resultSet) throws SQLException {
@@ -323,12 +392,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         customer.setFullname(resultSet.getString("full_name"));
         customer.setId(resultSet.getInt("id"));
         customer.setNationalId(resultSet.getString("national_id"));
-        customer.setUserId(resultSet.getLong("user_id"));
         customer.setPhoneNumber(resultSet.getString("phone_number"));
+
+        long userIdValue = resultSet.getInt("user_id");
+        customer.setUserId(resultSet.wasNull() ? null : userIdValue);
 
         return customer;
 
     }
 
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
+    }
 
 }

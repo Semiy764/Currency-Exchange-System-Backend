@@ -1,17 +1,27 @@
 package org.example.repository.impl;
-import org.example.database.DatabaseManager;
+import org.example.exception.DuplicateResourceException;
 import org.example.exception.EntityNotFoundException;
 import org.example.exception.ResourceNotFoundException;
 import org.example.model.Currency;
 import org.example.repository.interfaces.CurrencyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
+
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// agar query hich ? nadare resultset ro tooye try avali biyar vali agar ? dasht bayad yek try joda barash benevisi!!
+// harja dar query update ya delete bood bayad int rows begiri!!! va dige nemikhad dar try bebandish!!!
 @Repository
 public class CurrencyRepositoryImpl implements CurrencyRepository {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public Currency save(Currency currency) {
@@ -24,24 +34,28 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 VALUES(?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setString(1, currency.getCode());
             statement.setString(2, currency.getName());
             statement.setString(3, currency.getSymbol());
 
             statement.executeUpdate();
-            ResultSet keys = statement.getGeneratedKeys();
-            if(keys.next()) {
-                currency.setId(keys.getLong(1));
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if(keys.next()) {
+                    currency.setId(keys.getLong(1));
+                }
             }
 
             return currency;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("Currency code or name already exists");
+            }
             throw new RuntimeException("Error in save currency: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -53,12 +67,13 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (
                 PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+                ResultSet resultSet = statement.executeQuery();
 
-            ResultSet resultSet = statement.executeQuery();
+        ) {
+
             while(resultSet.next()) {
                 allCurrencies.add(mapCurrency(resultSet));
             }
@@ -68,6 +83,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all currencies: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -78,20 +95,22 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -102,22 +121,24 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE symbol = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, symbol);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
-            return null;
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by symbol: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -128,22 +149,22 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE name = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
-
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by name: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -153,22 +174,25 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE code = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, code);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapCurrency(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapCurrency(resultSet);
+                }
+                return null;
             }
 
-            return null;
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find currency by code: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -179,17 +203,21 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 DELETE FROM currencies WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in delete currency: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -200,17 +228,18 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT 1 FROM currencies WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing currency by id: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -221,16 +250,17 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT 1 FROM currencies WHERE name = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in existing currency by id: " + e, e);
+            throw new RuntimeException("Error in existing currency by name: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -241,16 +271,19 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT 1 FROM currencies WHERE code = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql);) {
             statement.setString(1, code);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in existing currency by code: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -265,21 +298,28 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, currency.getCode());
             statement.setString(2, currency.getName());
             statement.setString(3, currency.getSymbol());
             statement.setInt(4, currency.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("Currency not found with ID: " + currency.getId());
+            }
+
             return currency;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("Currency code or name already exists");
+            }
             throw new RuntimeException("Error in update currency: " + e, e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -292,21 +332,23 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT * FROM currencies WHERE is_active = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 1);
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                foundCurrencies.add(mapCurrency(resultSet));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    foundCurrencies.add(mapCurrency(resultSet));
+                }
             }
 
             return foundCurrencies;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all active currencies: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -318,10 +360,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 is_active = 0 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
@@ -332,6 +372,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in deactivate currency: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -344,10 +386,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
@@ -358,6 +398,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in activate currency: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -368,21 +410,22 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 SELECT is_active FROM currencies WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, currencyId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                 return resultSet.getBoolean("is_active");
-            } else {
-                throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return resultSet.getBoolean("is_active");
+                } else {
+                    throw new ResourceNotFoundException("Currency not found with ID: " + currencyId);
+                }
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error in currency is Active");
+            throw new RuntimeException("Error in currency is Active: " + e, e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -395,5 +438,12 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         currency.setActive(resultSet.getInt("is_active") == 1);
         return currency;
 
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 }

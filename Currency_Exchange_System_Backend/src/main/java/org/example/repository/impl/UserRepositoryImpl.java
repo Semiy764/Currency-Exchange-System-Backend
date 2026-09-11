@@ -1,18 +1,26 @@
 package org.example.repository.impl;
 
-import org.example.database.DatabaseManager;
 import org.example.enums.UserRole;
+import org.example.exception.DuplicateResourceException;
+import org.example.exception.ResourceNotFoundException;
 import org.example.model.User;
 import org.example.repository.interfaces.UserRepsitory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
-import javax.xml.crypto.Data;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepsitory {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public User save(User user) {
@@ -26,10 +34,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 VALUES(?, ?, ?, ?)
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPasswordHash());
@@ -38,15 +44,21 @@ public class UserRepositoryImpl implements UserRepsitory {
 
             statement.executeUpdate();
 
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if(generatedKeys.next()) {
-                user.setId(generatedKeys.getLong(1));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if(generatedKeys.next()) {
+                    user.setId(generatedKeys.getLong(1));
+                }
             }
 
             return user;
 
         } catch(SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("username already exists");
+            }
             throw new RuntimeException("Error saving user: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -56,24 +68,22 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users WHERE id = ?
                 """;
 
-
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapUser(resultSet);
+                }
+                return null;
             }
-
-            return null;
-
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find user by id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -85,12 +95,12 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users
                 """;
 
+        Connection connection = DataSourceUtils.getConnection(dataSource);
         try(
-                Connection connection = DatabaseManager.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
                 ) {
 
-            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 allUsers.add(mapUser(resultSet));
             }
@@ -98,6 +108,8 @@ public class UserRepositoryImpl implements UserRepsitory {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find all users: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -108,21 +120,22 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users WHERE username = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                return mapUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return mapUser(resultSet);
+                }
+                return null;
             }
-            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find user by username: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -132,19 +145,21 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT 1 FROM users WHERE username = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, username);
 
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by username: " + e.getMessage(), e);
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -155,19 +170,21 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT 1 FROM users WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
 
 
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -178,16 +195,19 @@ public class UserRepositoryImpl implements UserRepsitory {
                 DELETE FROM users WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if(rows == 0) {
+                throw new ResourceNotFoundException("User not found with ID: " + userId);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in determine existing user by id: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -203,10 +223,8 @@ public class UserRepositoryImpl implements UserRepsitory {
                 WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getRole().name());
@@ -214,11 +232,19 @@ public class UserRepositoryImpl implements UserRepsitory {
             statement.setString(4, user.getPasswordHash());
             statement.setInt(5, user.getId().intValue());
 
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            if (rows == 0) {
+                throw new ResourceNotFoundException("User not found with ID: " + user.getId());
+            }
             return user;
 
         } catch (SQLException e) {
+            if (isUniqueConstraitViolation(e)) {
+                throw new DuplicateResourceException("username already exists");
+            }
             throw new RuntimeException("Error in updateUser " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -230,21 +256,23 @@ public class UserRepositoryImpl implements UserRepsitory {
                 SELECT * FROM users WHERE role = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, role.name());
 
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                users.add(mapUser(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    users.add(mapUser(resultSet));
+                }
             }
+
             return users;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find users by role: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -257,21 +285,23 @@ public class UserRepositoryImpl implements UserRepsitory {
                 WHERE is_active = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 1);
-            ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next()) {
-                users.add(mapUser(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()) {
+                    users.add(mapUser(resultSet));
+                }
             }
+
             return users;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in find active users: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -279,27 +309,25 @@ public class UserRepositoryImpl implements UserRepsitory {
     public boolean isActive(int userId) {
 
         String sql = """
-                SELECT COUNT(*) FROM users WHERE id = ?
-                AND is_active = 1 LIMIT 1
+                SELECT is_active FROM users WHERE id = ?
                 """;
 
-        try(
-                Connection connection = DatabaseManager.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ) {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                int count = resultSet.getInt(1);
-                boolean isActive = count > 0;
-                return isActive;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    return resultSet.getInt("is_active") == 1;
+                }
+                throw new ResourceNotFoundException("User not found with ID: " + userId);
             }
 
-            return false;
 
         } catch (SQLException e) {
             throw new RuntimeException("Error in is Active: " + e.getMessage(), e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
         }
     }
 
@@ -313,6 +341,13 @@ public class UserRepositoryImpl implements UserRepsitory {
         user.setActive(res.getInt("is_active") == 1);
 
         return user;
+    }
+
+    private boolean isUniqueConstraitViolation(SQLException e) {
+        if (e instanceof SQLiteException sqliteException) {
+            return sqliteException.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE;
+        }
+        return false;
     }
 
 

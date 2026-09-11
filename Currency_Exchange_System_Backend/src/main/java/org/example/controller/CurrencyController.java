@@ -2,13 +2,9 @@ package org.example.controller;
 
 import org.example.dto.request.CurrencyRequest;
 import org.example.model.Currency;
-import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.CurrencyService;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @RestController
@@ -29,10 +25,9 @@ public class CurrencyController {
     }
 
     @PostMapping
-    public Currency saveCurrency(@AuthenticationPrincipal AuthenticatedUser principal,
-                                 @RequestBody CurrencyRequest request) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public Currency saveCurrency(@RequestBody CurrencyRequest request) {
 
-        requireAdmin(principal);
         Currency currency = new Currency();
         currency.setCode(request.getCode());
         currency.setActive(true);
@@ -43,12 +38,12 @@ public class CurrencyController {
     }
 
     @PutMapping("/{id}")
-    public Currency updateCurrency(@AuthenticationPrincipal AuthenticatedUser principal,
-                               @RequestBody CurrencyRequest request,
-                               @PathVariable int id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public Currency updateCurrency(@RequestBody CurrencyRequest request,
+                                   @PathVariable int id) {
+
 
         Currency currency = currencyService.findById(id);
-        currency.setActive(true);
         currency.setName(request.getName());
         currency.setCode(request.getCode());
         currency.setSymbol(request.getSymbol());
@@ -58,17 +53,17 @@ public class CurrencyController {
     }
 
     @PostMapping("/{id}/deactivate")
-    public Currency deactivateCurrency(@AuthenticationPrincipal AuthenticatedUser principal,
-                                       @PathVariable int id) {
-        requireAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public Currency deactivateCurrency(@PathVariable int id) {
         currencyService.deactivateCurrency(id);
         return currencyService.findById(id);
     }
 
-
-    private void requireAdmin(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
-        }
+    @PostMapping("/{id}/activate")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Currency activateCurrency(@PathVariable int id) {
+        currencyService.activateCurrency(id);
+        return currencyService.findById(id);
     }
- }
+
+}

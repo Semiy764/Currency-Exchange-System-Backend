@@ -4,12 +4,15 @@ import org.example.dto.request.CustomerRegisterRequest;
 import org.example.dto.request.LoginRequest;
 import org.example.dto.request.TellerRegisterRequest;
 import org.example.dto.response.AuthResponse;
+import org.example.enums.UserRole;
 import org.example.model.User;
 import org.example.security.AuthenticatedUser;
 import org.example.security.JwtUtil;
 import org.example.service.interfaces.AuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -28,13 +31,18 @@ public class AuthController {
 
 
     @PostMapping("/register/register-teller")
-    public AuthResponse registerTeller(@RequestBody TellerRegisterRequest request) {
+    public AuthResponse registerTeller(@RequestBody TellerRegisterRequest request,
+                                       @AuthenticationPrincipal AuthenticatedUser principal) {
+
+        requireAdmin(principal);
+        request.setRole(UserRole.TELLER);
         User saved = authService.register(request);
         return buildAuthResponse(saved);
     }
 
     @PostMapping("/register/register-customer")
     public AuthResponse registerCustomer(@RequestBody CustomerRegisterRequest request) {
+        request.setRole(UserRole.CUSTOMER);
         User saved = authService.register(request);
         return buildAuthResponse(saved);
     }
@@ -65,5 +73,11 @@ public class AuthController {
                 token, user.getId(),
                 user.getUsername());
 
+    }
+
+    private void requireAdmin(AuthenticatedUser principal) {
+        if(!"ADMIN".equals(principal.role())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
+        }
     }
 }
