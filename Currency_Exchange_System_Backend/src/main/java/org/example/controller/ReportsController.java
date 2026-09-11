@@ -6,14 +6,10 @@ import org.example.dto.response.VaultSummaryDto;
 import org.example.enums.TxStatus;
 import org.example.enums.TxType;
 import org.example.model.Transaction;
-import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.TransactionService;
 import org.example.service.interfaces.VaultLedgerService;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -37,20 +33,17 @@ public class ReportsController {
     }
 
     @GetMapping("/daily")
-    public List<Transaction> getDailyTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
-
-        isAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<Transaction> getDailyTransactions() {
         return transactionService.findTodayTransactions();
     }
 
     @GetMapping("/profit-loss")
-    public ProfitLossDtoResponse calculateProfitLoss(@AuthenticationPrincipal AuthenticatedUser principal,
-                                                     @RequestBody ProfitLossDtoRequest request) {
-
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public ProfitLossDtoResponse calculateProfitLoss(@RequestBody ProfitLossDtoRequest request) {
 
         if (request.getStart() == null || request.getEnd() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "start and end are required");
+            throw new IllegalArgumentException("start and end are required");
         }
 
         LocalDateTime start;
@@ -59,7 +52,7 @@ public class ReportsController {
             start = LocalDateTime.parse(request.getStart());
             end = LocalDateTime.parse(request.getEnd());
         } catch (DateTimeParseException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format");
+            throw new IllegalArgumentException("Invalid date format");
         }
 
         BigDecimal sumBuy = transactionService.sumAmountTomanByTypeAndStatusAndCreatedAtBetween(
@@ -88,22 +81,9 @@ public class ReportsController {
     }
 
     @GetMapping("/vault-summary/{threshold}")
-    public VaultSummaryDto getVaultSummary(@AuthenticationPrincipal AuthenticatedUser principal,
-                                           @PathVariable BigDecimal threshold) {
-
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public VaultSummaryDto getVaultSummary(@PathVariable BigDecimal threshold) {
         return vaultLedgerService.getVaultSummary(threshold);
     }
 
-    private void isAdminOrTeller(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
-        }
-    }
-
-    private void isAdmin(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
-        }
-    }
 }
