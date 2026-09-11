@@ -1,14 +1,12 @@
 package org.example.security;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.SecretKey;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +14,12 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET = "currency-exchange-super-secret-key-change-me-1234567890";
     private static final long EXPIRATION_MS = 24 * 60 * 60 * 1000L;
-    private final SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private final SecretKey key;
+
+    public JwtUtil(@Value("${jwt.secret}") String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
     public String generateToken(int userId, String username, String role) {
 
@@ -27,17 +28,16 @@ public class JwtUtil {
         claims.put("role", role);
 
         Date now = new Date();
-        Date expity = new Date(now.getTime() + EXPIRATION_MS);
+        Date expiry = new Date(now.getTime() + EXPIRATION_MS);
 
         return Jwts.builder()
                 .claims(claims)
                 .subject(String.valueOf(userId))
                 .issuedAt(now)
-                .expiration(expity)
+                .expiration(expiry)
                 .signWith(key)
                 .compact();
     }
-
 
     public Claims extractAllClaims(String token) {
 
@@ -65,7 +65,7 @@ public class JwtUtil {
             Claims claims = extractAllClaims(token);
             return claims.getExpiration().after(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            return  false;
+            return false;
         }
     }
 }

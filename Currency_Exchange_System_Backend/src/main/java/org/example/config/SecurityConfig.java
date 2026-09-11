@@ -75,13 +75,13 @@ public class SecurityConfig {
                                 "/api/auth/register/register-customer",
                                 "/api/auth/login")
                         .permitAll()
-                        // Role-level authorization for every other endpoint is
-                        // enforced explicitly inside each controller (isAdmin,
-                        // isAdminOrTeller, isCustomer, ...). We deliberately do NOT
-                        // duplicate that per-endpoint role matrix here: keeping the
-                        // rules in a single place (the controllers) avoids the two
-                        // definitions silently drifting apart over time. This layer
-                        // only guarantees that a valid token is present.
+                                // Role-level authorization for every other endpoint is enforced
+                                // via @PreAuthorize annotations on each controller method
+                                // (hasRole/hasAnyRole). We deliberately do NOT duplicate that
+                                // per-endpoint role matrix here as URL matchers: keeping the rules
+                                // in a single place (the @PreAuthorize annotations) avoids two
+                                // definitions silently drifting apart over time. This layer only
+                                // guarantees that a valid token is present.
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
@@ -92,13 +92,7 @@ public class SecurityConfig {
                             response.getWriter().write(
                                     "{\"message\": \"Missing or invalid token\", \"status\": 401}");
                         })
-                        // valid token but not allowed to do this -> 403 with a small JSON body
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            response.setContentType("application/json");
-                            response.getWriter().write(
-                                    "{\"message\": \"Access denied\", \"status\": 403}");
-                        })
+
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

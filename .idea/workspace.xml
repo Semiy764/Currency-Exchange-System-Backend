@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28645153-8019-4336-bf78-f19cecc5bef4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/controller/VaultBalanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/controller/VaultBalanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/java/org/example/security/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Currency_Exchange_System_Backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +236,7 @@
       <recent name="D:\Currency_Exchange_System_Project\Currency_Exchange_System_Backend\docs" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest">
+  <component name="RunManager" selected="Spring Boot.App">
     <configuration name="CurrencyRepositoryTest.findAllCurrenciesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
@@ -246,6 +249,9 @@
       <option name="MAIN_CLASS_NAME" value="Repository.CurrencyRepositoryTest" />
       <option name="METHOD_NAME" value="findAllCurrenciesTest" />
       <option name="TEST_OBJECT" value="method" />
+      <envs>
+        <env name="jwt.secret" value="_jMAD_lxTeYSJFR-ln3NuQJiMVzGUyisOCVexXnn3HtxvvEn0as2A20ECjZJSTtr" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -310,6 +316,9 @@
       <method v="2" />
     </configuration>
     <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="JWT_SECRET" value="_jMAD_lxTeYSJFR-ln3NuQJiMVzGUyisOCVexXnn3HtxvvEn0as2A20ECjZJSTtr" />
+      </envs>
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
       <module name="backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.App" />
@@ -332,8 +341,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
         <item itemvalue="Spring Boot.App" />
+        <item itemvalue="JUnit.CurrencyRepositoryTest.findAllCurrenciesTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.findTodayTransactionsTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.transactionSaveTest" />
         <item itemvalue="JUnit.TransactionRepositoryTest.cancelTransactionTest" />
