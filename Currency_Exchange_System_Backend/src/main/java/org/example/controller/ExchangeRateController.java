@@ -4,10 +4,9 @@ import org.example.dto.request.ExchangeRateRequest;
 import org.example.model.ExchangeRate;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.ExchangeRateService;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
@@ -26,11 +25,11 @@ public class ExchangeRateController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
     public ExchangeRate addRate(@AuthenticationPrincipal AuthenticatedUser principal,
                                 @RequestBody ExchangeRateRequest request) {
-        isAdminOrTeller(principal);
         if (request.getCurrencyId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Currency id is required");
+            throw new IllegalArgumentException("Currency id is required");
         }
         return exchangeRateService.setRate(request.getCurrencyId().intValue(), request.getBuyRate(), request.getSellRate(), principal.id());
     }
@@ -39,15 +38,4 @@ public class ExchangeRateController {
     public List<ExchangeRate> getHistoryOfCurrencyRates(@PathVariable int currencyId) {
         return exchangeRateService.getRateHistory(currencyId);
     }
-
-
-
-    private void isAdminOrTeller(AuthenticatedUser principal) {
-
-        if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
-        }
-    }
-
-
 }
