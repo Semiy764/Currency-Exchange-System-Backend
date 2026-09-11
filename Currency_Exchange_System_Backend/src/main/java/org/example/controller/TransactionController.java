@@ -11,10 +11,9 @@ import org.example.model.Transaction;
 import org.example.security.AuthenticatedUser;
 import org.example.service.interfaces.CustomerService;
 import org.example.service.interfaces.TransactionService;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -33,9 +32,9 @@ public class TransactionController {
     }
 
     @PostMapping("/buy")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
     public Transaction saveBuyTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
                                                   @RequestBody AdminAndTellerTransactionRequest request){
-        isAdminOrTeller(principal);
         Transaction transaction = new Transaction();
         transaction.setTxType(TxType.BUY);
         transaction.setCurrencyId(request.getCurrencyId());
@@ -55,9 +54,9 @@ public class TransactionController {
     }
 
     @PostMapping("/sell")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
     public Transaction saveSellTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
                                                          @RequestBody AdminAndTellerTransactionRequest request){
-        isAdminOrTeller(principal);
         Transaction transaction = new Transaction();
         transaction.setTxType(TxType.SELL);
         transaction.setCurrencyId(request.getCurrencyId());
@@ -76,33 +75,33 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getAllTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
-        isAdmin(principal);
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<Transaction> getAllTransactions() {
         return transactionService.findAllOrderByCreatedAtDesc();
     }
 
     @GetMapping("/{id}")
-    public Transaction getTransaction(@PathVariable int id,
-                                      @AuthenticationPrincipal AuthenticatedUser principal) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public Transaction getTransaction(@PathVariable int id) {
         return transactionService.findById(id);
     }
 
 
 
     @PostMapping("/request")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public Transaction saveTransactionByCustomer(@AuthenticationPrincipal AuthenticatedUser principal,
                                           @RequestBody CustomerTransactionRequest request) {
-        isCustomer(principal);
+
         Transaction transaction = new Transaction();
         if (request.getType() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tx type is required");
+            throw new IllegalArgumentException("Tx type is required");
         }
         TxType txType;
         try {
             txType = TxType.valueOf(request.getType());
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid transaction type: " + request.getType());
+            throw new IllegalArgumentException("Invalid transaction type: " + request.getType());
         }
         transaction.setTxType(txType);
         transaction.setCurrencyId(request.getCurrencyId());
@@ -122,62 +121,46 @@ public class TransactionController {
     }
 
     @GetMapping("/pending")
-    public List<Transaction> getAllPendingTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
-        isAdminOrTeller(principal);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
+    public List<Transaction> getAllPendingTransactions() {
         return transactionService.findByStatusOrderByCreatedAtDesc(TxStatus.PENDING);
     }
 
     @PostMapping("/{id}/approve")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
     public Transaction approveTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
                                                          @PathVariable int id) {
-        isAdminOrTeller(principal);
         transactionService.approveTransaction(id, principal.id());
 
         return transactionService.findById(id);
     }
 
     @PostMapping("{id}/reject")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TELLER')")
     public Transaction rejectTransactionByAdminOrTeller(@AuthenticationPrincipal AuthenticatedUser principal,
                                                         @PathVariable int id) {
-
-        isAdminOrTeller(principal);
         transactionService.rejectTransaction(id, principal.id());
         return transactionService.findById(id);
     }
 
     @PostMapping("{id}/cancel")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public Transaction cancelTransaction(@AuthenticationPrincipal AuthenticatedUser principal,
                                          @PathVariable int id) {
-        isCustomer(principal);
+
         isTransactionForThisUser(id, principal.id());
         transactionService.cancelTransaction(id);
         return transactionService.findById(id);
     }
 
     @GetMapping("/my")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public List<Transaction> getMyTransactions(@AuthenticationPrincipal AuthenticatedUser principal) {
-        isCustomer(principal);
+
         Customer customer = customerService.findByUserId(principal.id());
         return transactionService.findByCustomerIdOrderByCreatedAtDesc(customer.getId().intValue());
     }
 
-    private void isAdminOrTeller(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role()) && !"TELLER".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin or Teller only");
-        }
-    }
-
-    private void isAdmin(AuthenticatedUser principal) {
-        if(!"ADMIN".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
-        }
-    }
-
-    private void isCustomer(AuthenticatedUser principal) {
-        if(!"CUSTOMER".equals(principal.role())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Customer only");
-        }
-    }
 
     private void isTransactionForThisUser(int transactionId, int userId) {
 
